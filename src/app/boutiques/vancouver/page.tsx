@@ -176,14 +176,11 @@ export default function VancouverBoutiquePage() {
             Discover our curated spaces from coast to coast.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <Link href="/boutiques/toronto" className="btn-secondary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>
-              Toronto Flagship (Yorkville)
+            <Link href="/boutiques/canada" className="btn-secondary" style={{ padding: '10px 24px', fontSize: '0.85rem' }}>
+              Canada Boutiques 🇨🇦
             </Link>
-            <Link href="/boutiques/montreal" className="btn-secondary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>
-              Montreal Boutique (Old Montreal)
-            </Link>
-            <Link href="/boutiques/artisan-partners" className="btn-secondary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>
-              Artisan Partners &amp; Makers
+            <Link href="/boutiques/usa" className="btn-secondary" style={{ padding: '10px 24px', fontSize: '0.85rem' }}>
+              USA Boutiques 🇺🇸
             </Link>
           </div>
         </div>

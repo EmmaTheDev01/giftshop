@@ -1,12 +1,21 @@
 'use client';
 
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { BRANDS } from '@/data/mockData';
+import { getBrands } from '@/lib/api';
+import type { Brand } from '@/types/supabase';
 import { ArrowRight } from 'lucide-react';
 
 export default function CollaborationsGrid() {
+  const [brands, setBrands] = useState<Brand[]>([]);
+
+  useEffect(() => {
+    getBrands().then((data) => {
+      setBrands(data.slice(0, 4));
+    });
+  }, []);
+
   return (
     <section style={{ padding: '84px 0', backgroundColor: '#ffffff' }}>
       <div className="container-custom">
@@ -32,7 +41,7 @@ export default function CollaborationsGrid() {
                 marginBottom: '6px',
               }}
             >
-              Prestigious Houses
+              Prestigious Guilds & Workshops
             </p>
             <h2
               style={{
@@ -43,12 +52,12 @@ export default function CollaborationsGrid() {
                 lineHeight: 1.2,
               }}
             >
-              Official Collaborations
+              Artisan Guild Partners
             </h2>
           </div>
 
           <Link href="/brands" className="btn-secondary" style={{ padding: '10px 22px' }}>
-            <span>Discover all brands</span>
+            <span>Discover all artisans</span>
             <ArrowRight size={15} />
           </Link>
         </div>
@@ -61,7 +70,7 @@ export default function CollaborationsGrid() {
             gap: '24px',
           }}
         >
-          {BRANDS.map((brand) => (
+          {brands.map((brand) => (
             <Link
               key={brand.id}
               href={`/brands/${brand.slug}`}
@@ -112,16 +121,15 @@ export default function CollaborationsGrid() {
                     fontWeight: 700,
                   }}
                 >
-                  Maison Partenaire
+                  {brand.country || 'Canada'}
                 </span>
                 <h3
                   style={{
                     fontFamily: 'var(--font-serif)',
-                    fontSize: '1.65rem',
-                    fontWeight: 500,
-                    color: '#ffffff',
-                    marginTop: '2px',
-                    letterSpacing: '0.02em',
+                    fontSize: '1.4rem',
+                    fontWeight: 600,
+                    margin: '4px 0 8px',
+                    lineHeight: 1.25,
                   }}
                 >
                   {brand.name}
@@ -129,9 +137,8 @@ export default function CollaborationsGrid() {
                 <p
                   style={{
                     fontSize: '0.78rem',
-                    color: '#e2e8f0',
-                    marginTop: '6px',
-                    lineHeight: 1.4,
+                    opacity: 0.9,
+                    lineHeight: 1.45,
                     display: '-webkit-box',
                     WebkitLineClamp: 2,
                     WebkitBoxOrient: 'vertical',
@@ -140,6 +147,20 @@ export default function CollaborationsGrid() {
                 >
                   {brand.description}
                 </p>
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    fontSize: '0.75rem',
+                    fontWeight: 600,
+                    color: '#dda82e',
+                    marginTop: '8px',
+                  }}
+                >
+                  <span>Explore craft creations</span>
+                  <ArrowRight size={13} />
+                </span>
               </div>
             </Link>
           ))}

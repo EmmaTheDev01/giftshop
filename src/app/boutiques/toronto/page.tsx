@@ -58,7 +58,7 @@ export default function TorontoBoutiquePage() {
             Toronto Flagship Boutique
           </h1>
           <p style={{ color: '#cbd5e1', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: '720px' }}>
-            Nestled in the heart of Toronto’s historic Yorkville district, our flagship brings together fine Parisian artisanry, certified Eiffel Tower rivets, and Canadian maple keepsakes under one luminous roof.
+            Nestled in the heart of Toronto’s historic Yorkville district, our flagship brings together fine Canadian artisanry, personalized heirloom plaques, laser-cut wall decor, and Canadian keepsakes under one luminous roof.
           </p>
         </div>
       </section>
@@ -176,14 +176,11 @@ export default function TorontoBoutiquePage() {
             Experience our curated artisan collections across Canada.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <Link href="/boutiques/montreal" className="btn-secondary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>
-              Montreal Boutique (Old Montreal)
+            <Link href="/boutiques/canada" className="btn-secondary" style={{ padding: '10px 24px', fontSize: '0.85rem' }}>
+              Canada Boutiques 🇨🇦
             </Link>
-            <Link href="/boutiques/vancouver" className="btn-secondary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>
-              Vancouver Showroom (Alberni)
-            </Link>
-            <Link href="/boutiques/artisan-partners" className="btn-secondary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>
-              Artisan Partners &amp; Makers
+            <Link href="/boutiques/usa" className="btn-secondary" style={{ padding: '10px 24px', fontSize: '0.85rem' }}>
+              USA Boutiques 🇺🇸
             </Link>
           </div>
         </div>

@@ -4,7 +4,8 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Logo from './Logo';
 import { useCart } from '@/context/CartContext';
-import { NAV_MENU } from '@/data/mockData';
+import { useAuth } from '@/context/AuthContext';
+import { NAV_MENU } from '@/config/navigation';
 import {
   Search,
   User,
@@ -19,6 +20,7 @@ import {
 
 export default function Header() {
   const { cartCount, cartTotal, setIsCartOpen, setIsSearchOpen, wishlist } = useCart();
+  const { user, profile, isAdmin } = useAuth();
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [selectedLang, setSelectedLang] = useState('EN');
@@ -35,6 +37,7 @@ export default function Header() {
 
   const languages = [
     { code: 'EN', label: 'English (CA)', flag: '🇨🇦' },
+    { code: 'US', label: 'English (US)', flag: '🇺🇸' },
     { code: 'FR', label: 'Français (CA)', flag: '🇨🇦' },
   ];
 
@@ -58,9 +61,9 @@ export default function Header() {
           borderBottom: '1px solid rgba(180, 126, 0, 0.25)',
         }}
       >
-        <span>Delivery Across Canada & Worldwide 🇨🇦</span>
+        <span>Delivery Across Canada &amp; USA 🇨🇦 🇺🇸</span>
         <span style={{ color: '#b47e00' }}>•</span>
-        <span>Free Canadian shipping from $95 CAD</span>
+        <span>Free Shipping Over $95 CAD / $70 USD</span>
         <span style={{ color: '#b47e00' }}>•</span>
         <span style={{ color: '#dda82e' }}>Official Memoriq Boutique</span>
       </div>
@@ -161,9 +164,9 @@ export default function Header() {
             )}
           </div>
 
-          {/* Canadian Boutiques Link */}
+          {/* Canada & USA Boutiques Link */}
           <Link
-            href="/contact"
+            href="/boutiques"
             className="hidden-tablet"
             style={{
               display: 'flex',
@@ -175,7 +178,7 @@ export default function Header() {
               transition: 'color 0.2s',
             }}
           >
-            <span>Boutiques: Toronto • Montreal • Vancouver</span>
+            <span>Boutiques: Canada &amp; USA</span>
             <ArrowUpRight size={13} style={{ color: '#b47e00' }} />
           </Link>
         </div>
@@ -248,17 +251,33 @@ export default function Header() {
 
           {/* Account */}
           <Link
-            href="/my-account"
+            href={user ? '/my-account' : '/login'}
             style={{
               display: 'flex',
               alignItems: 'center',
-              color: '#0c2340',
+              color: user ? '#b47e00' : '#0c2340',
               padding: '8px',
+              position: 'relative',
             }}
-            aria-label="My Account"
+            aria-label={user ? 'Customer Account' : 'Sign In'}
             className="hidden-mobile"
+            title={user ? `Signed in as ${profile?.full_name || user.email}` : 'Sign In'}
           >
             <User size={21} />
+            {user && (
+              <span
+                style={{
+                  position: 'absolute',
+                  bottom: '6px',
+                  right: '6px',
+                  width: '8px',
+                  height: '8px',
+                  borderRadius: '50%',
+                  backgroundColor: '#16a34a',
+                  border: '1.5px solid #ffffff',
+                }}
+              />
+            )}
           </Link>
 
           {/* Cart Button */}
@@ -371,12 +390,14 @@ export default function Header() {
                   ? '/brands'
                   : menu.slug === 'gifts'
                   ? '/gifts'
+                  : menu.slug === 'crafts'
+                  ? '/crafts'
+                  : menu.slug === 'decorations'
+                  ? '/decorations'
+                  : menu.slug === 'souvenirs'
+                  ? '/souvenirs'
                   : menu.slug === 'lifestyle'
                   ? '/lifestyle'
-                  : menu.slug === 'fashion'
-                  ? '/fashion'
-                  : menu.slug === 'kids'
-                  ? '/kids'
                   : `/category/${menu.slug}`;
 
               return (
@@ -614,12 +635,14 @@ export default function Header() {
                   ? '/brands'
                   : item.slug === 'gifts'
                   ? '/gifts'
+                  : item.slug === 'crafts'
+                  ? '/crafts'
+                  : item.slug === 'decorations'
+                  ? '/decorations'
+                  : item.slug === 'souvenirs'
+                  ? '/souvenirs'
                   : item.slug === 'lifestyle'
                   ? '/lifestyle'
-                  : item.slug === 'fashion'
-                  ? '/fashion'
-                  : item.slug === 'kids'
-                  ? '/kids'
                   : `/category/${item.slug}`;
 
               return (

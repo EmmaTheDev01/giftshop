@@ -4,17 +4,18 @@ import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DiamondSeparator from '@/components/DiamondSeparator';
 import { SITE_CONFIG } from '@/config/site';
-import { BRANDS } from '@/data/mockData';
+import { getBrands } from '@/lib/api';
 import { Award, Compass, HeartHandshake, ShieldCheck, ChevronRight, ExternalLink } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
   title: `Artisan Partners & Guild Makers | ${SITE_CONFIG.name}`,
   description:
-    'Discover our collaborative network of historic French heritage houses and master Canadian artisans. Monnaie de Paris, Bernardaud, Saint James, and independent Canadian studios.',
+    'Discover our collaborative network of master Canadian woodcraft studios and heritage ateliers.',
 };
 
-export default function ArtisanPartnersPage() {
+export default async function ArtisanPartnersPage() {
+  const brands = await getBrands();
   return (
     <div style={{ backgroundColor: '#ffffff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Header />
@@ -112,7 +113,7 @@ export default function ArtisanPartnersPage() {
           </div>
 
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '24px' }}>
-            {BRANDS.map((brand) => (
+            {brands.map((brand) => (
               <div
                 key={brand.id}
                 style={{

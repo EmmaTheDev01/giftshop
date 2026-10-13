@@ -4,35 +4,34 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DepartmentView from '@/components/DepartmentView';
-import { PRODUCTS, NAV_MENU } from '@/data/mockData';
+import { NAV_MENU } from '@/config/navigation';
+import { getProducts } from '@/lib/api';
 
 export const metadata: Metadata = {
-  title: 'Gifts & Keepsakes | Official Memoriq Boutique Canada 🇨🇦',
+  title: 'Artisan Gifts & Commemorative Tokens | Memoriq Canada 🇨🇦',
   description:
-    'Explore curated gift sets, numbered summit medals, limited-edition keepsakes, and collector treasures for Canadians in CAD.',
+    'Curated Canadian woodcraft gift sets, personalized plaques, celebratory cake toppers, and bespoke keepsakes priced in CAD.',
 };
 
-export default function GiftsPage() {
+export default async function GiftsPage() {
   const giftsMenu = NAV_MENU.find((m) => m.slug === 'gifts');
   const subcategories = giftsMenu?.items || [];
+  const allProducts = await getProducts();
 
   // Filter products relevant to gifts
-  const giftProducts = PRODUCTS.filter((p) => {
+  const giftProducts = allProducts.filter((p) => {
     const cat = (p.category_name || '').toLowerCase();
     const name = p.name.toLowerCase();
     return (
-      cat.includes('medal') ||
+      cat.includes('gift') ||
       cat.includes('keepsake') ||
-      cat.includes('statue') ||
-      cat.includes('miniature') ||
-      cat.includes('confection') ||
-      name.includes('medal') ||
-      name.includes('rivet') ||
-      name.includes('bronze') ||
-      name.includes('syrup') ||
+      name.includes('nursery') ||
+      name.includes('sign') ||
+      name.includes('holder') ||
+      name.includes('plaque') ||
       p.is_limited_edition ||
-      p.badge === 'Iconic' ||
-      p.badge === 'Collector'
+      p.badge === 'Bestseller' ||
+      p.badge === 'Featured'
     );
   });
 
@@ -42,11 +41,11 @@ export default function GiftsPage() {
       <main style={{ flex: 1 }}>
         <DepartmentView
           title="The Gifts Department"
-          eyebrow="Curated Keepsakes & Collector Sets"
-          subtitle="From official summit medals to authentic monument bronze statues, discover exceptional Canadian and Parisian gift treasures."
+          eyebrow="Curated Keepsakes &amp; Heirloom Tokens"
+          subtitle="From personalized LED signs to laser-sculpted hardwood art, discover exceptional Canadian gifts presented in archival packaging."
           breadcrumbName="Gifts"
           subcategories={subcategories}
-          products={giftProducts.length > 0 ? giftProducts : PRODUCTS}
+          products={giftProducts.length > 0 ? giftProducts : allProducts}
         />
       </main>
       <ReassuranceFooter />

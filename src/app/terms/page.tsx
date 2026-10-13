@@ -101,7 +101,7 @@ export default function TermsOfUsePage() {
             7. External Hyperlinks &amp; Third-Party Integrations
           </h2>
           <p style={{ marginBottom: '14px' }}>
-            Our website may contain hyperlinks directed toward external websites, carrier tracking utilities (such as Canada Post, FedEx, and UPS), or heritage guild partners (such as the official site of the Eiffel Tower or Monnaie de Paris). These hyperlinks are provided purely for informational convenience and historical context. The inclusion of any link does not signify our endorsement, authorization, or assumption of responsibility for the content, privacy practices, or operational policies of any external platform.
+            Our website may contain hyperlinks directed toward external websites, carrier tracking utilities (such as Canada Post, FedEx, and UPS), or heritage guild partners (such as the Royal Canadian Mint, Canadian Crafts Federation, or provincial artisan guilds). These hyperlinks are provided purely for informational convenience and historical context. The inclusion of any link does not signify our endorsement, authorization, or assumption of responsibility for the content, privacy practices, or operational policies of any external platform.
           </p>
           <p>
             You acknowledge and agree that your navigation of third-party websites is conducted entirely at your own risk. We disclaim all liability for any loss, damage, or legal consequences arising directly or indirectly from your access to or reliance upon third-party services, external cookies, or third-party commercial transactions.

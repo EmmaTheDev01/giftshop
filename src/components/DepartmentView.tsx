@@ -4,7 +4,7 @@ import React, { useState, useMemo } from 'react';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import DiamondSeparator from '@/components/DiamondSeparator';
-import { ExtendedProduct } from '@/data/mockData';
+import { ExtendedProduct } from '@/types/supabase';
 import { Sparkles, SlidersHorizontal, Search, RotateCcw, ChevronRight } from 'lucide-react';
 
 interface SubcategoryItem {
@@ -55,13 +55,11 @@ export default function DepartmentView({
             pColl.includes(sub);
 
           // If no direct keyword match, allow fallthrough to show department items
-          if (!matches) {
-            // Check subcategory keyword hints
-            if (sub.includes('gift') && !pCat.includes('medal') && !pCat.includes('keepsake')) return false;
-            if (sub.includes('tea') && !pCat.includes('tea') && !pCat.includes('gourmet')) return false;
-            if (sub.includes('book') && !pCat.includes('book') && !pCat.includes('stationery')) return false;
-            if (sub.includes('knit') && !pCat.includes('knit') && !pCat.includes('apparel')) return false;
-          }
+            if (sub.includes('wood') && !pName.includes('wood') && !pCat.includes('wood') && !pDesc.includes('wood')) return false;
+            if (sub.includes('clock') && !pName.includes('clock') && !pCat.includes('clock')) return false;
+            if (sub.includes('shelf') && !pName.includes('shelf') && !pCat.includes('shelf')) return false;
+            if (sub.includes('maple') && !pName.includes('maple') && !pDesc.includes('maple')) return false;
+            if (sub.includes('led') && !pName.includes('led') && !pCat.includes('light')) return false;
         }
 
         // Search matching

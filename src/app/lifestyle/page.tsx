@@ -4,38 +4,30 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DepartmentView from '@/components/DepartmentView';
-import { PRODUCTS, NAV_MENU } from '@/data/mockData';
+import { NAV_MENU } from '@/config/navigation';
+import { getProducts } from '@/lib/api';
 
 export const metadata: Metadata = {
-  title: 'Lifestyle & Art de Vivre | Official Memoriq Boutique Canada 🇨🇦',
+  title: 'Artisan Living & Home Decor | Memoriq Canada 🇨🇦',
   description:
-    'Refined home accents, Limoges porcelain tableware, scented candles by Kerzon, fine art prints, and gourmet treats in CAD.',
+    'Refined handcrafted home accents, wooden wall clocks, entryway organizers, and ambient decor in CAD.',
 };
 
-export default function LifestylePage() {
-  const lifestyleMenu = NAV_MENU.find((m) => m.slug === 'lifestyle');
-  const subcategories = lifestyleMenu?.items || [];
+export default async function LifestylePage() {
+  const decorMenu = NAV_MENU.find((m) => m.slug === 'decorations');
+  const subcategories = decorMenu?.items || [];
+  const allProducts = await getProducts();
 
-  // Filter products relevant to lifestyle
-  const lifestyleProducts = PRODUCTS.filter((p) => {
+  const lifestyleProducts = allProducts.filter((p) => {
     const cat = (p.category_name || '').toLowerCase();
     const name = p.name.toLowerCase();
     return (
+      cat.includes('decor') ||
       cat.includes('home') ||
-      cat.includes('fragrance') ||
-      cat.includes('tableware') ||
-      cat.includes('porcelain') ||
-      cat.includes('decorative') ||
-      cat.includes('book') ||
-      cat.includes('stationery') ||
-      cat.includes('tea') ||
-      cat.includes('gourmet') ||
-      name.includes('candle') ||
-      name.includes('tea') ||
-      name.includes('cup') ||
-      name.includes('monograph') ||
-      name.includes('journal') ||
-      name.includes('sculpture')
+      name.includes('clock') ||
+      name.includes('shelf') ||
+      name.includes('holder') ||
+      name.includes('sign')
     );
   });
 
@@ -44,12 +36,12 @@ export default function LifestylePage() {
       <Header />
       <main style={{ flex: 1 }}>
         <DepartmentView
-          title="Lifestyle & Art de Vivre"
-          eyebrow="Art of Living • Refined Accents"
-          subtitle="Elevate Canadian living with Limoges porcelain, Parisian natural fragrances, gourmet teas, and curated art monographs."
+          title="Artisan Living &amp; Home Accents"
+          eyebrow="Crafted Living • Modern Canadian Homes"
+          subtitle="Elevate Canadian living spaces with precision-crafted wooden wall decor, silent quartz clocks, and functional entryway organizers."
           breadcrumbName="Lifestyle"
           subcategories={subcategories}
-          products={lifestyleProducts.length > 0 ? lifestyleProducts : PRODUCTS}
+          products={lifestyleProducts.length > 0 ? lifestyleProducts : allProducts}
         />
       </main>
       <ReassuranceFooter />

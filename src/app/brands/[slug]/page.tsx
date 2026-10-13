@@ -4,7 +4,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DepartmentView from '@/components/DepartmentView';
-import { PRODUCTS } from '@/data/mockData';
+import { getBrands, getProducts } from '@/lib/api';
 
 interface BrandDetailPageProps {
   params: Promise<{
@@ -13,62 +13,42 @@ interface BrandDetailPageProps {
 }
 
 const BRAND_METADATA: Record<string, { name: string; craft: string; desc: string }> = {
+  'memoriq-atelier': {
+    name: 'Memoriq Master Guild',
+    craft: 'Canadian Laser-Cut Hardwood & Fine Joinery',
+    desc: 'Precision laser-sculpted Canadian birch and walnut, hand-finished in our Canadian master ateliers.',
+  },
+  'laurentian-craft': {
+    name: 'Laurentian Woodcraft Studio',
+    craft: 'Solid Timber Clocks & Honeycomb Joinery',
+    desc: 'Custom quartz movement wall clocks and geometric modular shelving crafted from sustainable Laurentian timber.',
+  },
+  'rocky-metalworks': {
+    name: 'Rocky Mountain Metalworks',
+    craft: 'Dimensional Wall Art & Silhouette Sculptures',
+    desc: 'Laser-cut mountain silhouettes and wildlife wall sculptures inspired by the Canadian Rockies.',
+  },
+  'boreal-heritage': {
+    name: 'Boreal Heritage Workshops',
+    craft: 'Ambient LED Lighting & Maple Keepsakes',
+    desc: 'Handcrafted acrylic and walnut night lights, customized name signs, and Canadian maple tokens.',
+  },
   'saint-james': {
-    name: 'Saint James',
-    craft: 'Master Nautical Knitwear since 1889',
-    desc: 'Crafted in Normandy with 100% pure virgin wool and certified Living Heritage Company (EPV) status in France.',
-  },
-  bernardaud: {
-    name: 'Bernardaud',
-    craft: 'Limoges Fine Porcelain Manufacture since 1863',
-    desc: 'The historic benchmark for French porcelain dining artistry, creating bespoke gilded espresso services.',
-  },
-  'dammann-freres': {
-    name: 'DAMMANN Frères',
-    craft: 'Purveyor of Exceptional Teas since 1692',
-    desc: 'Artisan tea masters creating custom blends packed in collectible lacquered metal tins.',
-  },
-  vilac: {
-    name: 'VILAC',
-    craft: 'Master Wooden Toy Turners in the Jura since 1911',
-    desc: 'Handmade architectural puzzles, toys, and building sets crafted from sustainably harvested beechwood.',
-  },
-  kerzon: {
-    name: 'Kerzon Paris',
-    craft: 'Master Perfumer & Natural Candle Atelier',
-    desc: 'Formulated with natural vegetable waxes and essential oils evoking historic botanical promenades.',
-  },
-  'the-line': {
-    name: 'The Line',
-    craft: 'Architectural Laser-Cut Steel Sculptures',
-    desc: 'Laser-cut architectural silhouettes of monument skylines crafted from thick steel and finished in matte black.',
-  },
-  'monnaie-de-paris': {
-    name: 'Monnaie de Paris',
-    craft: 'Official French Mint since 864 AD',
-    desc: 'The oldest institution in France, striking commemorative high-relief summit medals with official seal engraving.',
-  },
-  'la-sablesienne': {
-    name: 'La Sablésienne',
-    craft: 'Artisan French Biscuits & Confections',
-    desc: 'Traditional pure butter shortbread baked in Sablé-sur-Sarthe and presented in vintage keepsake tins.',
-  },
-  payote: {
-    name: 'Payote',
-    craft: 'Authentic French Espadrilles',
-    desc: 'Handcrafted rope-sole espadrilles manufactured in Mauléon using natural organic cotton canvas.',
-  },
-  omy: {
-    name: 'OMY',
-    craft: 'Creative Giant Discovery Posters & Games',
-    desc: 'Playful illustrated Paris and world maps designed for children and families to colour together.',
+    name: 'Saint James & Allied Guilds',
+    craft: 'Master Canadian & Heritage Craftsmanship',
+    desc: 'Bespoke artisan goods crafted by master guilds dedicated to enduring quality and certified provenance.',
   },
 };
 
 export async function generateStaticParams() {
-  return Object.keys(BRAND_METADATA).map((slug) => ({
-    slug,
-  }));
+  const dbBrands = await getBrands();
+  const dbSlugs = dbBrands.map((b) => ({ slug: b.slug }));
+  const metaSlugs = Object.keys(BRAND_METADATA).map((slug) => ({ slug }));
+  const all = [...metaSlugs];
+  dbSlugs.forEach((s) => {
+    if (!all.some((x) => x.slug === s.slug)) all.push(s);
+  });
+  return all;
 }
 
 export async function generateMetadata({ params }: BrandDetailPageProps): Promise<Metadata> {
@@ -80,7 +60,7 @@ export async function generateMetadata({ params }: BrandDetailPageProps): Promis
   };
 
   return {
-    title: `${brand.name} | The Gift Shop Canada 🇨🇦`,
+    title: `${brand.name} | Memoriq Canada 🇨🇦`,
     description: brand.desc,
   };
 }
@@ -91,16 +71,18 @@ export default async function BrandDetailPage({ params }: BrandDetailPageProps) 
 
   const brandName = brand?.name || slug.replace(/-/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
   const brandCraft = brand?.craft || 'Master Artisan Craftsmanship';
-  const brandDesc = brand?.desc || 'Exceptional craftsmanship by renowned European and Canadian artisans.';
+  const brandDesc = brand?.desc || 'Exceptional craftsmanship by renowned Canadian artisans and guild makers.';
+
+  const allProducts = await getProducts();
 
   // Filter products matching this brand
   const keyword = slug.toLowerCase().replace(/-/g, ' ');
-  const matched = PRODUCTS.filter((p) => {
+  const matched = allProducts.filter((p) => {
     const text = `${p.brand_name || ''} ${p.name} ${p.description}`.toLowerCase();
     return text.includes(keyword) || text.includes(brandName.toLowerCase());
   });
 
-  const displayProducts = matched.length > 0 ? matched : PRODUCTS.slice(0, 6);
+  const displayProducts = matched.length > 0 ? matched : allProducts.slice(0, 6);
 
   return (
     <div style={{ backgroundColor: '#ffffff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>

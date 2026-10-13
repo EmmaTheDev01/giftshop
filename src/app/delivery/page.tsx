@@ -5,17 +5,17 @@ import { Truck, Clock, ShieldCheck, MapPin, Globe, CheckCircle2, ArrowRight } fr
 import Link from 'next/link';
 
 export const metadata = {
-  title: `Delivery & Canadian Shipping Policy | ${SITE_CONFIG.name}`,
+  title: `Delivery & Shipping Policy • Canada & USA | ${SITE_CONFIG.name}`,
   description:
-    'Free shipping across Canada on orders over $95 CAD. Delivery transit timelines by province, express courier options, and packaging standards.',
+    'Express delivery across Canada and the United States. Transit timelines by province and state, cross-border express courier options, and archival packaging standards.',
 };
 
 export default function DeliveryShippingPage() {
   return (
     <LegalLayout
-      title="Delivery & Canadian Shipping Policy"
-      subtitle="Nationwide expedited delivery across all Canadian provinces and territories, featuring complimentary expedited shipping on all orders totaling $95.00 CAD or more."
-      badge="Complimentary Canadian Shipping Over $95 CAD"
+      title="Delivery & Shipping Policy • Canada & USA"
+      subtitle="Expedited tracked delivery across all Canadian provinces and territories as well as the contiguous United States, featuring complimentary shipping on qualifying orders."
+      badge="Delivery Across Canada & USA 🇨🇦 🇺🇸"
       lastUpdated="October 2026"
     >
       <div style={{ color: '#334155', lineHeight: 1.8, fontSize: '0.94rem' }}>
@@ -49,10 +49,10 @@ export default function DeliveryShippingPage() {
           </div>
           <div>
             <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', color: '#0c2340', margin: '0 0 4px', fontWeight: 600 }}>
-              Free Canadian Expedited Delivery on Orders Over $95 CAD 🇨🇦
+              Express Delivery Across Canada &amp; the USA 🇨🇦 🇺🇸
             </h3>
             <p style={{ margin: 0, fontSize: '0.88rem', color: '#64748b' }}>
-              All orders reaching $95.00 CAD or more qualify automatically for complimentary tracked shipping to any domestic postal destination across Canada.
+              Complimentary tracked expedited shipping on orders totaling $95.00 CAD or $70.00 USD and above to domestic and cross-border destinations.
             </p>
           </div>
         </div>

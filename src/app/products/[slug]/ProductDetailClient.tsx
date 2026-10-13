@@ -3,8 +3,8 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ExtendedProduct } from '@/data/mockData';
 import { useCart } from '@/context/CartContext';
+import { ExtendedProduct } from '@/types/supabase';
 import ProductCard from '@/components/ProductCard';
 import DiamondSeparator from '@/components/DiamondSeparator';
 import {
@@ -64,7 +64,7 @@ export default function ProductDetailClient({
     }
   };
 
-  const mainImage = product.images?.[selectedImgIdx] || product.images?.[0] || 'https://shop.toureiffel.paris/879-medium_default/eiffel-tower-bronze-19-cm-signature-collection.jpg';
+  const mainImage = product.images?.[selectedImgIdx] || product.images?.[0] || '/images/products/mom-heart-photo-frame.jpeg';
 
   return (
     <div style={{ paddingBottom: '70px' }}>

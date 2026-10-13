@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { ExtendedProduct } from '@/data/mockData';
+import { ExtendedProduct } from '@/types/supabase';
 import { useCart } from '@/context/CartContext';
 import { Eye, Heart, ShoppingBag, Check } from 'lucide-react';
 
@@ -26,7 +26,7 @@ export default function ProductCard({ product }: { product: ExtendedProduct }) {
     toggleWishlist(product.id);
   };
 
-  const mainImage = product.images[0] || 'https://shop.toureiffel.paris/879-medium_default/eiffel-tower-bronze-19-cm-signature-collection.jpg';
+  const mainImage = product.images[0] || '/images/products/mom-heart-photo-frame.jpeg';
 
   return (
     <article
@@ -53,7 +53,7 @@ export default function ProductCard({ product }: { product: ExtendedProduct }) {
           border: '1px solid #eee8df',
         }}
       >
-        <Link href={`/products/${product.slug}`} style={{ display: 'block', width: '100%', height: '100%' }}>
+        <Link href={`/products/${product.slug}`} style={{ display: 'block', width: '100%', height: '100%', position: 'relative' }}>
           <Image
             src={mainImage}
             alt={product.name}

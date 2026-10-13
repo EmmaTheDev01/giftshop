@@ -1,13 +1,21 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { COLLECTIONS } from '@/data/mockData';
+import { getCollections } from '@/lib/api';
+import type { Collection } from '@/types/supabase';
 import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function CollectionsSlider() {
+  const [collections, setCollections] = useState<Collection[]>([]);
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    getCollections().then((data) => {
+      setCollections(data);
+    });
+  }, []);
 
   const scroll = (direction: 'left' | 'right') => {
     if (sliderRef.current) {
@@ -41,7 +49,7 @@ export default function CollectionsSlider() {
                 marginBottom: '6px',
               }}
             >
-              Exclusive Themes
+              Curated Thematic Series
             </p>
             <h2
               style={{
@@ -50,18 +58,17 @@ export default function CollectionsSlider() {
                 fontWeight: 500,
                 color: '#0c2340',
                 lineHeight: 1.2,
-                marginBottom: '12px',
               }}
             >
-              Discover Our Truly Parisian Collections
+              Collections of the Canadian Boutique
             </h2>
-            <p style={{ fontSize: '0.92rem', color: '#64748b', lineHeight: 1.6 }}>
-              Discover elegance and taste through our decorative and gourmet collections — a celebration of Parisian art de vivre for every moment of your day.
+            <p style={{ color: '#475569', fontSize: '0.95rem', marginTop: '8px', lineHeight: 1.6 }}>
+              From historic architecture and aurora nightscapes to limited numbered series crafted with master Canadian artisans.
             </p>
           </div>
 
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            {/* Arrows */}
+          {/* Navigation Controls */}
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button
               onClick={() => scroll('left')}
               style={{
@@ -119,69 +126,109 @@ export default function CollectionsSlider() {
             msOverflowStyle: 'none',
           }}
         >
-          {COLLECTIONS.map((col) => (
+          {collections.map((col) => (
             <Link
               key={col.id}
               href={`/collections/${col.slug}`}
               style={{
-                flex: '0 0 280px',
+                flex: '0 0 310px',
                 scrollSnapAlign: 'start',
-                backgroundColor: '#ffffff',
+                position: 'relative',
                 borderRadius: '2px',
                 overflow: 'hidden',
-                border: '1px solid #ebd9c0',
-                boxShadow: '0 4px 14px rgba(12, 35, 64, 0.05)',
+                aspectRatio: '4 / 5',
                 display: 'flex',
                 flexDirection: 'column',
-                transition: 'transform 0.25s, box-shadow 0.25s',
+                justifyContent: 'flex-end',
+                padding: '24px 20px',
+                boxShadow: '0 8px 24px rgba(12, 35, 64, 0.08)',
+                border: '1px solid #ebd9c0',
               }}
               className="collection-card"
             >
-              <div style={{ position: 'relative', width: '100%', aspectRatio: '1 / 1', overflow: 'hidden' }}>
-                <Image
-                  src={col.image_url || 'https://images.unsplash.com/photo-1502602898657-3e91760cbb34?auto=format&fit=crop&w=600&q=80'}
-                  alt={col.name || 'Collection'}
-                  fill
-                  sizes="280px"
-                  style={{ objectFit: 'cover', transition: 'transform 0.5s' }}
-                  className="collection-img"
-                />
-              </div>
+              <Image
+                src={col.image_url || 'https://images.unsplash.com/photo-1503614472-8c93d56e92ce?q=80&w=800&auto=format&fit=crop'}
+                alt={col.name}
+                fill
+                sizes="310px"
+                style={{
+                  objectFit: 'cover',
+                  transition: 'transform 0.6s cubic-bezier(0.16, 1, 0.3, 1)',
+                }}
+                className="collection-image"
+              />
 
-              <div style={{ padding: '18px 16px', flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-                <div>
-                  <h3
+              {/* Scrim Overlay */}
+              <div
+                style={{
+                  position: 'absolute',
+                  inset: 0,
+                  background: 'linear-gradient(180deg, rgba(12, 35, 64, 0.1) 30%, rgba(12, 35, 64, 0.88) 100%)',
+                  zIndex: 2,
+                }}
+              />
+
+              {/* Content text */}
+              <div style={{ position: 'relative', zIndex: 3, color: '#ffffff' }}>
+                {col.badge && (
+                  <span
                     style={{
-                      fontFamily: 'var(--font-serif)',
-                      fontSize: '1.35rem',
-                      fontWeight: 600,
+                      display: 'inline-block',
+                      backgroundColor: 'rgba(221, 168, 46, 0.95)',
                       color: '#0c2340',
-                      marginBottom: '6px',
+                      fontSize: '0.65rem',
+                      fontWeight: 800,
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      padding: '3px 8px',
+                      borderRadius: '2px',
+                      marginBottom: '8px',
                     }}
                   >
-                    {col.name}
-                  </h3>
-                  <p style={{ fontSize: '0.78rem', color: '#64748b', lineHeight: 1.4 }}>
-                    {col.subtitle}
-                  </p>
-                </div>
-
-                <div
+                    {col.badge}
+                  </span>
+                )}
+                <h3
                   style={{
-                    display: 'flex',
-                    alignItems: 'center',
-                    gap: '4px',
-                    fontSize: '0.75rem',
-                    fontWeight: 700,
-                    textTransform: 'uppercase',
-                    letterSpacing: '0.08em',
-                    color: '#b47e00',
-                    marginTop: '16px',
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: '1.45rem',
+                    fontWeight: 600,
+                    margin: '0 0 6px',
+                    lineHeight: 1.25,
                   }}
                 >
-                  <span>Explore items</span>
+                  {col.name}
+                </h3>
+                {col.subtitle && (
+                  <p
+                    style={{
+                      fontSize: '0.8rem',
+                      opacity: 0.9,
+                      margin: 0,
+                      lineHeight: 1.4,
+                      display: '-webkit-box',
+                      WebkitLineClamp: 2,
+                      WebkitBoxOrient: 'vertical',
+                      overflow: 'hidden',
+                    }}
+                  >
+                    {col.subtitle}
+                  </p>
+                )}
+                <span
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '4px',
+                    fontSize: '0.78rem',
+                    fontWeight: 600,
+                    color: '#dda82e',
+                    marginTop: '10px',
+                  }}
+                >
+                  <span>Explore series</span>
                   <ArrowRight size={13} />
-                </div>
+                </span>
               </div>
             </Link>
           ))}

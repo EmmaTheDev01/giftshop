@@ -1,14 +1,9 @@
-'use client';
-
 import React from 'react';
+import Link from 'next/link';
 import DiamondSeparator from './DiamondSeparator';
-import { useCart } from '@/context/CartContext';
-import { PRODUCTS } from '@/data/mockData';
 import { ArrowRight } from 'lucide-react';
 
 export default function HeroBanner() {
-  const { setQuickViewProduct } = useCart();
-  const diamondLightProduct = PRODUCTS.find((p) => p.slug === 'diamond-light-collector-lamp') || PRODUCTS[9];
 
   return (
     <section
@@ -19,10 +14,10 @@ export default function HeroBanner() {
         alignItems: 'center',
         backgroundColor: '#f9f6f1',
         backgroundImage: `
-          linear-gradient(90deg, rgba(12, 35, 64, 0.92) 15%, rgba(12, 35, 64, 0.6) 55%, rgba(12, 35, 64, 0.25) 100%),
-          url('https://shop.toureiffel.paris/img/cms/DL%20LP/asset%20(7).jpeg')
+          linear-gradient(90deg, rgba(12, 35, 64, 0.94) 15%, rgba(12, 35, 64, 0.72) 55%, rgba(12, 35, 64, 0.38) 100%),
+          url('https://images.unsplash.com/photo-1632857997897-9418428d7368?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D')
         `,
-        backgroundPosition: 'center center',
+        backgroundPosition: 'center 40%',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         color: '#ffffff',
@@ -32,7 +27,7 @@ export default function HeroBanner() {
       <div className="container-custom">
         <div
           style={{
-            maxWidth: '560px',
+            maxWidth: '620px',
             textAlign: 'left',
             display: 'flex',
             flexDirection: 'column',
@@ -44,15 +39,15 @@ export default function HeroBanner() {
             style={{
               color: '#B47E00',
               fontFamily: 'var(--font-serif)',
-              fontSize: '20px',
+              fontSize: '18px',
               fontWeight: 600,
-              letterSpacing: '1px',
+              letterSpacing: '1.5px',
               textTransform: 'uppercase',
               marginBottom: '10px',
               textShadow: '0px 0px 20px rgba(12, 35, 64, 0.54)',
             }}
           >
-            Diamond Light
+            North American Heritage Collection • Canada &amp; USA 🇨🇦 🇺🇸
           </h2>
 
           {/* Main Title */}
@@ -68,7 +63,7 @@ export default function HeroBanner() {
               marginBottom: '18px',
             }}
           >
-            Shine to<br />Eiffel&apos;s beat
+            Heirloom Gifts,<br />Crafted for Canada &amp; USA
           </h1>
 
           {/* Description */}
@@ -84,7 +79,7 @@ export default function HeroBanner() {
               marginBottom: '10px',
             }}
           >
-            An authentic Eiffel tower light bulb transformed into a collector&apos;s lamp
+            Curated artisan keepsakes, monumental architectural tributes from Toronto&apos;s CN Tower to New York landmarks, and certified limited editions handcrafted by master guild workshops.
           </p>
 
           <p
@@ -98,7 +93,7 @@ export default function HeroBanner() {
               marginBottom: '14px',
             }}
           >
-            Only 500 pieces available
+            All Prices in CAD ($) &amp; USD ($) • Express Cross-Border Delivery • Free Shipping Available
           </p>
 
           {/* Exact separator from site */}
@@ -107,8 +102,8 @@ export default function HeroBanner() {
           </div>
 
           {/* Button in exact site style: #B47E00, hover #0C2340 */}
-          <button
-            onClick={() => setQuickViewProduct(diamondLightProduct)}
+          <Link
+            href="/products"
             style={{
               backgroundColor: '#B47E00',
               color: '#FFFFFF',
@@ -119,8 +114,7 @@ export default function HeroBanner() {
               letterSpacing: '1px',
               padding: '14px 32px',
               borderRadius: '2px',
-              border: 'none',
-              cursor: 'pointer',
+              textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
               gap: '12px',
@@ -128,9 +122,9 @@ export default function HeroBanner() {
             }}
             className="hero-btn"
           >
-            <span>Discover now</span>
+            <span>Explore The Collection</span>
             <ArrowRight size={16} />
-          </button>
+          </Link>
         </div>
       </div>
 

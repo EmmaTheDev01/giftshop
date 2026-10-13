@@ -77,10 +77,10 @@ export default function ReassuranceFooter() {
               <Truck size={24} />
             </div>
             <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
-              Canadian & Global Delivery
+              Canada &amp; USA Express Delivery
             </h4>
             <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
-              Fast dispatch across all provinces 🇨🇦
+              Fast tracked dispatch across all provinces &amp; US states 🇨🇦 🇺🇸
             </p>
           </div>
 
@@ -102,10 +102,10 @@ export default function ReassuranceFooter() {
               <CreditCard size={24} />
             </div>
             <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
-              Secure Canadian Checkout
+              Secure Cross-Border Checkout
             </h4>
             <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
-              Interac, Visa, Mastercard, Apple Pay
+              CAD &amp; USD Accepted • Visa, Mastercard, Apple Pay
             </p>
           </div>
         </div>

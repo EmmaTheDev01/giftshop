@@ -1,13 +1,14 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ProductCard from '@/components/ProductCard';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DiamondSeparator from '@/components/DiamondSeparator';
-import { PRODUCTS, ExtendedProduct } from '@/data/mockData';
+import { getProducts } from '@/lib/api';
+import { ExtendedProduct } from '@/types/supabase';
 import {
   SlidersHorizontal,
   ChevronDown,
@@ -16,38 +17,64 @@ import {
   Sparkles,
   ShieldCheck,
   Truck,
-  ArrowRight,
+  Loader2,
 } from 'lucide-react';
 
 const CATEGORY_TABS = [
-  { id: 'all', label: 'All Catalogue' },
-  { id: 'keepsakes', label: 'Keepsakes & Medals' },
-  { id: 'fashion', label: 'Fashion & Knitwear' },
-  { id: 'lifestyle', label: 'Home & Fragrance' },
-  { id: 'gourmet', label: 'Gourmet & Teas' },
-  { id: 'kids', label: 'Kids & Wooden Toys' },
-  { id: 'books', label: 'Books & Stationery' },
+  { id: 'all', label: 'All Keepsakes' },
+  { id: 'crafts', label: 'Crafts & Woodwork' },
+  { id: 'decorations', label: 'Wall Decor & Clocks' },
+  { id: 'souvenirs', label: 'Canadian Souvenirs' },
+  { id: 'gifts', label: 'Keepsake Gifts' },
+  { id: 'lighting', label: 'LED Night Lights' },
 ];
 
 export default function ProductsPage() {
+  const [products, setProducts] = useState<ExtendedProduct[]>([]);
+  const [loading, setLoading] = useState(true);
   const [selectedTab, setSelectedTab] = useState('all');
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState<'featured' | 'price-asc' | 'price-desc' | 'rating' | 'name'>('featured');
   const [priceRange, setPriceRange] = useState<number>(500);
 
+  useEffect(() => {
+    async function loadData() {
+      try {
+        const data = await getProducts();
+        setProducts(data);
+      } catch (err) {
+        console.error('Error loading products:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadData();
+  }, []);
+
   // Filter and sort products
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter((product) => {
+    return products.filter((product) => {
       // Tab matching
       if (selectedTab !== 'all') {
         const cat = (product.category_name || '').toLowerCase();
         const name = product.name.toLowerCase();
-        if (selectedTab === 'keepsakes' && !cat.includes('medal') && !cat.includes('miniature') && !cat.includes('statue') && !cat.includes('keepsake')) return false;
-        if (selectedTab === 'fashion' && !cat.includes('fashion') && !cat.includes('apparel') && !cat.includes('knitwear') && !cat.includes('silk') && !cat.includes('bag')) return false;
-        if (selectedTab === 'lifestyle' && !cat.includes('home') && !cat.includes('tableware') && !cat.includes('decorative') && !cat.includes('porcelain')) return false;
-        if (selectedTab === 'gourmet' && !cat.includes('gourmet') && !cat.includes('tea') && !cat.includes('confection')) return false;
-        if (selectedTab === 'kids' && !cat.includes('kids') && !cat.includes('game') && !cat.includes('puzzle')) return false;
-        if (selectedTab === 'books' && !cat.includes('book') && !cat.includes('stationery') && !cat.includes('journal')) return false;
+        const desc = (product.description || '').toLowerCase();
+
+        if (selectedTab === 'crafts' && !cat.includes('craft') && !cat.includes('wood') && !name.includes('wood') && !name.includes('laser') && !desc.includes('birch') && !desc.includes('walnut')) {
+          return false;
+        }
+        if (selectedTab === 'decorations' && !cat.includes('decor') && !cat.includes('wall') && !name.includes('clock') && !name.includes('shelf') && !name.includes('sign') && !name.includes('holder')) {
+          return false;
+        }
+        if (selectedTab === 'souvenirs' && !cat.includes('souvenir') && !name.includes('maple') && !name.includes('canada') && !name.includes('mountain') && !name.includes('compass')) {
+          return false;
+        }
+        if (selectedTab === 'gifts' && !cat.includes('gift') && !name.includes('gift') && !name.includes('nursery') && !name.includes('plaque') && !product.is_limited_edition) {
+          return false;
+        }
+        if (selectedTab === 'lighting' && !cat.includes('light') && !name.includes('led') && !name.includes('light')) {
+          return false;
+        }
       }
 
       // Price filter
@@ -71,7 +98,7 @@ export default function ProductsPage() {
       if (sortBy === 'name') return a.name.localeCompare(b.name);
       return (b.is_featured ? 1 : 0) - (a.is_featured ? 1 : 0);
     });
-  }, [selectedTab, searchQuery, sortBy, priceRange]);
+  }, [products, selectedTab, searchQuery, sortBy, priceRange]);
 
   const resetFilters = () => {
     setSelectedTab('all');
@@ -114,7 +141,7 @@ export default function ProductsPage() {
                 Home
               </Link>
               <span>/</span>
-              <span style={{ color: '#f5f1eb' }}>All Products</span>
+              <span style={{ color: '#f5f1eb' }}>All Keepsakes</span>
             </div>
 
             <div
@@ -135,7 +162,7 @@ export default function ProductsPage() {
               }}
             >
               <Sparkles size={13} />
-              <span>Official Canadian & European Heritage Catalogue</span>
+              <span>Artisan Canadian Woodcraft &amp; Home Decor</span>
             </div>
 
             <h1
@@ -149,7 +176,7 @@ export default function ProductsPage() {
                 lineHeight: 1.2,
               }}
             >
-              The Complete Collection
+              The Artisan Keepsake Collection
             </h1>
 
             <p
@@ -162,8 +189,8 @@ export default function ProductsPage() {
                 fontWeight: 300,
               }}
             >
-              Explore all numbered keepsakes, monument editions, fine porcelain, maritime knitwear,
-              and Canadian artisan treasures priced transparently in Canadian Dollars (CAD).
+              Explore Canadian laser-cut woodcraft, architectural wall clocks, honeycomb shelves,
+              maple leaf souvenirs, and LED signs priced transparently in Canadian Dollars (CAD).
             </p>
 
             <div style={{ marginTop: '20px' }}>
@@ -251,7 +278,7 @@ export default function ProductsPage() {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Search catalogue..."
+                  placeholder="Search craft, clock, shelf..."
                   style={{
                     border: 'none',
                     outline: 'none',
@@ -334,7 +361,12 @@ export default function ProductsPage() {
         {/* 3. Products Grid Section */}
         <section style={{ padding: '48px 20px 80px' }}>
           <div className="container-custom">
-            {filteredProducts.length === 0 ? (
+            {loading ? (
+              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px', gap: '14px' }}>
+                <Loader2 size={36} className="animate-spin" style={{ color: '#b47e00' }} />
+                <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Loading artisan collection...</p>
+              </div>
+            ) : filteredProducts.length === 0 ? (
               <div
                 style={{
                   textAlign: 'center',
@@ -361,7 +393,7 @@ export default function ProductsPage() {
                   Try adjusting your search query, selecting another category, or resetting all filters.
                 </p>
                 <button onClick={resetFilters} className="btn-primary">
-                  View All Products
+                  View All Keepsakes
                 </button>
               </div>
             ) : (

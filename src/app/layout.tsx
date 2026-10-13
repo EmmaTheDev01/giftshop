@@ -17,18 +17,48 @@ const manrope = Manrope({
 });
 
 export const metadata: Metadata = {
-  title: "Memoriq | Curated Artisan Keepsakes & Gifts for Canadians 🇨🇦",
+  metadataBase: new URL("https://memoriq.lifelines.global"),
+  title: {
+    default: "memoriq.lifelines.global | Curated Artisan Keepsakes & Gifts | Canada 🇨🇦 & USA 🇺🇸",
+    template: "%s | memoriq.lifelines.global",
+  },
   description:
-    "Curated Canadian & artisan gift collections in CAD ($). Exceptional keepsakes, limited editions, and bespoke treasures with nationwide delivery across Canada.",
+    "memoriq.lifelines.global — Curated North American artisan gift collections in CAD ($) and USD ($). Exceptional keepsakes, personalized wooden plaques, laser-cut wall decor, and certified limited editions with express delivery across Canada and the USA.",
+  applicationName: "memoriq.lifelines.global",
   keywords: [
-    "canadian Memoriq",
+    "memoriq.lifelines.global",
+    "memoriq",
+    "lifelines global",
+    "canadian keepsakes",
+    "american keepsakes",
     "curated gifts canada",
+    "curated gifts usa",
     "artisan keepsakes",
-    "gifts for canadians",
+    "gifts for canadians and americans",
     "cad currency gifts",
-    "canadian boutique",
+    "north american boutique",
     "limited edition gifts",
   ],
+  authors: [{ name: "memoriq.lifelines.global" }],
+  creator: "memoriq.lifelines.global",
+  publisher: "memoriq.lifelines.global",
+  openGraph: {
+    type: "website",
+    locale: "en_CA",
+    url: "https://memoriq.lifelines.global",
+    siteName: "memoriq.lifelines.global",
+    title: "memoriq.lifelines.global | Curated Artisan Keepsakes & Gifts | Canada 🇨🇦 & USA 🇺🇸",
+    description:
+      "Curated North American artisan gift collections in CAD ($) and USD ($). Exceptional keepsakes, personalized wooden plaques, laser-cut wall decor, and limited editions across Canada & the USA.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    site: "@MemoriqGlobal",
+    creator: "@MemoriqGlobal",
+    title: "memoriq.lifelines.global | Curated Artisan Keepsakes & Gifts | Canada 🇨🇦 & USA 🇺🇸",
+    description:
+      "Curated North American artisan gift collections in CAD ($) and USD ($). Exceptional keepsakes, personalized wooden plaques, laser-cut wall decor, and limited editions across Canada & the USA.",
+  },
   icons: {
     icon: "/favicon.ico",
   },

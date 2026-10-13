@@ -57,7 +57,10 @@ export interface Database {
           hero_image_url: string | null;
           website: string | null;
           country?: string | null;
+          is_featured?: boolean;
+          order_position?: number;
           created_at: string;
+          updated_at?: string;
         };
         Insert: {
           id?: string;
@@ -68,7 +71,10 @@ export interface Database {
           hero_image_url?: string | null;
           website?: string | null;
           country?: string | null;
+          is_featured?: boolean;
+          order_position?: number;
           created_at?: string;
+          updated_at?: string;
         };
         Update: {
           id?: string;
@@ -79,7 +85,10 @@ export interface Database {
           hero_image_url?: string | null;
           website?: string | null;
           country?: string | null;
+          is_featured?: boolean;
+          order_position?: number;
           created_at?: string;
+          updated_at?: string;
         };
       };
       collections: {
@@ -669,5 +678,11 @@ export type SystemLog = Database['public']['Tables']['system_logs']['Row'];
 export type AdminAuditLog = Database['public']['Tables']['admin_audit_logs']['Row'];
 export type AdminNotification = Database['public']['Tables']['admin_notifications']['Row'];
 export type UserRole = 'customer' | 'staff' | 'moderator' | 'admin';
+
+export interface ExtendedProduct extends Product {
+  category_name?: string;
+  brand_name?: string;
+  collection_name?: string;
+}
 
 

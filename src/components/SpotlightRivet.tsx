@@ -1,14 +1,9 @@
-'use client';
-
 import React from 'react';
 import Image from 'next/image';
-import { useCart } from '@/context/CartContext';
-import { PRODUCTS } from '@/data/mockData';
+import Link from 'next/link';
 import { ArrowRight, Flame } from 'lucide-react';
 
 export default function SpotlightRivet() {
-  const { setQuickViewProduct } = useCart();
-  const rivetProduct = PRODUCTS.find((p) => p.slug === 'eiffel-tower-rivet-2025-limited-edition') || PRODUCTS[10];
 
   return (
     <section
@@ -29,7 +24,7 @@ export default function SpotlightRivet() {
             gap: '48px',
           }}
         >
-          {/* Left: Exact Packshot from toureiffel.paris */}
+          {/* Left: Statue of Liberty Heritage Artifact Image */}
           <div style={{ display: 'flex', justifyContent: 'center' }}>
             <div
               style={{
@@ -37,19 +32,23 @@ export default function SpotlightRivet() {
                 width: '100%',
                 maxWidth: '480px',
                 aspectRatio: '1 / 1',
+                borderRadius: '8px',
+                overflow: 'hidden',
+                boxShadow: '0 12px 36px rgba(12, 35, 64, 0.16)',
+                border: '1px solid #ebd9c0',
               }}
             >
               <Image
-                src="https://shop.toureiffel.paris/img/cms/homepage/packshot_produit/HP_Printemps_bandeau_rivet_2026%20(1).png"
-                alt="The Official 2025 Rivet"
+                src="/images/statue-of-liberty.jpg"
+                alt="The Statue of Liberty Collector Keepsake"
                 fill
                 sizes="(max-width: 768px) 100vw, 480px"
-                style={{ objectFit: 'contain' }}
+                style={{ objectFit: 'cover' }}
               />
             </div>
           </div>
 
-          {/* Right: Narrative matching site */}
+          {/* Right: Narrative matching USA & Canada context */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
             <div
               style={{
@@ -65,7 +64,7 @@ export default function SpotlightRivet() {
               }}
             >
               <Flame size={16} />
-              <span>Limited Edition</span>
+              <span>North American Landmarks • USA Heritage 🇺🇸</span>
             </div>
 
             <h2
@@ -78,7 +77,7 @@ export default function SpotlightRivet() {
                 marginBottom: '16px',
               }}
             >
-              The Official 2025 Rivet
+              The Statue of Liberty Collector Keepsake
             </h2>
 
             <p
@@ -89,7 +88,7 @@ export default function SpotlightRivet() {
                 marginBottom: '14px',
               }}
             >
-              Crafted from genuine Eiffel Tower steel, authenticated and individually numbered, this rivet is a unique and exceptional keepsake, carrying a piece of the history of Paris and France.
+              An enduring tribute to American freedom and monumental architectural grandeur. Hand-finished with authentic copper-patina detailing and accompanied by an engraved certificate of provenance, this heirloom piece honors the intertwined craft heritage of Canada and the United States.
             </p>
 
             <p
@@ -102,11 +101,11 @@ export default function SpotlightRivet() {
                 marginBottom: '24px',
               }}
             >
-              Only a few pieces left!
+              Numbered Limited Series • Express Canada &amp; USA Shipping 🇨🇦 🇺🇸
             </p>
 
-            <button
-              onClick={() => setQuickViewProduct(rivetProduct)}
+            <Link
+              href="/products"
               style={{
                 backgroundColor: '#B47E00',
                 color: '#FFFFFF',
@@ -117,8 +116,7 @@ export default function SpotlightRivet() {
                 letterSpacing: '1px',
                 padding: '14px 32px',
                 borderRadius: '2px',
-                border: 'none',
-                cursor: 'pointer',
+                textDecoration: 'none',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '12px',
@@ -126,9 +124,9 @@ export default function SpotlightRivet() {
               }}
               className="hero-btn"
             >
-              <span>Get yours</span>
+              <span>Explore USA &amp; Canada Keepsakes</span>
               <ArrowRight size={16} />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

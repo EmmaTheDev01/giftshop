@@ -176,14 +176,11 @@ export default function MontrealBoutiquePage() {
             Des boutiques pensées pour célébrer l&apos;artisanat d&apos;exception d&apos;un océan à l&apos;autre.
           </p>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '16px', flexWrap: 'wrap' }}>
-            <Link href="/boutiques/toronto" className="btn-secondary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>
-              Toronto Flagship (Yorkville)
+            <Link href="/boutiques/canada" className="btn-secondary" style={{ padding: '10px 24px', fontSize: '0.85rem' }}>
+              Boutiques Canada 🇨🇦
             </Link>
-            <Link href="/boutiques/vancouver" className="btn-secondary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>
-              Vancouver Showroom (Alberni)
-            </Link>
-            <Link href="/boutiques/artisan-partners" className="btn-secondary" style={{ padding: '10px 20px', fontSize: '0.85rem' }}>
-              Artisans et Ateliers Partenaires
+            <Link href="/boutiques/usa" className="btn-secondary" style={{ padding: '10px 24px', fontSize: '0.85rem' }}>
+              Boutiques USA 🇺🇸
             </Link>
           </div>
         </div>

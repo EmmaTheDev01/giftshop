@@ -38,10 +38,8 @@ export default function Footer() {
     {
       title: 'Our Boutiques',
       links: [
-        { label: 'Toronto Flagship', href: '/boutiques/toronto' },
-        { label: 'Montreal Boutique', href: '/boutiques/montreal' },
-        { label: 'Vancouver Showroom', href: '/boutiques/vancouver' },
-        { label: 'Artisan Partners & Makers', href: '/boutiques/artisan-partners' },
+        { label: 'Canada', href: '/boutiques/canada' },
+        { label: 'USA', href: '/boutiques/usa' },
       ],
     },
     {
@@ -81,7 +79,7 @@ export default function Footer() {
             </span>
             <div style={{ display: 'flex', gap: '12px' }}>
               <a
-                href="https://www.facebook.com/TourEiffel/"
+                href="https://www.facebook.com/MemoriqCanada/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -103,7 +101,7 @@ export default function Footer() {
                 FB
               </a>
               <a
-                href="https://twitter.com/LaTourEiffel"
+                href="https://twitter.com/MemoriqCanada"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -125,7 +123,7 @@ export default function Footer() {
                 X
               </a>
               <a
-                href="https://www.instagram.com/toureiffelofficielle/"
+                href="https://www.instagram.com/memoriqcanada/"
                 target="_blank"
                 rel="noopener noreferrer"
                 style={{
@@ -211,7 +209,7 @@ export default function Footer() {
           }}
         >
           <p>
-            © {new Date().getFullYear()} {SITE_CONFIG.name} Canada. All rights reserved. Curated for Canadians in CAD ($).
+            © {new Date().getFullYear()} {SITE_CONFIG.name} Canada &amp; USA. All rights reserved. Curated for collectors across Canada &amp; the United States.
           </p>
 
           {/* Secure Payment Badges: ONLY VISA & MASTERCARD with SVG Icons */}

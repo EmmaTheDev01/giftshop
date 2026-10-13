@@ -4,16 +4,19 @@ import React, { useState, useEffect, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useCart } from '@/context/CartContext';
-import { PRODUCTS } from '@/data/mockData';
+import { getProducts } from '@/lib/api';
+import type { ExtendedProduct } from '@/types/supabase';
 import { Search, X, ArrowRight } from 'lucide-react';
 
 export default function SearchModal() {
   const { isSearchOpen, setIsSearchOpen, setQuickViewProduct } = useCart();
   const [query, setQuery] = useState('');
+  const [products, setProducts] = useState<ExtendedProduct[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
     if (isSearchOpen) {
+      getProducts().then(setProducts);
       setTimeout(() => inputRef.current?.focus(), 50);
     } else {
       setQuery('');
@@ -31,14 +34,14 @@ export default function SearchModal() {
   if (!isSearchOpen) return null;
 
   const results = query.trim()
-    ? PRODUCTS.filter(
+    ? products.filter(
         (p) =>
           p.name.toLowerCase().includes(query.toLowerCase()) ||
           p.category_name?.toLowerCase().includes(query.toLowerCase()) ||
-          p.description?.toLowerCase().includes(query.toLowerCase()) ||
-          p.brand_name?.toLowerCase().includes(query.toLowerCase())
+          (p.description || '').toLowerCase().includes(query.toLowerCase()) ||
+          (p.brand_name || '').toLowerCase().includes(query.toLowerCase())
       )
-    : PRODUCTS.slice(0, 4);
+    : products.slice(0, 4);
 
   return (
     <div

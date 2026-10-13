@@ -1,4 +1,4 @@
-/* Official Boutique Tour Eiffel Design System */
+/* Official Memoriq Canadian Keepsakes Design System */
 :root {
   --color-navy: #0c2340;
   --color-navy-deep: #061324;
@@ -98,7 +98,7 @@ img {
   }
 }
 
-/* Diamond Separator (The signature motif of Toureiffel.paris) */
+/* Heritage Diamond Separator Motif */
 .eiffel-separator {
   display: flex;
   align-items: center;

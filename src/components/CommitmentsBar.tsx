@@ -5,18 +5,18 @@ import { Award, Compass, ShieldCheck, Sparkles } from 'lucide-react';
 export default function CommitmentsBar() {
   const pillars = [
     {
-      title: 'French Craftsmanship',
-      desc: 'Made in France or in Europe',
+      title: 'North American Master Guilds',
+      desc: 'Handcrafted across Canada & USA by certified master ateliers',
       icon: Award,
     },
     {
-      title: 'Official Store',
-      desc: 'Products created by or for the Eiffel Tower',
+      title: 'Official Heritage Keepsakes',
+      desc: 'Authentic landmark tributes & certified limited editions',
       icon: ShieldCheck,
     },
     {
-      title: 'Exclusive Collaborations',
-      desc: 'In partnership with renowned brands',
+      title: 'Curated Artisan Houses',
+      desc: 'In partnership with historic workshops across Canada & the United States',
       icon: Sparkles,
     },
   ];

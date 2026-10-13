@@ -5,8 +5,8 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import ProductDetailClient from './ProductDetailClient';
-import { PRODUCTS, ExtendedProduct } from '@/data/mockData';
 import { getProductBySlug, getProducts } from '@/lib/api';
+import { ExtendedProduct } from '@/types/supabase';
 
 interface ProductPageProps {
   params: Promise<{
@@ -15,7 +15,8 @@ interface ProductPageProps {
 }
 
 export async function generateStaticParams() {
-  return PRODUCTS.map((product) => ({
+  const products = await getProducts();
+  return products.map((product) => ({
     slug: product.slug,
   }));
 }

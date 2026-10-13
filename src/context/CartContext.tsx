@@ -1,7 +1,7 @@
 'use client';
 
 import React, { createContext, useContext, useState, useEffect } from 'react';
-import { ExtendedProduct, PRODUCTS } from '@/data/mockData';
+import { ExtendedProduct } from '@/types/supabase';
 
 export interface CartItemType {
   product: ExtendedProduct;
@@ -20,6 +20,8 @@ interface CartContextType {
   clearCart: () => void;
   wishlist: string[];
   toggleWishlist: (productId: string) => void;
+  clearWishlist: () => void;
+  resetCartAndWishlist: () => void;
   quickViewProduct: ExtendedProduct | null;
   setQuickViewProduct: (product: ExtendedProduct | null) => void;
   isSearchOpen: boolean;
@@ -31,16 +33,33 @@ interface CartContextType {
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export function CartProvider({ children }: { children: React.ReactNode }) {
-  // Initialize with 2 items from the shop for realistic first-impression demo
-  const [cart, setCart] = useState<CartItemType[]>([
-    { product: PRODUCTS[1], quantity: 1 }, // Bronze Eiffel Tower 19cm ($29.99 CAD)
-    { product: PRODUCTS[2], quantity: 1 }, // Golden Glass Snow Globe ($22.50 CAD)
-  ]);
+  // Reset by default: starts strictly empty
+  const [cart, setCart] = useState<CartItemType[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
-  const [wishlist, setWishlist] = useState<string[]>(['prod-2', 'prod-10']);
+  const [wishlist, setWishlist] = useState<string[]>([]);
   const [quickViewProduct, setQuickViewProduct] = useState<ExtendedProduct | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Clear any residual browser storage on mount to guarantee default empty state
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('memoriq_cart');
+        localStorage.removeItem('memoriq_wishlist');
+        localStorage.removeItem('giftshop_cart');
+        localStorage.removeItem('giftshop_wishlist');
+      } catch {}
+
+      const handleCartReset = () => {
+        setCart([]);
+        setWishlist([]);
+      };
+
+      window.addEventListener('cart_reset', handleCartReset);
+      return () => window.removeEventListener('cart_reset', handleCartReset);
+    }
+  }, []);
 
   const showToast = (msg: string) => {
     setToastMessage(msg);
@@ -82,6 +101,19 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
 
   const clearCart = () => setCart([]);
 
+  const clearWishlist = () => setWishlist([]);
+
+  const resetCartAndWishlist = () => {
+    setCart([]);
+    setWishlist([]);
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.removeItem('memoriq_cart');
+        localStorage.removeItem('memoriq_wishlist');
+      } catch {}
+    }
+  };
+
   const toggleWishlist = (productId: string) => {
     setWishlist((prev) => {
       const exists = prev.includes(productId);
@@ -112,6 +144,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         clearCart,
         wishlist,
         toggleWishlist,
+        clearWishlist,
+        resetCartAndWishlist,
         quickViewProduct,
         setQuickViewProduct,
         isSearchOpen,
