@@ -60,7 +60,11 @@ export const metadata: Metadata = {
       "Curated North American artisan gift collections in CAD ($) and USD ($). Exceptional keepsakes, personalized wooden plaques, laser-cut wall decor, and limited editions across Canada & the USA.",
   },
   icons: {
-    icon: "/favicon.ico",
+    icon: [
+      { url: '/favicon.ico', sizes: 'any' },
+      { url: '/favicon.svg', type: 'image/svg+xml' },
+    ],
+    apple: '/apple-touch-icon.png',
   },
 };
 
