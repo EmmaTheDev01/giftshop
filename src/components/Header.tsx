@@ -19,7 +19,7 @@ import {
 } from 'lucide-react';
 
 export default function Header() {
-  const { cartCount, cartTotal, setIsCartOpen, setIsSearchOpen, wishlist } = useCart();
+  const { cartCount, cartTotal, setIsCartOpen, setIsFavoritesOpen, setIsSearchOpen, wishlist } = useCart();
   const { user, profile, isAdmin } = useAuth();
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -211,10 +211,7 @@ export default function Header() {
 
           {/* Wishlist */}
           <button
-            onClick={() => {
-              // Open cart or scroll to wishlist
-              setIsCartOpen(true);
-            }}
+            onClick={() => setIsFavoritesOpen(true)}
             style={{
               display: 'flex',
               alignItems: 'center',
@@ -355,7 +352,7 @@ export default function Header() {
             {/* 1. Check Your Favorite */}
             <li>
               <button
-                onClick={() => setIsCartOpen(true)}
+                onClick={() => setIsFavoritesOpen(true)}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',

@@ -14,6 +14,8 @@ interface CartContextType {
   cartTotal: number;
   isCartOpen: boolean;
   setIsCartOpen: (open: boolean) => void;
+  isFavoritesOpen: boolean;
+  setIsFavoritesOpen: (open: boolean) => void;
   addToCart: (product: ExtendedProduct, quantity?: number) => void;
   removeFromCart: (productId: string) => void;
   updateQuantity: (productId: string, quantity: number) => void;
@@ -36,6 +38,7 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
   // Reset by default: starts strictly empty
   const [cart, setCart] = useState<CartItemType[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isFavoritesOpen, setIsFavoritesOpen] = useState(false);
   const [wishlist, setWishlist] = useState<string[]>([]);
   const [quickViewProduct, setQuickViewProduct] = useState<ExtendedProduct | null>(null);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -138,6 +141,8 @@ export function CartProvider({ children }: { children: React.ReactNode }) {
         cartTotal,
         isCartOpen,
         setIsCartOpen,
+        isFavoritesOpen,
+        setIsFavoritesOpen,
         addToCart,
         removeFromCart,
         updateQuantity,
