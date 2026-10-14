@@ -85,10 +85,10 @@ export default function USABoutiquesPage() {
             United States Flagships &amp; Salons 🇺🇸
           </span>
           <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontWeight: 600, marginBottom: '16px' }}>
-            Boutiques Across the USA
+            Boutiques Across North America
           </h1>
           <p style={{ color: '#cbd5e1', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: '720px' }}>
-            Experience our curated artisan collections in New York, Chicago, and Los Angeles. Celebrating iconic North American landmarks, master hardwood craft, and white-glove concierge services across the United States.
+            Experience our curated collections in North America. Celebrating iconic North American landmarks, and white-glove concierge services across the United States.
           </p>
         </div>
       </section>

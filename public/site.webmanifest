@@ -1,0 +1,22 @@
+{
+  "name": "Memoriq Canada & USA Keepsakes",
+  "short_name": "Memoriq",
+  "description": "Curated North American artisan gift collections, precision laser-cut woodcraft, and heirloom keepsakes.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0c2340",
+  "theme_color": "#0c2340",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}

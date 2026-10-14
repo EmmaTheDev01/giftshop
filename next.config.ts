@@ -5,7 +5,7 @@ const nextConfig: NextConfig = {
     remotePatterns: [
       {
         protocol: "https",
-        hostname: "shop.toureiffel.paris",
+        hostname: "memoriq.lifelines.global",
       },
       {
         protocol: "https",
