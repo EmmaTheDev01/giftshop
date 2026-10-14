@@ -9,6 +9,7 @@ import { ArrowRight, ChevronLeft, ChevronRight } from 'lucide-react';
 
 export default function CollectionsSlider() {
   const [collections, setCollections] = useState<Collection[]>([]);
+  const [isPaused, setIsPaused] = useState(false);
   const sliderRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -19,10 +20,29 @@ export default function CollectionsSlider() {
 
   const scroll = (direction: 'left' | 'right') => {
     if (sliderRef.current) {
-      const scrollAmount = direction === 'left' ? -320 : 320;
-      sliderRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      const scrollAmount = direction === 'left' ? -334 : 334;
+      const { scrollLeft, scrollWidth, clientWidth } = sliderRef.current;
+
+      if (direction === 'right' && scrollLeft + clientWidth >= scrollWidth - 25) {
+        sliderRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      } else if (direction === 'left' && scrollLeft <= 15) {
+        sliderRef.current.scrollTo({ left: scrollWidth - clientWidth, behavior: 'smooth' });
+      } else {
+        sliderRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
     }
   };
+
+  // Auto-scroll animation: advances right every 4 seconds, pauses on hover
+  useEffect(() => {
+    if (isPaused || collections.length === 0) return;
+
+    const timer = setInterval(() => {
+      scroll('right');
+    }, 4000);
+
+    return () => clearInterval(timer);
+  }, [isPaused, collections.length]);
 
   return (
     <section style={{ padding: '84px 0', backgroundColor: '#faf8f5', borderTop: '1px solid #ebd9c0' }}>
@@ -116,6 +136,10 @@ export default function CollectionsSlider() {
         {/* Scrollable Collections Cards */}
         <div
           ref={sliderRef}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onTouchStart={() => setIsPaused(true)}
+          onTouchEnd={() => setIsPaused(false)}
           style={{
             display: 'flex',
             gap: '24px',
@@ -124,6 +148,7 @@ export default function CollectionsSlider() {
             scrollSnapType: 'x mandatory',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
+            scrollBehavior: 'smooth',
           }}
         >
           {collections.map((col) => (
