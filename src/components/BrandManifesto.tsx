@@ -49,17 +49,30 @@ export default function BrandManifesto() {
           <DiamondSeparator variant="points" />
         </div>
 
+        <p
+          style={{
+            fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
+            lineHeight: 1.7,
+            color: '#cbd5e1',
+            maxWidth: '780px',
+            margin: '0 auto 28px',
+            fontWeight: 300,
+          }}
+        >
+          Some moments deserve more than a passing thought. At Memoriq, we help you turn names, memories and small details into thoughtful gifts, meaningful keepsakes worth giving and keeping.
+        </p>
+
         <h3
           style={{
             fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(1.5rem, 3.2vw, 2.4rem)',
+            fontSize: 'clamp(1.5rem, 3.2vw, 2.3rem)',
             fontWeight: 400,
             lineHeight: 1.5,
             color: '#f8fafc',
             letterSpacing: '0.01em',
           }}
         >
-          Born from a passion for artisan craftsmanship, {SITE_CONFIG.name} embodies the alliance of heritage, innovation and curation, giving every keepsake a signature that is{' '}
+          Memoriq Embodies the Alliance of Innovation and Curation, Giving every keepsake a signature That is{' '}
           <span
             style={{
               color: '#dda82e',

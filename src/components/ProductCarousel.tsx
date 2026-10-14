@@ -10,7 +10,6 @@ import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 export default function ProductCarousel() {
   const [products, setProducts] = useState<ExtendedProduct[]>([]);
   const [loading, setLoading] = useState(true);
-  const [filter, setFilter] = useState('all');
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -27,22 +26,7 @@ export default function ProductCarousel() {
     load();
   }, []);
 
-  const categories = [
-    { id: 'all', label: 'All Keepsakes' },
-    { id: 'craft', label: 'Hardwood Crafts' },
-    { id: 'clock', label: 'Artisan Clocks' },
-    { id: 'shelf', label: 'Honeycomb Shelves' },
-    { id: 'maple', label: 'Maple Souvenirs' },
-    { id: 'led', label: 'LED Night Lights' },
-  ];
-
-  const filteredProducts = products.filter((p) => {
-    if (filter === 'all') return true;
-    const cat = (p.category_name || '').toLowerCase();
-    const name = p.name.toLowerCase();
-    const desc = (p.description || '').toLowerCase();
-    return cat.includes(filter) || name.includes(filter) || desc.includes(filter);
-  });
+  const filteredProducts = products;
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
@@ -55,7 +39,7 @@ export default function ProductCarousel() {
     <section style={{ padding: '72px 0 84px', backgroundColor: '#ffffff' }}>
       <div className="container-custom">
         {/* Section Header */}
-        <div style={{ textAlign: 'center', marginBottom: '32px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
           <p
             style={{
               fontSize: '0.75rem',
@@ -80,38 +64,6 @@ export default function ProductCarousel() {
             Take home an authentic Memoriq keepsake
           </h2>
           <DiamondSeparator variant="points" />
-
-          {/* Filter Tabs */}
-          <div
-            style={{
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '8px',
-              flexWrap: 'wrap',
-              marginTop: '16px',
-            }}
-          >
-            {categories.map((cat) => (
-              <button
-                key={cat.id}
-                onClick={() => setFilter(cat.id)}
-                style={{
-                  padding: '7px 18px',
-                  borderRadius: '9999px',
-                  fontSize: '0.78rem',
-                  fontWeight: 600,
-                  letterSpacing: '0.04em',
-                  transition: 'all 0.2s',
-                  border: filter === cat.id ? '1px solid #0c2340' : '1px solid #e2e8f0',
-                  backgroundColor: filter === cat.id ? '#0c2340' : '#faf8f5',
-                  color: filter === cat.id ? '#ffffff' : '#475569',
-                }}
-              >
-                {cat.label}
-              </button>
-            ))}
-          </div>
         </div>
 
         {/* Carousel Container */}

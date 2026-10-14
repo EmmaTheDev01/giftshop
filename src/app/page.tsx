@@ -7,6 +7,7 @@ import SpotlightRivet from '@/components/SpotlightRivet';
 import CuratedLookbook from '@/components/CuratedLookbook';
 import BrandManifesto from '@/components/BrandManifesto';
 import CollaborationsGrid from '@/components/CollaborationsGrid';
+import YourOwnMark from '@/components/YourOwnMark';
 import CollectionsSlider from '@/components/CollectionsSlider';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import Footer from '@/components/Footer';
@@ -40,10 +41,13 @@ export default function Home() {
         {/* 7. Official Collaborations (Maison Partenaires) */}
         <CollaborationsGrid />
 
-        {/* 8. Parisian Collections Slider */}
+        {/* 8. Your Own Mark Personalization Studio */}
+        <YourOwnMark />
+
+        {/* 9. Parisian Collections Slider */}
         <CollectionsSlider />
 
-        {/* 9. Buyer Protection & Newsletter Registration */}
+        {/* 10. Buyer Protection & Newsletter Registration */}
         <ReassuranceFooter />
       </main>
 

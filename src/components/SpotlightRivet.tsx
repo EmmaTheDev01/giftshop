@@ -64,7 +64,7 @@ export default function SpotlightRivet() {
               }}
             >
               <Flame size={16} />
-              <span>North American Landmarks • USA Heritage 🇺🇸</span>
+              <span>LIMITED EDITION</span>
             </div>
 
             <h2
@@ -74,21 +74,34 @@ export default function SpotlightRivet() {
                 fontWeight: 600,
                 color: '#0c2340',
                 lineHeight: 1.2,
+                marginBottom: '8px',
+              }}
+            >
+              Made With Heart
+            </h2>
+
+            <p
+              style={{
+                fontFamily: 'var(--font-serif)',
+                fontSize: '1.25rem',
+                fontWeight: 500,
+                color: '#b47e00',
+                fontStyle: 'italic',
                 marginBottom: '16px',
               }}
             >
-              The Statue of Liberty Collector Keepsake
-            </h2>
+              Keep Your Moments Close
+            </p>
 
             <p
               style={{
                 fontSize: '1rem',
                 lineHeight: 1.65,
                 color: '#475569',
-                marginBottom: '14px',
+                marginBottom: '16px',
               }}
             >
-              An enduring tribute to American freedom and monumental architectural grandeur. Hand-finished with authentic copper-patina detailing and accompanied by an engraved certificate of provenance, this heirloom piece honors the intertwined craft heritage of Canada and the United States.
+              A favourite artwork says more than words. Unique and exceptional keepsake, carry a piece of the history. Ready to brighten your own space?
             </p>
 
             <p
@@ -101,7 +114,7 @@ export default function SpotlightRivet() {
                 marginBottom: '24px',
               }}
             >
-              Numbered Limited Series • Express Canada &amp; USA Shipping 🇨🇦 🇺🇸
+              Only a few pieces left!
             </p>
 
             <Link
@@ -124,7 +137,7 @@ export default function SpotlightRivet() {
               }}
               className="hero-btn"
             >
-              <span>Explore USA &amp; Canada Keepsakes</span>
+              <span>Get yours</span>
               <ArrowRight size={16} />
             </Link>
           </div>

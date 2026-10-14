@@ -55,7 +55,7 @@ export default function ReassuranceFooter() {
               Satisfaction Guarantee
             </h4>
             <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
-              Hassle-free returns within 30 days
+              Your style. Made for you.
             </p>
           </div>
 
@@ -77,10 +77,10 @@ export default function ReassuranceFooter() {
               <Truck size={24} />
             </div>
             <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
-              Canada &amp; USA Express Delivery
+              Canadian &amp; Global Delivery
             </h4>
             <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
-              Fast tracked dispatch across all provinces &amp; US states 🇨🇦 🇺🇸
+              Express dispatch within 1-2 days
             </p>
           </div>
 
@@ -102,10 +102,10 @@ export default function ReassuranceFooter() {
               <CreditCard size={24} />
             </div>
             <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
-              Secure Cross-Border Checkout
+              Secure Checkout
             </h4>
             <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
-              CAD &amp; USD Accepted • Visa, Mastercard, Apple Pay
+              Interac, Visa, Mastercard, Apple Pay
             </p>
           </div>
         </div>

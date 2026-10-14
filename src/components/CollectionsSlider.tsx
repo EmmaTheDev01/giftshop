@@ -38,7 +38,7 @@ export default function CollectionsSlider() {
             marginBottom: '40px',
           }}
         >
-          <div style={{ maxWidth: '640px' }}>
+          <div style={{ maxWidth: '680px' }}>
             <p
               style={{
                 fontSize: '0.75rem',
@@ -49,7 +49,7 @@ export default function CollectionsSlider() {
                 marginBottom: '6px',
               }}
             >
-              Curated Thematic Series
+              Make It Personal
             </p>
             <h2
               style={{
@@ -60,10 +60,10 @@ export default function CollectionsSlider() {
                 lineHeight: 1.2,
               }}
             >
-              Collections of the Canadian Boutique
+              Explore Collections Made for Your Story
             </h2>
-            <p style={{ color: '#475569', fontSize: '0.95rem', marginTop: '8px', lineHeight: 1.6 }}>
-              From historic architecture and aurora nightscapes to limited numbered series crafted with master Canadian artisans.
+            <p style={{ color: '#475569', fontSize: '0.98rem', marginTop: '10px', lineHeight: 1.6 }}>
+              Choose from gifts, keepsakes and décor that reflect your own style, celebrate your stories and make everyday moments feel a little more personal.
             </p>
           </div>
 
@@ -107,7 +107,7 @@ export default function CollectionsSlider() {
             </button>
 
             <Link href="/collections" className="btn-secondary" style={{ padding: '10px 20px', marginLeft: '6px' }}>
-              <span>Discover all collections</span>
+              <span>Explore Gift Collections</span>
               <ArrowRight size={15} />
             </Link>
           </div>

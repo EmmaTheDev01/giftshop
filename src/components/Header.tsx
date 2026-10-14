@@ -178,7 +178,7 @@ export default function Header() {
               transition: 'color 0.2s',
             }}
           >
-            <span>Boutiques: Canada &amp; USA</span>
+            <span>Galleries: Canada • USA</span>
             <ArrowUpRight size={13} style={{ color: '#b47e00' }} />
           </Link>
         </div>
@@ -342,63 +342,59 @@ export default function Header() {
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: '36px',
+              gap: 'clamp(14px, 2vw, 26px)',
               listStyle: 'none',
               padding: 0,
               margin: 0,
+              flexWrap: 'nowrap',
+              overflowX: 'auto',
             }}
           >
-            {/* All Products link */}
+            {/* 1. Check Your Favorite */}
             <li>
-              <Link
-                href="/products"
+              <button
+                onClick={() => setIsCartOpen(true)}
                 style={{
                   display: 'inline-flex',
                   alignItems: 'center',
                   gap: '6px',
                   padding: '14px 4px',
-                  fontSize: '0.85rem',
+                  fontSize: '0.82rem',
                   fontWeight: 700,
                   textTransform: 'uppercase',
-                  letterSpacing: '0.12em',
-                  color: '#0c2340',
-                  position: 'relative',
+                  letterSpacing: '0.1em',
+                  color: '#b47e00',
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  whiteSpace: 'nowrap',
                 }}
+                title="View your favorite keepsakes"
               >
-                <span>All Products</span>
-                <span
-                  style={{
-                    fontSize: '0.65rem',
-                    backgroundColor: '#dda82e',
-                    color: '#0c2340',
-                    padding: '2px 6px',
-                    borderRadius: '2px',
-                    fontWeight: 800,
-                    letterSpacing: '0.05em',
-                  }}
-                >
-                  Catalogue
-                </span>
-              </Link>
+                <Heart size={14} style={{ fill: wishlist.length > 0 ? '#b47e00' : 'none', color: '#b47e00' }} />
+                <span>Check Your Favorite</span>
+              </button>
             </li>
 
             {NAV_MENU.map((menu) => {
               const menuHref =
-                menu.slug === 'collections'
-                  ? '/collections'
-                  : menu.slug === 'brands'
-                  ? '/brands'
-                  : menu.slug === 'gifts'
-                  ? '/gifts'
-                  : menu.slug === 'crafts'
-                  ? '/crafts'
-                  : menu.slug === 'decorations'
-                  ? '/decorations'
-                  : menu.slug === 'souvenirs'
-                  ? '/souvenirs'
-                  : menu.slug === 'lifestyle'
-                  ? '/lifestyle'
-                  : `/category/${menu.slug}`;
+                menu.slug === 'catalogue'
+                  ? '/products'
+                  : menu.slug === 'collections'
+                    ? '/collections'
+                    : menu.slug === 'brands'
+                      ? '/brands'
+                      : menu.slug === 'gifts'
+                        ? '/gifts'
+                        : menu.slug === 'lifestyles'
+                          ? '/collections'
+                          : menu.slug === 'fashion'
+                            ? '/collections'
+                            : menu.slug === 'events'
+                              ? '/boutiques'
+                              : menu.slug === 'customize'
+                                ? '/customize'
+                                : `/category/${menu.slug}`;
 
               return (
                 <li
@@ -412,12 +408,13 @@ export default function Header() {
                     style={{
                       display: 'inline-block',
                       padding: '14px 4px',
-                      fontSize: '0.85rem',
+                      fontSize: '0.82rem',
                       fontWeight: 600,
                       textTransform: 'uppercase',
-                      letterSpacing: '0.12em',
+                      letterSpacing: '0.1em',
                       color: activeMegaMenu === menu.slug ? '#b47e00' : '#0c2340',
                       position: 'relative',
+                      whiteSpace: 'nowrap',
                     }}
                   >
                     {menu.name}
@@ -490,8 +487,8 @@ export default function Header() {
                               menu.slug === 'collections'
                                 ? `/collections/${sub.slug}`
                                 : menu.slug === 'brands'
-                                ? `/brands/${sub.slug}`
-                                : `/category/${sub.slug}`;
+                                  ? `/brands/${sub.slug}`
+                                  : `/category/${sub.slug}`;
 
                             return (
                               <li key={sub.slug}>
@@ -632,18 +629,18 @@ export default function Header() {
                 item.slug === 'collections'
                   ? '/collections'
                   : item.slug === 'brands'
-                  ? '/brands'
-                  : item.slug === 'gifts'
-                  ? '/gifts'
-                  : item.slug === 'crafts'
-                  ? '/crafts'
-                  : item.slug === 'decorations'
-                  ? '/decorations'
-                  : item.slug === 'souvenirs'
-                  ? '/souvenirs'
-                  : item.slug === 'lifestyle'
-                  ? '/lifestyle'
-                  : `/category/${item.slug}`;
+                    ? '/brands'
+                    : item.slug === 'gifts'
+                      ? '/gifts'
+                      : item.slug === 'crafts'
+                        ? '/crafts'
+                        : item.slug === 'decorations'
+                          ? '/decorations'
+                          : item.slug === 'souvenirs'
+                            ? '/souvenirs'
+                            : item.slug === 'lifestyle'
+                              ? '/lifestyle'
+                              : `/category/${item.slug}`;
 
               return (
                 <div key={item.slug} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '12px' }}>
@@ -667,8 +664,8 @@ export default function Header() {
                         item.slug === 'collections'
                           ? `/collections/${sub.slug}`
                           : item.slug === 'brands'
-                          ? `/brands/${sub.slug}`
-                          : `/category/${sub.slug}`;
+                            ? `/brands/${sub.slug}`
+                            : `/category/${sub.slug}`;
 
                       return (
                         <Link
