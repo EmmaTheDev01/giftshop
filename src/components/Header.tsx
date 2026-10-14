@@ -333,21 +333,23 @@ export default function Header() {
           borderTop: '1px solid var(--color-border-light)',
           borderBottom: '1px solid var(--color-border-light)',
           position: 'relative',
+          overflow: 'visible',
+          zIndex: 40,
         }}
         className="hidden-mobile"
       >
-        <div className="container-custom">
+        <div className="container-custom" style={{ position: 'relative', overflow: 'visible' }}>
           <ul
             style={{
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
-              gap: 'clamp(14px, 2vw, 26px)',
+              gap: 'clamp(8px, 1.6vw, 22px)',
               listStyle: 'none',
               padding: 0,
               margin: 0,
-              flexWrap: 'nowrap',
-              overflowX: 'auto',
+              flexWrap: 'wrap',
+              overflow: 'visible',
             }}
           >
             {/* 1. Check Your Favorite */}
@@ -359,10 +361,10 @@ export default function Header() {
                   alignItems: 'center',
                   gap: '6px',
                   padding: '14px 4px',
-                  fontSize: '0.82rem',
+                  fontSize: '0.8rem',
                   fontWeight: 700,
                   textTransform: 'uppercase',
-                  letterSpacing: '0.1em',
+                  letterSpacing: '0.08em',
                   color: '#b47e00',
                   background: 'none',
                   border: 'none',
@@ -396,6 +398,9 @@ export default function Header() {
                                 ? '/customize'
                                 : `/category/${menu.slug}`;
 
+              const isLeftItem = menu.slug === 'catalogue' || menu.slug === 'gifts';
+              const isRightItem = menu.slug === 'customize' || menu.slug === 'events';
+
               return (
                 <li
                   key={menu.slug}
@@ -408,10 +413,10 @@ export default function Header() {
                     style={{
                       display: 'inline-block',
                       padding: '14px 4px',
-                      fontSize: '0.82rem',
+                      fontSize: '0.8rem',
                       fontWeight: 600,
                       textTransform: 'uppercase',
-                      letterSpacing: '0.1em',
+                      letterSpacing: '0.08em',
                       color: activeMegaMenu === menu.slug ? '#b47e00' : '#0c2340',
                       position: 'relative',
                       whiteSpace: 'nowrap',
@@ -438,18 +443,20 @@ export default function Header() {
                       style={{
                         position: 'absolute',
                         top: '100%',
-                        left: '50%',
-                        transform: 'translateX(-50%)',
+                        left: isLeftItem ? '0' : isRightItem ? 'auto' : '50%',
+                        right: isRightItem ? '0' : 'auto',
+                        transform: isLeftItem || isRightItem ? 'none' : 'translateX(-50%)',
                         backgroundColor: '#ffffff',
-                        boxShadow: 'var(--shadow-xl)',
-                        border: '1px solid var(--color-border)',
-                        borderRadius: '0 0 4px 4px',
-                        padding: '28px 36px',
-                        minWidth: menu.featured ? '640px' : '380px',
+                        boxShadow: '0 20px 45px rgba(0, 0, 0, 0.16), 0 2px 6px rgba(0, 0, 0, 0.08)',
+                        border: '1px solid #ebd9c0',
+                        borderRadius: '0 0 6px 6px',
+                        padding: '24px 30px',
+                        minWidth: menu.featured ? '620px' : '360px',
+                        maxWidth: '90vw',
                         display: 'flex',
-                        gap: '32px',
-                        zIndex: 70,
-                        animation: 'slideDown 0.2s ease-out forwards',
+                        gap: '28px',
+                        zIndex: 100,
+                        animation: 'slideDown 0.18s ease-out forwards',
                       }}
                     >
                       {/* Category Column */}
