@@ -16,8 +16,12 @@ const manrope = Manrope({
   display: "swap",
 });
 
+const siteUrl =
+  process.env.NEXT_PUBLIC_SITE_URL ||
+  (process.env.VERCEL_URL ? `https://${process.env.VERCEL_URL}` : "https://memoriq.lifelines.global");
+
 export const metadata: Metadata = {
-  metadataBase: new URL("https://memoriq.lifelines.global"),
+  metadataBase: new URL(siteUrl),
   title: {
     default: "memoriq.lifelines.global | Curated Artisan Keepsakes & Gifts | Canada 🇨🇦 & USA 🇺🇸",
     template: "%s | memoriq.lifelines.global",
@@ -45,7 +49,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_CA",
-    url: "https://memoriq.lifelines.global",
+    url: siteUrl,
     siteName: "memoriq.lifelines.global",
     title: "memoriq.lifelines.global | Curated Artisan Keepsakes & Gifts | Canada 🇨🇦 & USA 🇺🇸",
     description:
@@ -63,9 +67,14 @@ export const metadata: Metadata = {
     icon: [
       { url: '/favicon.ico', sizes: 'any' },
       { url: '/favicon.svg', type: 'image/svg+xml' },
+      { url: '/icon.svg', type: 'image/svg+xml' },
     ],
-    apple: '/apple-touch-icon.png',
+    shortcut: '/favicon.ico',
+    apple: [
+      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+    ],
   },
+  manifest: '/site.webmanifest',
 };
 
 import ClientProviders from "@/components/ClientProviders";
@@ -77,6 +86,12 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${cinzel.variable} ${manrope.variable}`}>
+      <head>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+        <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        <link rel="manifest" href="/site.webmanifest" />
+      </head>
       <body className="antialiased">
         <ClientProviders>{children}</ClientProviders>
       </body>
