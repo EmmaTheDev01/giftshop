@@ -10,6 +10,7 @@ import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
 export default function ProductCarousel() {
   const [products, setProducts] = useState<ExtendedProduct[]>([]);
   const [loading, setLoading] = useState(true);
+  const [isPaused, setIsPaused] = useState(false);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -30,10 +31,29 @@ export default function ProductCarousel() {
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollContainerRef.current) {
-      const scrollAmount = direction === 'left' ? -380 : 380;
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      const scrollAmount = direction === 'left' ? -304 : 304;
+      const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
+
+      if (direction === 'right' && scrollLeft + clientWidth >= scrollWidth - 25) {
+        scrollContainerRef.current.scrollTo({ left: 0, behavior: 'smooth' });
+      } else if (direction === 'left' && scrollLeft <= 15) {
+        scrollContainerRef.current.scrollTo({ left: scrollWidth - clientWidth, behavior: 'smooth' });
+      } else {
+        scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+      }
     }
   };
+
+  // Auto-scroll animation: advances right every 3.2s, loops seamlessly, pauses on user interaction
+  useEffect(() => {
+    if (loading || isPaused || products.length === 0) return;
+
+    const timer = setInterval(() => {
+      scroll('right');
+    }, 3200);
+
+    return () => clearInterval(timer);
+  }, [loading, isPaused, products.length]);
 
   return (
     <section style={{ padding: '72px 0 84px', backgroundColor: '#ffffff' }}>
@@ -50,7 +70,7 @@ export default function ProductCarousel() {
               marginBottom: '8px',
             }}
           >
-            Handcrafted Canadian Treasures
+            Laser-Engraved Canadian Keepsakes
           </p>
           <h2
             style={{
@@ -61,7 +81,7 @@ export default function ProductCarousel() {
               lineHeight: 1.2,
             }}
           >
-            Take home an authentic Memoriq keepsake
+            Precision Laser-Cut & Engraved Keepsakes
           </h2>
           <DiamondSeparator variant="points" />
         </div>
@@ -72,10 +92,20 @@ export default function ProductCarousel() {
             <Loader2 size={32} className="animate-spin" style={{ color: '#b47e00' }} />
           </div>
         ) : (
-          <div style={{ position: 'relative' }}>
+          <div
+            style={{ position: 'relative' }}
+            onMouseEnter={() => setIsPaused(true)}
+            onMouseLeave={() => setIsPaused(false)}
+            onTouchStart={() => setIsPaused(true)}
+            onTouchEnd={() => setIsPaused(false)}
+          >
             {/* Left Arrow */}
             <button
-              onClick={() => scroll('left')}
+              onClick={() => {
+                setIsPaused(true);
+                scroll('left');
+                setTimeout(() => setIsPaused(false), 4000);
+              }}
               style={{
                 position: 'absolute',
                 left: '-20px',
@@ -112,6 +142,7 @@ export default function ProductCarousel() {
                 paddingBottom: '20px',
                 scrollbarWidth: 'none',
                 msOverflowStyle: 'none',
+                scrollBehavior: 'smooth',
               }}
             >
               {filteredProducts.map((product) => (
@@ -129,7 +160,11 @@ export default function ProductCarousel() {
 
             {/* Right Arrow */}
             <button
-              onClick={() => scroll('right')}
+              onClick={() => {
+                setIsPaused(true);
+                scroll('right');
+                setTimeout(() => setIsPaused(false), 4000);
+              }}
               style={{
                 position: 'absolute',
                 right: '-20px',

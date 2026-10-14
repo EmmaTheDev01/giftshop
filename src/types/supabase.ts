@@ -681,8 +681,11 @@ export type UserRole = 'customer' | 'staff' | 'moderator' | 'admin';
 
 export interface ExtendedProduct extends Product {
   category_name?: string;
+  category_slug?: string;
   brand_name?: string;
+  brand_slug?: string;
   collection_name?: string;
+  collection_slug?: string;
 }
 
 

@@ -162,7 +162,7 @@ export default function ProductsPage() {
               }}
             >
               <Sparkles size={13} />
-              <span>Artisan Canadian Woodcraft &amp; Home Decor</span>
+              <span>Precision Laser-Engraved Canadian Keepsakes</span>
             </div>
 
             <h1
@@ -176,7 +176,7 @@ export default function ProductsPage() {
                 lineHeight: 1.2,
               }}
             >
-              The Artisan Keepsake Collection
+              The Laser-Engraved Keepsake Collection
             </h1>
 
             <p
@@ -189,8 +189,7 @@ export default function ProductsPage() {
                 fontWeight: 300,
               }}
             >
-              Explore Canadian laser-cut woodcraft, architectural wall clocks, honeycomb shelves,
-              maple leaf souvenirs, and LED signs priced transparently in Canadian Dollars (CAD).
+              Explore Canadian precision laser-engraved hardwood plaques, laser-cut steel wall art, architectural clocks, custom LED night lights, and personalized heirloom gifts priced transparently in Canadian Dollars (CAD).
             </p>
 
             <div style={{ marginTop: '20px' }}>

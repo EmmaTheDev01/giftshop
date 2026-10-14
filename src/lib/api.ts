@@ -36,7 +36,12 @@ export async function getProducts(options?: {
   limit?: number;
 }): Promise<ExtendedProduct[]> {
   try {
-    let query = supabase.from('products').select('*');
+    let query = supabase.from('products').select(`
+      *,
+      collections:collection_id(id, slug, name),
+      categories:category_id(id, slug, name),
+      brands:brand_id(id, slug, name)
+    `);
     if (options?.categoryId) query = query.eq('category_id', options.categoryId);
     if (options?.isFeatured) query = query.eq('is_featured', true);
     if (options?.limit) query = query.limit(options.limit);
@@ -47,7 +52,21 @@ export async function getProducts(options?: {
       console.warn('Supabase products fetch failed:', error?.message);
       return [];
     }
-    return data as ExtendedProduct[];
+    let products = (data as any[]).map((p) => ({
+      ...p,
+      collection_name: p.collections?.name || undefined,
+      collection_slug: p.collections?.slug || undefined,
+      category_name: p.categories?.name || undefined,
+      category_slug: p.categories?.slug || undefined,
+      brand_name: p.brands?.name || undefined,
+      brand_slug: p.brands?.slug || undefined,
+    })) as ExtendedProduct[];
+
+    if (options?.collectionSlug) {
+      products = products.filter((p) => p.collection_slug === options.collectionSlug);
+    }
+
+    return products;
   } catch (err) {
     console.error('Exception fetching products from Supabase:', err);
     return [];
@@ -61,14 +80,28 @@ export async function getProductBySlug(slug: string): Promise<ExtendedProduct | 
   try {
     const { data, error } = await supabase
       .from('products')
-      .select('*')
+      .select(`
+        *,
+        collections:collection_id(id, slug, name),
+        categories:category_id(id, slug, name),
+        brands:brand_id(id, slug, name)
+      `)
       .eq('slug', slug)
       .single();
 
     if (error || !data) {
       return null;
     }
-    return data as ExtendedProduct;
+    const p = data as any;
+    return {
+      ...p,
+      collection_name: p.collections?.name || undefined,
+      collection_slug: p.collections?.slug || undefined,
+      category_name: p.categories?.name || undefined,
+      category_slug: p.categories?.slug || undefined,
+      brand_name: p.brands?.name || undefined,
+      brand_slug: p.brands?.slug || undefined,
+    } as ExtendedProduct;
   } catch (err) {
     return null;
   }

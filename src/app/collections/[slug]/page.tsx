@@ -6,6 +6,8 @@ import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DepartmentView from '@/components/DepartmentView';
 import { getProducts, getCollections } from '@/lib/api';
 
+export const dynamic = 'force-dynamic';
+
 interface CollectionPageProps {
   params: Promise<{
     slug: string;
@@ -14,29 +16,39 @@ interface CollectionPageProps {
 
 const COLLECTION_METADATA: Record<string, { name: string; tagline: string; desc: string }> = {
   signature: {
-    name: 'Canadian Signature Collection',
+    name: 'North American Signature Keepsakes',
     tagline: 'The Quintessential Gift Collection',
     desc: 'Timeless hardwood wall art, precision laser crafts, and heirloom plaques celebrating Canadian heritage.',
   },
   gardens: {
-    name: 'Laurentian Gardens Collection',
+    name: 'Laurentian Woodcraft & Forest Art',
     tagline: 'Botanical Sculptures & Natural Timber',
     desc: 'Botanical patterns, floral mandalas, and natural woodcrafts inspired by Canadian flora and forests.',
   },
   'day-night': {
-    name: 'Aurora Day & Night Collection',
-    tagline: 'Ambient Illumination & Nocturnal Art',
-    desc: 'Bespoke LED night lights and dimensional mountain silhouettes capturing the Northern lights.',
+    name: 'Artisan Living & Architectural Clocks',
+    tagline: 'From Morning Dawn to Northern Lights',
+    desc: 'Bespoke LED night lights, precision pendulum clocks, and dimensional mountain silhouettes capturing the Northern lights.',
   },
   'historic-architecture': {
-    name: 'Historic Architecture Collection',
+    name: 'Architectural Metal & Script Art',
     tagline: 'Geometric Mastery & Modern Living',
-    desc: 'Architectural honeycomb wall shelves and geometric wooden wall sculptures for modern living.',
+    desc: 'Architectural skyline silhouettes, cursive script accents, and precision laser-cut steel wall sculptures.',
+  },
+  '330-meters': {
+    name: 'Monumental Heights & Mountain Summits',
+    tagline: 'Architectural Height & Rocky Mountain Summits',
+    desc: 'Commemorating the monumental summits of Canadian engineering and Rocky mountain peaks with precision monographs.',
   },
   'limited-editions': {
     name: 'Limited Collector Editions',
     tagline: 'Numbered Rarity & Certified Provenance',
-    desc: 'Bespoke hand-finished keepsake plaques and limited run clocks crafted by master Canadian artisans.',
+    desc: 'Bespoke hand-finished keepsake plaques, crystal monoliths, and limited run clocks crafted by master Canadian artisans.',
+  },
+  'olympic-collection': {
+    name: 'Heirloom Gifting & Commemorative Relics',
+    tagline: 'Sporting Prestige & Winter Triumphs',
+    desc: 'Commemorating Canadian winter triumphs and celebration heirlooms with handcrafted keepsakes, guestbooks, and boards.',
   },
 };
 
@@ -72,16 +84,20 @@ export default async function CollectionDetailPage({ params }: CollectionPagePro
   const colTagline = col?.tagline || 'Official Heritage Collection';
   const colDesc = col?.desc || 'Curated keepsakes celebrating exquisite craftsmanship.';
 
-  const allProducts = await getProducts();
+  // Directly fetch products assigned to this collection slug
+  const collectionProducts = await getProducts({ collectionSlug: slug });
+  console.log('DEBUG CollectionDetailPage:', { slug, colCount: collectionProducts.length });
 
-  // Filter products by collection name or slug keyword
-  const keyword = slug.toLowerCase().replace(/-/g, ' ');
-  const matched = allProducts.filter((p) => {
-    const text = `${p.collection_name || ''} ${p.name} ${p.description}`.toLowerCase();
-    return text.includes(keyword) || text.includes(colName.toLowerCase());
-  });
-
-  const displayProducts = matched.length > 0 ? matched : allProducts.slice(0, 8);
+  let displayProducts = collectionProducts;
+  if (displayProducts.length === 0) {
+    const allProducts = await getProducts();
+    const keyword = slug.toLowerCase().replace(/-/g, ' ');
+    const matched = allProducts.filter((p) => {
+      const text = `${p.collection_name || ''} ${p.name} ${p.description}`.toLowerCase();
+      return text.includes(keyword) || text.includes(colName.toLowerCase());
+    });
+    displayProducts = matched.length > 0 ? matched : allProducts.slice(0, 12);
+  }
 
   return (
     <div style={{ backgroundColor: '#ffffff', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
