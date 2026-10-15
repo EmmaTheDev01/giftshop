@@ -47,7 +47,7 @@ export default function HeroBanner() {
               textShadow: '0px 0px 20px rgba(12, 35, 64, 0.54)',
             }}
           >
-            North American Heritage Collection • Canada &amp; USA 🇨🇦 🇺🇸
+            PERSONAL GIFTS • MOMENTS TO REMEMBER • CANADA/USA 🇨🇦 🇺🇸
           </h2>
 
           {/* Main Title */}
@@ -63,7 +63,7 @@ export default function HeroBanner() {
               marginBottom: '18px',
             }}
           >
-            Heirloom Gifts,<br />Crafted for Canada &amp; USA
+            PERSONAL GIFTS,<br />MADE TO FIT YOUR STORIES
           </h1>
 
           {/* Description */}
@@ -79,7 +79,7 @@ export default function HeroBanner() {
               marginBottom: '10px',
             }}
           >
-            Curated artisan keepsakes, monumental architectural tributes from Toronto&apos;s CN Tower to New York landmarks, and certified limited editions handcrafted by master guild workshops.
+            Put your own story in the spotlight with personalized keepsakes, gifts, and décor. Choose meaningful details for the people you love, and give something that feels truly theirs.
           </p>
 
           <p
@@ -93,7 +93,7 @@ export default function HeroBanner() {
               marginBottom: '14px',
             }}
           >
-            All Prices in CAD ($) &amp; USD ($) • Express Cross-Border Delivery • Free Shipping Available
+            SHOP BY OCCASION • ADD A LITTLE PERSONAL TOUCH • KEEPSAKES FOR THE PEOPLE WHO MATTER MOST
           </p>
 
           {/* Exact separator from site */}
@@ -122,7 +122,7 @@ export default function HeroBanner() {
             }}
             className="hero-btn"
           >
-            <span>Explore The Collection</span>
+            <span>EXPLORE PERSONAL GIFTS</span>
             <ArrowRight size={16} />
           </Link>
         </div>

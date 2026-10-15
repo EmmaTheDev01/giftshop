@@ -70,7 +70,7 @@ export default function ProductCarousel() {
               marginBottom: '8px',
             }}
           >
-            Laser-Engraved Canadian Keepsakes
+            HANDCRAFTED CANADIAN TREASURES
           </p>
           <h2
             style={{
@@ -81,7 +81,7 @@ export default function ProductCarousel() {
               lineHeight: 1.2,
             }}
           >
-            Precision Laser-Cut & Engraved Keepsakes
+            Gifts Worth Keeping and Giving
           </h2>
           <DiamondSeparator variant="points" />
         </div>

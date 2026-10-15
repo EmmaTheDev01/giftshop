@@ -1,7 +1,6 @@
 import React from 'react';
 import Header from '@/components/Header';
 import HeroBanner from '@/components/HeroBanner';
-import CommitmentsBar from '@/components/CommitmentsBar';
 import ProductCarousel from '@/components/ProductCarousel';
 import SpotlightRivet from '@/components/SpotlightRivet';
 import CuratedLookbook from '@/components/CuratedLookbook';

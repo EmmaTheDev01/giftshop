@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Sparkles, ArrowRight, PenTool, CheckCircle2 } from 'lucide-react';
+import { Sparkles, ArrowRight, PenTool } from 'lucide-react';
 import DiamondSeparator from './DiamondSeparator';
 
 export default function YourOwnMark() {
@@ -103,35 +103,6 @@ export default function YourOwnMark() {
             >
               Choose a gift, add your details, and create something they won&apos;t forget. Make their day memorable.
             </p>
-
-            {/* Value checklist */}
-            <div
-              style={{
-                display: 'grid',
-                gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))',
-                gap: '12px',
-                marginBottom: '36px',
-                fontSize: '0.85rem',
-                color: '#e2e8f0',
-              }}
-            >
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <CheckCircle2 size={16} style={{ color: '#dda82e', flexShrink: 0 }} />
-                <span>Custom Name Engraving</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <CheckCircle2 size={16} style={{ color: '#dda82e', flexShrink: 0 }} />
-                <span>GPS Coordinates &amp; Dates</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <CheckCircle2 size={16} style={{ color: '#dda82e', flexShrink: 0 }} />
-                <span>Archival Canadian Birch</span>
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                <CheckCircle2 size={16} style={{ color: '#dda82e', flexShrink: 0 }} />
-                <span>Certificate of Provenance</span>
-              </div>
-            </div>
 
             {/* CTAs matching Google Doc requirements */}
             <div
