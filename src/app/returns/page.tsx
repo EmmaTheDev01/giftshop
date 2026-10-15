@@ -63,7 +63,7 @@ export default function ReturnsRefundsPage() {
             1. The 30-Day Boutique Satisfaction Promise &amp; Scope
           </h2>
           <p style={{ marginBottom: '14px' }}>
-            At {SITE_CONFIG.name}, we believe that acquiring handcrafted Canadian and French keepsakes should be an experience of effortless pleasure and absolute security. We understand that selecting fine art objects, luxury homeware, or tailored apparel online requires confidence in the tactile beauty and craftsmanship of the finished piece. To ensure your complete peace of mind, every standard purchase completed through our official digital boutique is backed by our comprehensive <strong>30-Day Satisfaction Guarantee</strong>.
+            At {SITE_CONFIG.name}, we believe that acquiring laser engraved Canadian & USA products should be an experience of effortless pleasure and absolute security. We understand that selecting fine art objects, luxury homeware, or tailored apparel online requires confidence in the tactile beauty and craftsmanship of the finished piece. To ensure your complete peace of mind, every standard purchase completed through our official digital boutique is backed by our comprehensive <strong>30-Day Satisfaction Guarantee</strong>.
           </p>
           <p>
             The thirty (30) calendar day return period begins on the verified date of physical delivery confirmed by the tracking carrier (Canada Post, FedEx, or UPS). If for any reason you are not completely enchanted with your selection upon opening your package, you are fully entitled to return the item to our Canadian logistics facility for a complete refund of the purchase price or an immediate boutique exchange.

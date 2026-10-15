@@ -22,10 +22,6 @@ export default function Home() {
       <main style={{ flex: 1 }}>
         {/* 1. Hero Section: Diamond Light */}
         <HeroBanner />
-
-        {/* 2. Official Guarantees / Commitments Bar */}
-        <CommitmentsBar />
-
         {/* 3. Official Keepsakes Carousel */}
         <ProductCarousel />
 

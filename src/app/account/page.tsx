@@ -418,7 +418,7 @@ export default function AccountPage() {
                       <Package size={40} style={{ color: '#94a3b8', margin: '0 auto 12px' }} />
                       <h3 style={{ fontSize: '1.05rem', color: '#0c2340', marginBottom: '6px' }}>No orders placed yet</h3>
                       <p style={{ color: '#64748b', fontSize: '0.85rem', maxWidth: '380px', margin: '0 auto 18px' }}>
-                        Explore our handcrafted Canadian wall decor, wooden clocks, and artisan keepsakes.
+                        Explore our Laser engraved Canadian & USA made products.
                       </p>
                       <Link
                         href="/products"
@@ -499,14 +499,14 @@ export default function AccountPage() {
                                     order.status === 'delivered'
                                       ? '#dcfce7'
                                       : order.status === 'shipped'
-                                      ? '#e0e7ff'
-                                      : '#fef3c7',
+                                        ? '#e0e7ff'
+                                        : '#fef3c7',
                                   color:
                                     order.status === 'delivered'
                                       ? '#15803d'
                                       : order.status === 'shipped'
-                                      ? '#4338ca'
-                                      : '#b45309',
+                                        ? '#4338ca'
+                                        : '#b45309',
                                 }}
                               >
                                 {order.status}

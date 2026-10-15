@@ -65,7 +65,7 @@ export default function GuestTrackingPage() {
             Guest Order Tracking
           </h1>
           <p style={{ color: '#cbd5e1', fontSize: '1rem', lineHeight: 1.6, maxWidth: '640px', margin: '0 auto' }}>
-            Follow your handcrafted Canadian keepsakes and artisan deliveries in real-time with our live carrier tracking system.
+            Follow your laser engraved Canadian keepsakes and artisan deliveries in real-time with our live carrier tracking system.
           </p>
         </div>
       </section>
