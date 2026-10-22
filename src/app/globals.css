@@ -505,4 +505,81 @@ img {
   display: block;
 }
 
+/* ============================================================================== */
+/* LUXURY QUICK VIEW MODAL ACTION STYLES                                          */
+/* ============================================================================== */
+.quickview-add-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  background: linear-gradient(135deg, #0c2340 0%, #152d4e 100%);
+  color: #ffffff;
+  border: 1px solid rgba(221, 168, 46, 0.45);
+  border-radius: 6px;
+  height: 48px;
+  padding: 0 18px;
+  font-size: 0.84rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(12, 35, 64, 0.22);
+  transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+  overflow: hidden;
+  user-select: none;
+}
 
+.quickview-add-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.16), transparent);
+  transform: skewX(-20deg);
+  transition: left 0.75s ease;
+  pointer-events: none;
+}
+
+.quickview-add-btn:hover::before {
+  left: 150%;
+}
+
+.quickview-add-btn:hover {
+  background: linear-gradient(135deg, #b47e00 0%, #dda82e 100%);
+  border-color: #dda82e;
+  box-shadow: 0 6px 20px rgba(180, 126, 0, 0.35);
+  transform: translateY(-1px);
+  color: #ffffff;
+}
+
+.quickview-add-btn:active {
+  transform: scale(0.98);
+}
+
+.quickview-add-btn.added {
+  background: linear-gradient(135deg, #15803d 0%, #166534 100%) !important;
+  border-color: #22c55e !important;
+  box-shadow: 0 4px 16px rgba(21, 128, 61, 0.35) !important;
+  justify-content: center !important;
+}
+
+@media (max-width: 540px) {
+  .quickview-actions-row {
+    flex-wrap: wrap !important;
+  }
+  .quickview-add-btn {
+    width: 100% !important;
+    order: 1;
+  }
+  .quickview-qty-stepper {
+    flex: 1 !important;
+    order: 2;
+  }
+  .quickview-wishlist-btn {
+    order: 3;
+  }
+}

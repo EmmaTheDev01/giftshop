@@ -231,71 +231,148 @@ export default function QuickViewModal() {
 
           {/* Add to Cart Actions */}
           <div>
-            <div style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
-              {/* Quantity */}
+            <div className="quickview-actions-row" style={{ display: 'flex', gap: '12px', alignItems: 'center', marginBottom: '16px' }}>
+              {/* Quantity Stepper */}
               <div
+                className="quickview-qty-stepper"
                 style={{
                   display: 'flex',
                   alignItems: 'center',
-                  border: '1px solid #cbd5e1',
-                  borderRadius: '2px',
-                  backgroundColor: '#ffffff',
+                  height: '48px',
+                  border: '1.5px solid #ebd9c0',
+                  borderRadius: '6px',
+                  backgroundColor: '#faf8f5',
+                  overflow: 'hidden',
+                  flexShrink: 0,
                 }}
               >
                 <button
+                  type="button"
                   onClick={() => setQty(Math.max(1, qty - 1))}
-                  style={{ padding: '10px 14px', color: '#0c2340' }}
+                  style={{
+                    width: '38px',
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#0c2340',
+                    fontSize: '1.1rem',
+                    fontWeight: 700,
+                    border: 'none',
+                    background: 'none',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.15s',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(180, 126, 0, 0.12)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                  aria-label="Decrease quantity"
                 >
-                  -
+                  −
                 </button>
-                <span style={{ padding: '0 12px', fontWeight: 600, fontSize: '0.9rem' }}>
+                <span
+                  style={{
+                    minWidth: '32px',
+                    textAlign: 'center',
+                    fontWeight: 700,
+                    fontSize: '0.92rem',
+                    color: '#0c2340',
+                    userSelect: 'none',
+                  }}
+                >
                   {qty}
                 </span>
                 <button
+                  type="button"
                   onClick={() => setQty(qty + 1)}
-                  style={{ padding: '10px 14px', color: '#0c2340' }}
+                  style={{
+                    width: '38px',
+                    height: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#0c2340',
+                    fontSize: '1.1rem',
+                    fontWeight: 700,
+                    border: 'none',
+                    background: 'none',
+                    cursor: 'pointer',
+                    transition: 'background-color 0.15s',
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = 'rgba(180, 126, 0, 0.12)')}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = 'transparent')}
+                  aria-label="Increase quantity"
                 >
                   +
                 </button>
               </div>
 
-              {/* Add Button */}
+              {/* Add to Cart Button */}
               <button
+                type="button"
                 onClick={handleAdd}
-                className="btn-primary"
-                style={{
-                  flex: 1,
-                  padding: '14px 24px',
-                  backgroundColor: added ? '#15803d' : '#0c2340',
-                }}
+                className={`quickview-add-btn ${added ? 'added' : ''}`}
+                style={{ flex: 1 }}
+                aria-label={`Add ${qty} ${quickViewProduct.name} to cart`}
               >
                 {added ? (
-                  <>
-                    <Check size={16} />
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '8px', color: '#ffffff' }}>
+                    <Check size={18} strokeWidth={2.5} />
                     <span>Added to Cart!</span>
-                  </>
+                  </div>
                 ) : (
                   <>
-                    <ShoppingBag size={16} style={{ color: '#dda82e' }} />
-                    <span>Add to Cart • ${(quickViewProduct.price * qty).toFixed(2)} CAD</span>
+                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <ShoppingBag size={17} style={{ color: '#dda82e', flexShrink: 0 }} />
+                      <span>Add to Cart</span>
+                    </div>
+                    <span
+                      style={{
+                        backgroundColor: 'rgba(255, 255, 255, 0.16)',
+                        padding: '4px 10px',
+                        borderRadius: '4px',
+                        fontSize: '0.8rem',
+                        fontWeight: 800,
+                        letterSpacing: '0.02em',
+                        color: '#ffffff',
+                        border: '1px solid rgba(255, 255, 255, 0.25)',
+                      }}
+                    >
+                      ${(quickViewProduct.price * qty).toFixed(2)} CAD
+                    </span>
                   </>
                 )}
               </button>
 
-              {/* Wishlist */}
+              {/* Wishlist Button */}
               <button
+                type="button"
                 onClick={() => toggleWishlist(quickViewProduct.id)}
+                className="quickview-wishlist-btn"
                 style={{
-                  width: '46px',
-                  height: '46px',
-                  borderRadius: '2px',
-                  border: '1px solid #cbd5e1',
+                  width: '48px',
+                  height: '48px',
+                  borderRadius: '6px',
+                  border: '1.5px solid #ebd9c0',
+                  backgroundColor: isFavorite ? '#faf8f5' : '#ffffff',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   color: isFavorite ? '#b47e00' : '#475569',
+                  cursor: 'pointer',
+                  flexShrink: 0,
+                  transition: 'all 0.2s',
+                  boxShadow: '0 2px 6px rgba(0,0,0,0.03)',
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.borderColor = '#b47e00';
+                  e.currentTarget.style.backgroundColor = '#faf8f5';
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.borderColor = '#ebd9c0';
+                  e.currentTarget.style.backgroundColor = isFavorite ? '#faf8f5' : '#ffffff';
                 }}
                 aria-label="Toggle wishlist"
+                title={isFavorite ? 'Saved in Wishlist' : 'Add to Wishlist'}
               >
                 <Heart size={20} fill={isFavorite ? '#b47e00' : 'none'} />
               </button>
