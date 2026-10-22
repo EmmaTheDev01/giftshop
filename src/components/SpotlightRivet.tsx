@@ -39,7 +39,7 @@ export default function SpotlightRivet() {
               }}
             >
               <Image
-                src="/images/statue-of-liberty.jpg"
+                src="/images/mountain-gorilla-wood-slice.png"
                 alt="The Statue of Liberty Collector Keepsake"
                 fill
                 sizes="(max-width: 768px) 100vw, 480px"
@@ -70,10 +70,10 @@ export default function SpotlightRivet() {
             <h2
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(2rem, 3.8vw, 2.75rem)',
+                fontSize: 'clamp(1.45rem, 2.2vw, 1.95rem)',
                 fontWeight: 600,
                 color: '#0c2340',
-                lineHeight: 1.2,
+                lineHeight: 1.25,
                 marginBottom: '8px',
               }}
             >
@@ -83,11 +83,11 @@ export default function SpotlightRivet() {
             <p
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: '1.25rem',
+                fontSize: 'clamp(1.05rem, 1.2vw, 1.15rem)',
                 fontWeight: 500,
                 color: '#b47e00',
                 fontStyle: 'italic',
-                marginBottom: '16px',
+                marginBottom: '14px',
               }}
             >
               Keep Your Moments Close
@@ -95,10 +95,10 @@ export default function SpotlightRivet() {
 
             <p
               style={{
-                fontSize: '1rem',
-                lineHeight: 1.65,
+                fontSize: '0.92rem',
+                lineHeight: 1.6,
                 color: '#475569',
-                marginBottom: '16px',
+                marginBottom: '14px',
               }}
             >
               A favourite artwork says more than words. Unique and exceptional keepsake, carry a piece of the history. Ready to brighten your own space?

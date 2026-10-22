@@ -39,7 +39,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const [profile, setProfile] = useState<Profile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  // Load user profile from Supabase profiles table
+  // Load user profile from Supabase profiles table, auto-creating if missing
   const fetchProfile = async (userId: string, userEmail?: string) => {
     try {
       const { data, error } = await supabase
@@ -51,19 +51,38 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       if (!error && data) {
         setProfile(data as Profile);
       } else {
-        // Fallback default profile if trigger hasn't fired yet
-        setProfile({
+        const cleanName = userEmail?.split('@')[0] || 'Customer';
+        const fallbackProfile: Profile = {
           id: userId,
           email: userEmail || '',
-          full_name: userEmail?.split('@')[0] || 'Customer',
+          full_name: cleanName,
           role: (userEmail?.includes('admin') ? 'admin' : 'customer') as any,
           avatar_url: null,
           phone: null,
           default_shipping_address: null as any,
-          language: 'en',
+          language: 'en-CA',
           created_at: new Date().toISOString(),
           updated_at: new Date().toISOString(),
-        });
+        };
+
+        // Automatically create in database if missing
+        try {
+          await supabase.from('profiles').upsert(
+            {
+              id: userId,
+              email: userEmail || '',
+              full_name: cleanName,
+              role: (userEmail?.includes('admin') ? 'admin' : 'customer') as any,
+              language: 'en-CA',
+              updated_at: new Date().toISOString(),
+            },
+            { onConflict: 'id' }
+          );
+        } catch (upsertErr) {
+          console.warn('Auto profile insertion fallback:', upsertErr);
+        }
+
+        setProfile(fallbackProfile);
       }
     } catch {
       // ignore
@@ -127,38 +146,51 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const signUp = async (email: string, password: string, fullName: string) => {
     setIsLoading(true);
     try {
-      const { data, error } = await supabase.auth.signUp({
-        email,
-        password,
-        options: {
-          data: {
-            full_name: fullName,
-          },
-        },
+      // 1. Call server-side registration route (bypasses unhandled auth trigger exceptions and auto-creates profile)
+      const res = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email, password, fullName }),
       });
 
-      if (error) {
-        setIsLoading(false);
-        return { success: false, error: error.message };
-      }
+      const data = await res.json();
 
-      if (data.user) {
-        // 1. Immediately guarantee user profile creation in public.profiles
-        try {
-          await supabase.from('profiles').upsert({
-            id: data.user.id,
-            email: data.user.email,
-            full_name: fullName || data.user.email?.split('@')[0] || 'Customer',
-            role: 'customer',
-            language: 'en',
-            updated_at: new Date().toISOString(),
-          });
-        } catch (profileErr) {
-          console.warn('Profile direct upsert notice:', profileErr);
+      if (!res.ok || !data.success) {
+        // Fallback to client signUp if endpoint had an issue
+        if (res.status === 400 && data.error) {
+          setIsLoading(false);
+          return { success: false, error: data.error };
         }
 
-        await fetchProfile(data.user.id, data.user.email);
+        // Try direct supabase client signup as backup
+        const { data: clientData, error: clientErr } = await supabase.auth.signUp({
+          email,
+          password,
+          options: {
+            data: { full_name: fullName },
+          },
+        });
+
+        if (clientErr) {
+          setIsLoading(false);
+          return { success: false, error: clientErr.message || data.error || 'Registration failed' };
+        }
+
+        if (clientData.user) {
+          await fetchProfile(clientData.user.id, clientData.user.email);
+        }
       }
+
+      // 2. Automatically sign the user in with their new credentials
+      const loginRes = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (!loginRes.error && loginRes.data.user) {
+        await fetchProfile(loginRes.data.user.id, loginRes.data.user.email);
+      }
+
       setIsLoading(false);
       return { success: true };
     } catch (err: any) {

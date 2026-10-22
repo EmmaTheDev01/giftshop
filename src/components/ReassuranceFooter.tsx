@@ -28,33 +28,33 @@ export default function ReassuranceFooter() {
         <div
           style={{
             display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '36px',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+            gap: '32px',
             textAlign: 'center',
-            padding: '32px 0 48px',
+            padding: '28px 0 44px',
           }}
         >
           {/* Guarantee 1 */}
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div
               style={{
-                width: '54px',
-                height: '54px',
+                width: '50px',
+                height: '50px',
                 borderRadius: '50%',
                 backgroundColor: 'rgba(180, 126, 0, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#b47e00',
-                marginBottom: '14px',
+                marginBottom: '12px',
               }}
             >
-              <RotateCcw size={24} />
+              <RotateCcw size={22} />
             </div>
-            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
+            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1rem, 1.2vw, 1.15rem)', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
               Satisfaction Guarantee
             </h4>
-            <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
+            <p style={{ fontSize: '0.84rem', color: '#64748b' }}>
               Your style. Made for you.
             </p>
           </div>
@@ -63,23 +63,23 @@ export default function ReassuranceFooter() {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div
               style={{
-                width: '54px',
-                height: '54px',
+                width: '50px',
+                height: '50px',
                 borderRadius: '50%',
                 backgroundColor: 'rgba(180, 126, 0, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#b47e00',
-                marginBottom: '14px',
+                marginBottom: '12px',
               }}
             >
-              <Truck size={24} />
+              <Truck size={22} />
             </div>
-            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
+            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1rem, 1.2vw, 1.15rem)', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
               Canadian &amp; Global Delivery
             </h4>
-            <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
+            <p style={{ fontSize: '0.84rem', color: '#64748b' }}>
               Express dispatch within 1-2 days
             </p>
           </div>
@@ -88,23 +88,23 @@ export default function ReassuranceFooter() {
           <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
             <div
               style={{
-                width: '54px',
-                height: '54px',
+                width: '50px',
+                height: '50px',
                 borderRadius: '50%',
                 backgroundColor: 'rgba(180, 126, 0, 0.1)',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 color: '#b47e00',
-                marginBottom: '14px',
+                marginBottom: '12px',
               }}
             >
-              <CreditCard size={24} />
+              <CreditCard size={22} />
             </div>
-            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.25rem', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
+            <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1rem, 1.2vw, 1.15rem)', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
               Secure Checkout
             </h4>
-            <p style={{ fontSize: '0.85rem', color: '#64748b' }}>
+            <p style={{ fontSize: '0.84rem', color: '#64748b' }}>
               Interac, Visa, Mastercard, Apple Pay
             </p>
           </div>
@@ -120,7 +120,7 @@ export default function ReassuranceFooter() {
             margin: '20px auto 72px',
             textAlign: 'center',
             backgroundColor: '#faf8f5',
-            padding: '48px 32px',
+            padding: '40px 24px',
             borderRadius: '4px',
             border: '1px solid #ebd9c0',
             boxShadow: '0 8px 24px rgba(12, 35, 64, 0.04)',
@@ -142,7 +142,7 @@ export default function ReassuranceFooter() {
           <h3
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(1.75rem, 3.5vw, 2.35rem)',
+              fontSize: 'clamp(1.35rem, 2vw, 1.75rem)',
               fontWeight: 500,
               color: '#0c2340',
               marginBottom: '8px',
@@ -150,7 +150,7 @@ export default function ReassuranceFooter() {
           >
             Keep in touch with The Memoriq
           </h3>
-          <p style={{ fontSize: '0.9rem', color: '#64748b', marginBottom: '24px' }}>
+          <p style={{ fontSize: '0.88rem', color: '#64748b', marginBottom: '22px' }}>
             Receive exclusive artisan releases, seasonal collections, and Canadian subscriber privileges.
           </p>
 

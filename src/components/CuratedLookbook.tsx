@@ -39,10 +39,10 @@ export default function CuratedLookbook() {
           <h2
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(2rem, 4vw, 2.85rem)',
+              fontSize: 'clamp(1.45rem, 2.2vw, 1.95rem)',
               fontWeight: 500,
               color: '#0c2340',
-              lineHeight: 1.2,
+              lineHeight: 1.25,
             }}
           >
             Curated Woodcraft & Wall Decor

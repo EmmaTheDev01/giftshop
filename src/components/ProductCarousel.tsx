@@ -59,15 +59,15 @@ export default function ProductCarousel() {
     <section style={{ padding: '72px 0 84px', backgroundColor: '#ffffff' }}>
       <div className="container-custom">
         {/* Section Header */}
-        <div style={{ textAlign: 'center', marginBottom: '40px' }}>
+        <div style={{ textAlign: 'center', marginBottom: '36px' }}>
           <p
             style={{
-              fontSize: '0.75rem',
+              fontSize: '0.72rem',
               fontWeight: 700,
               textTransform: 'uppercase',
-              letterSpacing: '0.22em',
+              letterSpacing: '0.2em',
               color: '#b47e00',
-              marginBottom: '8px',
+              marginBottom: '6px',
             }}
           >
             HANDCRAFTED CANADIAN TREASURES
@@ -75,10 +75,10 @@ export default function ProductCarousel() {
           <h2
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(2rem, 4vw, 2.85rem)',
+              fontSize: 'clamp(1.45rem, 2.2vw, 1.95rem)',
               fontWeight: 500,
               color: '#0c2340',
-              lineHeight: 1.2,
+              lineHeight: 1.25,
             }}
           >
             Gifts Worth Keeping and Giving

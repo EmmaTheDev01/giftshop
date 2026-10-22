@@ -1,5 +1,7 @@
 /* Official Memoriq Canadian Keepsakes Design System */
 :root {
+  --font-serif: 'Cinzel', Georgia, serif;
+  --font-sans: 'Manrope', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   --color-navy: #0c2340;
   --color-navy-deep: #061324;
   --color-navy-light: #16365c;
@@ -344,11 +346,19 @@ img {
   .legal-content-card {
     padding: 24px 20px !important;
   }
+  .hero-section {
+    min-height: 480px !important;
+    padding: 44px 0 !important;
+  }
 }
 
 @media (max-width: 640px) {
   .carousel-nav-btn {
     display: none !important;
+  }
+  .hero-section {
+    min-height: 440px !important;
+    padding: 36px 0 !important;
   }
 }
 

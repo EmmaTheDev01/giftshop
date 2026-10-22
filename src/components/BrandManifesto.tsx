@@ -51,11 +51,11 @@ export default function BrandManifesto() {
 
         <p
           style={{
-            fontSize: 'clamp(1rem, 1.8vw, 1.2rem)',
+            fontSize: 'clamp(0.92rem, 1.1vw, 1.05rem)',
             lineHeight: 1.7,
             color: '#cbd5e1',
-            maxWidth: '780px',
-            margin: '0 auto 28px',
+            maxWidth: '740px',
+            margin: '0 auto 24px',
             fontWeight: 300,
           }}
         >
@@ -65,7 +65,7 @@ export default function BrandManifesto() {
         <h3
           style={{
             fontFamily: 'var(--font-serif)',
-            fontSize: 'clamp(1.5rem, 3.2vw, 2.3rem)',
+            fontSize: 'clamp(1.15rem, 1.8vw, 1.55rem)',
             fontWeight: 400,
             lineHeight: 1.5,
             color: '#f8fafc',

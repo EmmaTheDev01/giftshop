@@ -74,15 +74,15 @@ export default function CollectionsSlider() {
             <h2
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(2rem, 3.8vw, 2.75rem)',
+                fontSize: 'clamp(1.45rem, 2.2vw, 1.95rem)',
                 fontWeight: 500,
                 color: '#0c2340',
-                lineHeight: 1.2,
+                lineHeight: 1.25,
               }}
             >
               Explore Collections Made for Your Story
             </h2>
-            <p style={{ color: '#475569', fontSize: '0.98rem', marginTop: '10px', lineHeight: 1.6 }}>
+            <p style={{ color: '#475569', fontSize: 'clamp(0.88rem, 1vw, 0.94rem)', marginTop: '8px', lineHeight: 1.6 }}>
               Choose from gifts, keepsakes and décor that reflect your own style, celebrate your stories and make everyday moments feel a little more personal.
             </p>
           </div>

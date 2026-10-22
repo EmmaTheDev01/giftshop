@@ -48,23 +48,24 @@ export default function Header() {
         style={{
           backgroundColor: '#0c2340',
           color: '#f5f1eb',
-          fontSize: '0.75rem',
+          fontSize: 'clamp(0.66rem, 1.8vw, 0.74rem)',
           fontWeight: 500,
-          letterSpacing: '0.08em',
+          letterSpacing: '0.06em',
           textTransform: 'uppercase',
-          padding: '8px 16px',
+          padding: '7px 14px',
           textAlign: 'center',
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          gap: '12px',
+          flexWrap: 'wrap',
+          gap: '6px 12px',
           borderBottom: '1px solid rgba(180, 126, 0, 0.25)',
         }}
       >
         <span>Delivery Across Canada &amp; USA 🇨🇦 🇺🇸</span>
-        <span style={{ color: '#b47e00' }}>•</span>
-        <span>Free Shipping Over $95 CAD / $70 USD</span>
-        <span style={{ color: '#b47e00' }}>•</span>
+        <span style={{ color: '#b47e00' }} className="hidden-mobile">•</span>
+        <span className="hidden-mobile">Free Shipping Over $95 CAD / $70 USD</span>
+        <span style={{ color: '#b47e00' }} className="hidden-mobile">•</span>
         <span style={{ color: '#dda82e' }}>Official Memoriq Boutique</span>
       </div>
 

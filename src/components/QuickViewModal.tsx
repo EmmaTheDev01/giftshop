@@ -175,11 +175,11 @@ export default function QuickViewModal() {
             <h3
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: '1.75rem',
+                fontSize: 'clamp(1.2rem, 1.8vw, 1.45rem)',
                 fontWeight: 600,
                 color: '#0c2340',
                 lineHeight: 1.25,
-                marginBottom: '12px',
+                marginBottom: '10px',
               }}
             >
               {quickViewProduct.name}

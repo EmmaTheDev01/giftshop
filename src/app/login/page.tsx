@@ -18,6 +18,8 @@ import {
   Package,
   Heart,
   RotateCcw,
+  Eye,
+  EyeOff,
   Loader2,
 } from 'lucide-react';
 
@@ -31,6 +33,9 @@ function LoginForm() {
   const [activeTab, setActiveTab] = useState<'signin' | 'register'>('signin');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [fullName, setFullName] = useState('');
   const [submitting, setSubmitting] = useState(false);
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
@@ -60,6 +65,16 @@ function LoginForm() {
     } else {
       if (!fullName.trim()) {
         setErrorMsg('Please enter your full name.');
+        setSubmitting(false);
+        return;
+      }
+      if (password.length < 6) {
+        setErrorMsg('Password must be at least 6 characters.');
+        setSubmitting(false);
+        return;
+      }
+      if (password !== confirmPassword) {
+        setErrorMsg('Passwords do not match. Please verify your password confirmation.');
         setSubmitting(false);
         return;
       }
@@ -304,7 +319,7 @@ function LoginForm() {
                 </div>
               </div>
 
-              <div style={{ marginBottom: '24px' }}>
+              <div style={{ marginBottom: activeTab === 'register' ? '18px' : '24px' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '6px' }}>
                   <label
                     style={{
@@ -335,7 +350,7 @@ function LoginForm() {
                     }}
                   />
                   <input
-                    type="password"
+                    type={showPassword ? 'text' : 'password'}
                     required
                     minLength={6}
                     value={password}
@@ -343,7 +358,7 @@ function LoginForm() {
                     placeholder="••••••••"
                     style={{
                       width: '100%',
-                      padding: '12px 12px 12px 40px',
+                      padding: '12px 42px 12px 40px',
                       border: '1px solid #cbd5e1',
                       borderRadius: '4px',
                       fontSize: '0.9rem',
@@ -351,8 +366,97 @@ function LoginForm() {
                       color: '#0f172a',
                     }}
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword(!showPassword)}
+                    style={{
+                      position: 'absolute',
+                      right: '12px',
+                      top: '50%',
+                      transform: 'translateY(-50%)',
+                      background: 'none',
+                      border: 'none',
+                      color: '#94a3b8',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: '4px',
+                    }}
+                    aria-label={showPassword ? 'Hide password' : 'Show password'}
+                  >
+                    {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                  </button>
                 </div>
               </div>
+
+              {activeTab === 'register' && (
+                <div style={{ marginBottom: '24px' }}>
+                  <label
+                    style={{
+                      display: 'block',
+                      fontSize: '0.8rem',
+                      fontWeight: 600,
+                      color: '#334155',
+                      marginBottom: '6px',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.05em',
+                    }}
+                  >
+                    Confirm Password
+                  </label>
+                  <div style={{ position: 'relative' }}>
+                    <Lock
+                      size={18}
+                      style={{
+                        position: 'absolute',
+                        left: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        color: '#94a3b8',
+                      }}
+                    />
+                    <input
+                      type={showConfirmPassword ? 'text' : 'password'}
+                      required
+                      minLength={6}
+                      value={confirmPassword}
+                      onChange={(e) => setConfirmPassword(e.target.value)}
+                      placeholder="••••••••"
+                      style={{
+                        width: '100%',
+                        padding: '12px 42px 12px 40px',
+                        border: '1px solid #cbd5e1',
+                        borderRadius: '4px',
+                        fontSize: '0.9rem',
+                        outline: 'none',
+                        color: '#0f172a',
+                      }}
+                    />
+                    <button
+                      type="button"
+                      onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                      style={{
+                        position: 'absolute',
+                        right: '12px',
+                        top: '50%',
+                        transform: 'translateY(-50%)',
+                        background: 'none',
+                        border: 'none',
+                        color: '#94a3b8',
+                        cursor: 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: '4px',
+                      }}
+                      aria-label={showConfirmPassword ? 'Hide password' : 'Show password'}
+                    >
+                      {showConfirmPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                    </button>
+                  </div>
+                </div>
+              )}
 
               <button
                 type="submit"

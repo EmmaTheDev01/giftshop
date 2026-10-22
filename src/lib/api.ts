@@ -654,15 +654,35 @@ export async function adminUpdateProduct(
       })
       .eq('id', id);
 
-    if (error) return { success: false, error: error.message };
+    if (error) {
+      // Fallback: try calling server API endpoint /api/admin/products/[id]
+      try {
+        const res = await fetch(`/api/admin/products/${id}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(productData),
+        });
+        const data = await res.json();
+        if (res.ok && data.success) {
+          return { success: true };
+        }
+      } catch {
+        // API fallback failed
+      }
+      return { success: false, error: error.message };
+    }
 
-    await supabase.from('admin_audit_logs').insert({
-      action: 'update_product',
-      resource_type: 'products',
-      resource_id: id,
-      new_state: productData as any,
-      details: `Updated product properties for ID ${id}`,
-    });
+    try {
+      await supabase.from('admin_audit_logs').insert({
+        action: 'update_product',
+        resource_type: 'products',
+        resource_id: id,
+        new_state: productData as any,
+        details: `Updated product properties for ID ${id}`,
+      });
+    } catch (auditErr) {
+      console.warn('Non-critical: Audit log insert failed on update_product', auditErr);
+    }
 
     return { success: true };
   } catch (err: any) {

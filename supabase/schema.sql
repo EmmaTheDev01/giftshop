@@ -398,20 +398,62 @@ $$ LANGUAGE plpgsql SECURITY DEFINER;
 
 -- Function 3: Trigger to auto-create profile on auth.users signup
 CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, auth
+AS $$
+DECLARE
+  existing_count INT;
+  assigned_role public.user_role;
+  user_full_name TEXT;
 BEGIN
-  INSERT INTO public.profiles (id, email, full_name, role)
+  -- Determine full name safely
+  user_full_name := COALESCE(
+    NEW.raw_user_meta_data->>'full_name',
+    split_part(NEW.email, '@', 1),
+    'Customer'
+  );
+
+  -- Determine role: first user or admin email gets admin, all others get customer
+  SELECT COUNT(*) INTO existing_count FROM public.profiles;
+  IF existing_count = 0 OR NEW.email LIKE '%admin%' THEN
+    assigned_role := 'admin'::public.user_role;
+  ELSE
+    assigned_role := 'customer'::public.user_role;
+  END IF;
+
+  -- Insert or update customer profile
+  INSERT INTO public.profiles (
+    id,
+    email,
+    full_name,
+    role,
+    language,
+    created_at,
+    updated_at
+  )
   VALUES (
     NEW.id,
     NEW.email,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', NEW.email),
-    COALESCE((NEW.raw_user_meta_data->>'role')::user_role, 'customer')
+    user_full_name,
+    assigned_role,
+    'en-CA',
+    NOW(),
+    NOW()
   )
-  ON CONFLICT (id) DO UPDATE
-  SET email = EXCLUDED.email, updated_at = NOW();
+  ON CONFLICT (id) DO UPDATE SET
+    email = EXCLUDED.email,
+    full_name = COALESCE(EXCLUDED.full_name, profiles.full_name),
+    updated_at = NOW();
+
+  RETURN NEW;
+EXCEPTION WHEN OTHERS THEN
+  -- Gracefully catch any unexpected error so auth.users signup transaction never fails with 500
+  RAISE WARNING 'handle_new_user exception: %', SQLERRM;
   RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created
@@ -998,37 +1040,68 @@ END $$;
 -- AUTOMATED FIRST ADMIN & CREATOR RE-ATTRIBUTION
 -- ==============================================================================
 CREATE OR REPLACE FUNCTION public.handle_new_user()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER
+LANGUAGE plpgsql
+SECURITY DEFINER
+SET search_path = public, auth
+AS $$
 DECLARE
   existing_count INT;
+  assigned_role public.user_role;
+  user_full_name TEXT;
 BEGIN
-  SELECT COUNT(*) INTO existing_count FROM public.profiles;
+  -- Determine full name safely
+  user_full_name := COALESCE(
+    NEW.raw_user_meta_data->>'full_name',
+    split_part(NEW.email, '@', 1),
+    'Customer'
+  );
 
-  INSERT INTO public.profiles (id, email, full_name, role)
+  -- Determine role
+  SELECT COUNT(*) INTO existing_count FROM public.profiles;
+  IF existing_count = 0 OR NEW.email LIKE '%admin%' THEN
+    assigned_role := 'admin'::public.user_role;
+  ELSE
+    assigned_role := 'customer'::public.user_role;
+  END IF;
+
+  INSERT INTO public.profiles (
+    id,
+    email,
+    full_name,
+    role,
+    language,
+    created_at,
+    updated_at
+  )
   VALUES (
     NEW.id,
     NEW.email,
-    COALESCE(NEW.raw_user_meta_data->>'full_name', split_part(NEW.email, '@', 1)),
-    CASE WHEN existing_count = 0 OR NEW.email LIKE '%admin%' THEN 'admin'::user_role ELSE 'customer'::user_role END
+    user_full_name,
+    assigned_role,
+    'en-CA',
+    NOW(),
+    NOW()
   )
   ON CONFLICT (id) DO UPDATE SET
     email = EXCLUDED.email,
-    role = CASE WHEN existing_count = 0 OR NEW.email LIKE '%admin%' THEN 'admin'::user_role ELSE profiles.role END;
+    full_name = COALESCE(EXCLUDED.full_name, profiles.full_name),
+    updated_at = NOW();
 
   -- Re-attribute initial seeded products created_by to the first registered admin user
-  IF existing_count = 0 OR NEW.email LIKE '%admin%' THEN
+  IF assigned_role = 'admin'::public.user_role THEN
     UPDATE public.products
     SET created_by = NEW.id
     WHERE created_by = '00000000-0000-0000-0000-000000000001'::uuid OR created_by IS NULL;
-
-    UPDATE public.admin_audit_logs
-    SET admin_id = NEW.id, admin_email = NEW.email
-    WHERE admin_email = 'admin@memoriq.ca';
   END IF;
 
   RETURN NEW;
+EXCEPTION WHEN OTHERS THEN
+  -- Gracefully catch any unexpected error so auth.users signup transaction never fails with 500
+  RAISE WARNING 'handle_new_user exception: %', SQLERRM;
+  RETURN NEW;
 END;
-$$ LANGUAGE plpgsql SECURITY DEFINER;
+$$;
 
 DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
 CREATE TRIGGER on_auth_user_created

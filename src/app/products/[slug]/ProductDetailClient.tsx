@@ -7,6 +7,7 @@ import { useCart } from '@/context/CartContext';
 import { ExtendedProduct } from '@/types/supabase';
 import ProductCard from '@/components/ProductCard';
 import DiamondSeparator from '@/components/DiamondSeparator';
+import { useAuth } from '@/context/AuthContext';
 import {
   Star,
   Heart,
@@ -21,6 +22,7 @@ import {
   ChevronUp,
   CreditCard,
   Share2,
+  Edit,
 } from 'lucide-react';
 
 export default function ProductDetailClient({
@@ -31,6 +33,8 @@ export default function ProductDetailClient({
   relatedProducts: ExtendedProduct[];
 }) {
   const { addToCart, toggleWishlist, wishlist, setIsCartOpen } = useCart();
+  const { profile } = useAuth();
+  const isAdmin = profile?.role === 'admin';
   const [selectedImgIdx, setSelectedImgIdx] = useState(0);
   const [qty, setQty] = useState(1);
   const [added, setAdded] = useState(false);
@@ -102,6 +106,30 @@ export default function ProductDetailClient({
             )}
             <ChevronRight size={13} style={{ color: '#b47e00' }} />
             <span style={{ color: '#b47e00', fontWeight: 600 }}>{product.name}</span>
+
+            {isAdmin && (
+              <Link
+                href="/admin"
+                style={{
+                  marginLeft: 'auto',
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '6px',
+                  backgroundColor: '#0c2340',
+                  color: '#ffffff',
+                  padding: '5px 12px',
+                  borderRadius: '4px',
+                  fontSize: '0.74rem',
+                  fontWeight: 700,
+                  textDecoration: 'none',
+                  boxShadow: '0 2px 6px rgba(12, 35, 64, 0.2)',
+                }}
+                title="Open Admin Catalogue to Edit this product"
+              >
+                <Edit size={12} style={{ color: '#dda82e' }} />
+                <span>Edit Product (Admin)</span>
+              </Link>
+            )}
           </nav>
         </div>
       </div>
@@ -296,7 +324,7 @@ export default function ProductDetailClient({
             <h1
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)',
+                fontSize: 'clamp(1.35rem, 2.2vw, 1.85rem)',
                 fontWeight: 600,
                 color: '#0c2340',
                 lineHeight: 1.25,

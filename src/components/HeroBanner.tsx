@@ -4,30 +4,95 @@ import DiamondSeparator from './DiamondSeparator';
 import { ArrowRight } from 'lucide-react';
 
 export default function HeroBanner() {
-
   return (
     <section
       style={{
         position: 'relative',
-        minHeight: '625px',
+        minHeight: '560px',
         display: 'flex',
         alignItems: 'center',
-        backgroundColor: '#f9f6f1',
-        backgroundImage: `
-          linear-gradient(90deg, rgba(12, 35, 64, 0.94) 15%, rgba(12, 35, 64, 0.72) 55%, rgba(12, 35, 64, 0.38) 100%),
-          url('https://images.unsplash.com/photo-1632857997897-9418428d7368?q=80&w=2340&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=NHwxMjA3fDA%3D')
-        `,
-        backgroundPosition: 'center 40%',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
+        backgroundColor: '#0c2340',
         color: '#ffffff',
-        padding: '80px 0',
+        padding: '64px 0',
+        overflow: 'hidden',
       }}
+      className="hero-section"
     >
-      <div className="container-custom">
+      {/* 2 Distinct Background Images Side-by-Side */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          display: 'flex',
+          width: '100%',
+          height: '100%',
+          zIndex: 0,
+          
+        }}
+        aria-hidden="true"
+      >
+        {/* Left Half: Statue of Liberty (USA) */}
         <div
           style={{
-            maxWidth: '620px',
+            flex: '1 1 50%',
+            height: '100%',
+            position: 'relative',
+            backgroundImage: `url('/images/statue-of-liberty.jpg')`,
+            backgroundPosition: '52% 16%',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+
+          }}
+        >
+          {/* Left Side Overlay for crisp text contrast */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(90deg, rgba(26, 49, 79, 0.95) 0%, rgba(14, 33, 59, 0.9) 65%, rgba(37, 66, 104, 0.82) 100%)',
+            }}
+          />
+        </div>
+
+        {/* Right Half: CN Tower (Canada) */}
+        <div
+          style={{
+            flex: '1 1 50%',
+            height: '100%',
+            position: 'relative',
+            backgroundImage: `url('/images/cn-tower-hero.jpg')`,
+            backgroundPosition: '72% 35%',
+            backgroundSize: 'cover',
+            backgroundRepeat: 'no-repeat',
+          }}
+        >
+          {/* Right Side Overlay for cinematic luxury tone */}
+          <div
+            style={{
+              position: 'absolute',
+              inset: 0,
+              background: 'linear-gradient(90deg, rgba(10, 28, 52, 0.65) 0%, rgba(10, 28, 52, 0.45) 50%, rgba(10, 28, 52, 0.32) 100%)',
+            }}
+          />
+        </div>
+      </div>
+
+      {/* Subtle Top & Bottom Vignette */}
+      <div
+        style={{
+          position: 'absolute',
+          inset: 0,
+          background: 'linear-gradient(180deg, rgba(10, 28, 52, 0.35) 0%, transparent 20%, transparent 80%, rgba(10, 28, 52, 0.4) 100%)',
+          zIndex: 1,
+          pointerEvents: 'none',
+        }}
+        aria-hidden="true"
+      />
+
+      <div className="container-custom" style={{ position: 'relative', zIndex: 2 }}>
+        <div
+          style={{
+            maxWidth: '560px',
             textAlign: 'left',
             display: 'flex',
             flexDirection: 'column',
@@ -37,30 +102,30 @@ export default function HeroBanner() {
           {/* Top category headline */}
           <h2
             style={{
-              color: '#B47E00',
+              color: '#dda82e',
               fontFamily: 'var(--font-serif)',
-              fontSize: '18px',
+              fontSize: 'clamp(0.72rem, 0.85vw, 0.82rem)',
               fontWeight: 600,
-              letterSpacing: '1.5px',
+              letterSpacing: '0.14em',
               textTransform: 'uppercase',
-              marginBottom: '10px',
-              textShadow: '0px 0px 20px rgba(12, 35, 64, 0.54)',
+              marginBottom: '8px',
+              textShadow: '0 1px 4px rgba(0, 0, 0, 0.4)',
             }}
           >
             PERSONAL GIFTS • MOMENTS TO REMEMBER • CANADA/USA 🇨🇦 🇺🇸
           </h2>
 
-          {/* Main Title */}
+          {/* Main Title - Proportional Luxury Size */}
           <h1
             style={{
               color: '#FFFFFF',
               fontFamily: 'var(--font-serif)',
-              fontSize: 'clamp(2.5rem, 4.5vw, 3.4rem)',
+              fontSize: 'clamp(1.75rem, 2.4vw, 2.35rem)',
               fontWeight: 600,
-              lineHeight: 1.15,
-              letterSpacing: '1px',
-              textShadow: '0px 0px 20px rgba(12, 35, 64, 0.54)',
-              marginBottom: '18px',
+              lineHeight: 1.2,
+              letterSpacing: '0.01em',
+              textShadow: '0 2px 10px rgba(0, 0, 0, 0.4)',
+              marginBottom: '14px',
             }}
           >
             PERSONAL GIFTS,<br />MADE TO FIT YOUR STORIES
@@ -69,13 +134,12 @@ export default function HeroBanner() {
           {/* Description */}
           <p
             style={{
-              color: '#FFFFFF',
+              color: '#f1f5f9',
               fontFamily: 'var(--font-sans)',
-              fontSize: '18px',
+              fontSize: 'clamp(0.92rem, 0.98vw, 1rem)',
               fontWeight: 300,
-              lineHeight: 1.5,
-              letterSpacing: '0.1px',
-              textShadow: '0px 0px 57px rgba(12, 35, 64, 0.8)',
+              lineHeight: 1.6,
+              textShadow: '0 1px 6px rgba(0, 0, 0, 0.5)',
               marginBottom: '10px',
             }}
           >
@@ -86,18 +150,19 @@ export default function HeroBanner() {
             style={{
               color: '#dda82e',
               fontFamily: 'var(--font-sans)',
-              fontSize: '15px',
+              fontSize: 'clamp(0.72rem, 0.78vw, 0.78rem)',
               fontWeight: 600,
-              letterSpacing: '0.5px',
+              letterSpacing: '0.08em',
               textTransform: 'uppercase',
-              marginBottom: '14px',
+              marginBottom: '12px',
+              lineHeight: 1.45,
             }}
           >
             SHOP BY OCCASION • ADD A LITTLE PERSONAL TOUCH • KEEPSAKES FOR THE PEOPLE WHO MATTER MOST
           </p>
 
           {/* Exact separator from site */}
-          <div style={{ width: '100%', maxWidth: '320px', margin: '14px 0 24px' }}>
+          <div style={{ width: '100%', maxWidth: '280px', margin: '8px 0 20px' }}>
             <DiamondSeparator variant="dl" />
           </div>
 
@@ -108,26 +173,26 @@ export default function HeroBanner() {
               backgroundColor: '#B47E00',
               color: '#FFFFFF',
               fontFamily: 'var(--font-serif)',
-              fontSize: '14px',
+              fontSize: '13px',
               fontWeight: 600,
               textTransform: 'uppercase',
-              letterSpacing: '1px',
-              padding: '14px 32px',
+              letterSpacing: '0.08em',
+              padding: '13px 28px',
               borderRadius: '2px',
               textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
-              gap: '12px',
-              transition: 'background-color 0.25s',
+              gap: '10px',
+              boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
+              transition: 'background-color 0.25s, transform 0.2s',
             }}
             className="hero-btn"
           >
             <span>EXPLORE PERSONAL GIFTS</span>
-            <ArrowRight size={16} />
+            <ArrowRight size={15} />
           </Link>
         </div>
       </div>
-
     </section>
   );
 }

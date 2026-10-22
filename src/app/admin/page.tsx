@@ -13,6 +13,7 @@ import {
   adminGetAuditLogs,
   adminGetSystemLogs,
   adminCreateProduct,
+  adminUpdateProduct,
   adminDeleteProduct,
   adminUpdateOrderStatus,
   getProducts,
@@ -352,6 +353,171 @@ export default function AdminDashboardPage() {
         setProducts(refreshed);
         setTimeout(() => setBannerNotice(null), 4000);
       }
+    }
+  };
+
+  // ----------------------------------------------------------------------------
+  // EDIT PRODUCT MODAL STATE & HANDLERS
+  // ----------------------------------------------------------------------------
+  const [isEditProductModalOpen, setIsEditProductModalOpen] = useState(false);
+  const [editingProductId, setEditingProductId] = useState<string | null>(null);
+  const [editProdName, setEditProdName] = useState('');
+  const [editProdSlug, setEditProdSlug] = useState('');
+  const [editProdSku, setEditProdSku] = useState('');
+  const [editProdPrice, setEditProdPrice] = useState('49.99');
+  const [editProdOrigPrice, setEditProdOrigPrice] = useState('');
+  const [editProdStock, setEditProdStock] = useState('50');
+  const [editProdCategory, setEditProdCategory] = useState('');
+  const [editProdCollection, setEditProdCollection] = useState('');
+  const [editProdBrand, setEditProdBrand] = useState('');
+  const [editProdBadge, setEditProdBadge] = useState('New Release');
+  const [editProdMaterial, setEditProdMaterial] = useState('');
+  const [editProdDimensions, setEditProdDimensions] = useState('');
+  const [editProdShortDesc, setEditProdShortDesc] = useState('');
+  const [editProdDesc, setEditProdDesc] = useState('');
+  const [editIsFeatured, setEditIsFeatured] = useState(false);
+  const [editIsLimited, setEditIsLimited] = useState(false);
+  const [editExistingImages, setEditExistingImages] = useState<string[]>([]);
+  const [editPendingFiles, setEditPendingFiles] = useState<
+    { file: File; previewUrl: string; originalSize: number; compressedSize: number }[]
+  >([]);
+  const [isSubmittingEdit, setIsSubmittingEdit] = useState(false);
+  const editFileInputRef = useRef<HTMLInputElement>(null);
+
+  const handleOpenEditModal = (p: ExtendedProduct) => {
+    setEditingProductId(p.id);
+    setEditProdName(p.name || '');
+    setEditProdSlug(p.slug || '');
+    setEditProdSku(p.sku || '');
+    setEditProdPrice(p.price !== undefined ? p.price.toString() : '0');
+    setEditProdOrigPrice(p.original_price ? p.original_price.toString() : '');
+    setEditProdStock(p.stock !== undefined ? p.stock.toString() : '0');
+    setEditProdCategory(p.category_id || (categories[0]?.id ?? ''));
+    setEditProdCollection(p.collection_id || (collections[0]?.id ?? ''));
+    setEditProdBrand(p.brand_id || (brands[0]?.id ?? ''));
+    setEditProdBadge(p.badge || 'New Release');
+    setEditProdMaterial(p.material || 'Canadian Hardwood & Timber');
+    setEditProdDimensions(p.dimensions || '25cm x 25cm x 2cm');
+    setEditProdShortDesc(p.short_description || '');
+    setEditProdDesc(p.description || '');
+    setEditIsFeatured(!!p.is_featured);
+    setEditIsLimited(!!p.is_limited_edition);
+    setEditExistingImages(p.images && p.images.length > 0 ? [...p.images] : []);
+    setEditPendingFiles([]);
+    setIsEditProductModalOpen(true);
+  };
+
+  const handleEditFileSelect = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (!e.target.files || e.target.files.length === 0) return;
+    const files = Array.from(e.target.files);
+
+    setIsUploadingImages(true);
+    setUploadProgressText(`Optimizing ${files.length} images...`);
+
+    try {
+      const processed: { file: File; previewUrl: string; originalSize: number; compressedSize: number }[] = [];
+      for (let i = 0; i < files.length; i++) {
+        setUploadProgressText(`Compressing image ${i + 1} of ${files.length}...`);
+        const opt = await optimizeImage(files[i]);
+        processed.push({
+          file: opt.file instanceof File ? opt.file : new File([opt.file], files[i].name, { type: 'image/webp' }),
+          previewUrl: opt.previewUrl,
+          originalSize: opt.originalSize,
+          compressedSize: opt.compressedSize,
+        });
+      }
+      setEditPendingFiles((prev) => [...prev, ...processed]);
+      setUploadProgressText('');
+    } catch (err) {
+      console.error('Image optimization error:', err);
+    } finally {
+      setIsUploadingImages(false);
+      if (editFileInputRef.current) editFileInputRef.current.value = '';
+    }
+  };
+
+  const removeEditPendingImage = (index: number) => {
+    setEditPendingFiles((prev) => prev.filter((_, i) => i !== index));
+  };
+
+  const removeEditExistingImage = (url: string) => {
+    setEditExistingImages((prev) => prev.filter((u) => u !== url));
+  };
+
+  const setEditPrimaryImage = (index: number) => {
+    setEditExistingImages((prev) => {
+      const item = prev[index];
+      const rest = prev.filter((_, i) => i !== index);
+      return [item, ...rest];
+    });
+  };
+
+  const handleUpdateProductSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editingProductId) return;
+    if (!editProdName.trim()) {
+      alert('Please provide a product title');
+      return;
+    }
+
+    setIsSubmittingEdit(true);
+    setUploadProgressText('Uploading images and saving changes...');
+
+    try {
+      const finalImages: string[] = [...editExistingImages];
+      if (editPendingFiles.length > 0) {
+        for (let i = 0; i < editPendingFiles.length; i++) {
+          setUploadProgressText(`Uploading image ${i + 1} of ${editPendingFiles.length}...`);
+          const fileItem = editPendingFiles[i];
+          const uploadRes = await uploadProductImage(fileItem.file, fileItem.file.name);
+          if (uploadRes.success && uploadRes.url) {
+            finalImages.push(uploadRes.url);
+          }
+        }
+      }
+
+      if (finalImages.length === 0) {
+        finalImages.push('/images/products/laser-cut-wolf-howling-forest-wall-art.jpg');
+      }
+
+      const res = await adminUpdateProduct(editingProductId, {
+        name: editProdName.trim(),
+        slug: editProdSlug.trim() || editProdName.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        sku: editProdSku.trim() || undefined,
+        price: parseFloat(editProdPrice) || 0,
+        original_price: editProdOrigPrice ? parseFloat(editProdOrigPrice) : undefined,
+        stock: parseInt(editProdStock, 10) || 0,
+        category_id: editProdCategory || undefined,
+        collection_id: editProdCollection || undefined,
+        brand_id: editProdBrand || undefined,
+        images: finalImages,
+        badge: editProdBadge || undefined,
+        material: editProdMaterial.trim(),
+        dimensions: editProdDimensions.trim(),
+        short_description: editProdShortDesc.trim() || editProdName.trim(),
+        description: editProdDesc.trim(),
+        is_featured: editIsFeatured,
+        is_limited_edition: editIsLimited,
+      });
+
+      if (res.success) {
+        setBannerNotice({
+          message: `Product "${editProdName}" updated successfully!`,
+          type: 'success',
+        });
+        setIsEditProductModalOpen(false);
+        setEditingProductId(null);
+        const refreshed = await getProducts();
+        setProducts(refreshed);
+        setTimeout(() => setBannerNotice(null), 5000);
+      } else {
+        alert(`Failed to update product: ${res.error}`);
+      }
+    } catch (err: any) {
+      alert(`Error updating product: ${err.message}`);
+    } finally {
+      setIsSubmittingEdit(false);
+      setUploadProgressText('');
     }
   };
 
@@ -1523,6 +1689,23 @@ export default function AdminDashboardPage() {
                                 <Eye size={14} />
                               </Link>
                               <button
+                                onClick={() => handleOpenEditModal(p)}
+                                style={{
+                                  padding: '6px',
+                                  borderRadius: '4px',
+                                  border: '1px solid #cbd5e1',
+                                  backgroundColor: '#f8fafc',
+                                  color: '#0c2340',
+                                  cursor: 'pointer',
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  transition: 'background-color 0.2s',
+                                }}
+                                title="Edit product details"
+                              >
+                                <Edit size={14} />
+                              </button>
+                              <button
                                 onClick={() => handleDeleteProduct(p.id, p.name)}
                                 style={{
                                   padding: '6px',
@@ -2551,6 +2734,667 @@ export default function AdminDashboardPage() {
                     </>
                   ) : (
                     <span>Publish to Live Catalogue &rarr;</span>
+                  )}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* -------------------------------------------------------------------------- */}
+      {/* 5. EDIT PRODUCT MODAL WITH IMAGE MANAGEMENT & METADATA                     */}
+      {/* -------------------------------------------------------------------------- */}
+      {isEditProductModalOpen && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            backgroundColor: 'rgba(7, 22, 38, 0.75)',
+            backdropFilter: 'blur(4px)',
+            zIndex: 100,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            animation: 'fadeIn 0.2s ease-out',
+          }}
+        >
+          <div
+            style={{
+              backgroundColor: '#ffffff',
+              borderRadius: '10px',
+              maxWidth: '840px',
+              width: '100%',
+              maxHeight: '90vh',
+              display: 'flex',
+              flexDirection: 'column',
+              boxShadow: '0 20px 40px rgba(0,0,0,0.25)',
+              overflow: 'hidden',
+            }}
+          >
+            {/* Modal Header */}
+            <div
+              style={{
+                padding: '20px 24px',
+                backgroundColor: '#0c2340',
+                color: '#ffffff',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'space-between',
+                borderBottom: '3px solid #b47e00',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
+                <Edit size={22} style={{ color: '#dda82e' }} />
+                <div>
+                  <h3 style={{ fontSize: '1.2rem', fontWeight: 700, margin: 0 }}>
+                    Edit Canadian Keepsake
+                  </h3>
+                  <p style={{ fontSize: '0.75rem', color: '#94a3b8', margin: 0 }}>
+                    Modify pricing, stock, images, specifications, and merchandising for &quot;{editProdName || 'Product'}&quot;
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => setIsEditProductModalOpen(false)}
+                style={{ background: 'none', border: 'none', color: '#ffffff', cursor: 'pointer' }}
+                aria-label="Close edit modal"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Modal Body Form */}
+            <form onSubmit={handleUpdateProductSubmit} style={{ flex: 1, overflowY: 'auto', padding: '24px' }}>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
+                {/* Row 1: Name and Slug */}
+                <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Keepsake Name *
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      placeholder="e.g. Laser-Cut Beaver Boreal Plaque"
+                      value={editProdName}
+                      onChange={(e) => setEditProdName(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.88rem',
+                        outline: 'none',
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Product Slug (URL)
+                    </label>
+                    <input
+                      type="text"
+                      value={editProdSlug}
+                      onChange={(e) => setEditProdSlug(e.target.value)}
+                      placeholder="product-slug"
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.88rem',
+                        outline: 'none',
+                        fontFamily: 'monospace',
+                        backgroundColor: '#f8fafc',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Row 2: Price CAD, Orig Price, Stock, SKU */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '14px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Price ($ CAD) *
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      required
+                      value={editProdPrice}
+                      onChange={(e) => setEditProdPrice(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.88rem',
+                        outline: 'none',
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Compare-at Price
+                    </label>
+                    <input
+                      type="number"
+                      step="0.01"
+                      value={editProdOrigPrice}
+                      onChange={(e) => setEditProdOrigPrice(e.target.value)}
+                      placeholder="e.g. 65.00"
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.88rem',
+                        outline: 'none',
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Stock Quantity
+                    </label>
+                    <input
+                      type="number"
+                      required
+                      value={editProdStock}
+                      onChange={(e) => setEditProdStock(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.88rem',
+                        outline: 'none',
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      SKU Code
+                    </label>
+                    <input
+                      type="text"
+                      value={editProdSku}
+                      onChange={(e) => setEditProdSku(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.88rem',
+                        outline: 'none',
+                        fontFamily: 'monospace',
+                      }}
+                    />
+                  </div>
+                </div>
+
+                {/* Row 3: Category, Collection, Brand Dropdowns */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Department Category
+                    </label>
+                    <select
+                      value={editProdCategory}
+                      onChange={(e) => setEditProdCategory(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.85rem',
+                        outline: 'none',
+                        backgroundColor: '#ffffff',
+                      }}
+                    >
+                      {categories.map((c) => (
+                        <option key={c.id} value={c.id}>
+                          {c.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Collection
+                    </label>
+                    <select
+                      value={editProdCollection}
+                      onChange={(e) => setEditProdCollection(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.85rem',
+                        outline: 'none',
+                        backgroundColor: '#ffffff',
+                      }}
+                    >
+                      <option value="">No Collection</option>
+                      {collections.map((col) => (
+                        <option key={col.id} value={col.id}>
+                          {col.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Artisan Studio
+                    </label>
+                    <select
+                      value={editProdBrand}
+                      onChange={(e) => setEditProdBrand(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.85rem',
+                        outline: 'none',
+                        backgroundColor: '#ffffff',
+                      }}
+                    >
+                      <option value="">No Studio</option>
+                      {brands.map((b) => (
+                        <option key={b.id} value={b.id}>
+                          {b.name}
+                        </option>
+                      ))}
+                    </select>
+                  </div>
+                </div>
+
+                {/* Row 4: Multiple Image Management */}
+                <div style={{ backgroundColor: '#faf8f5', border: '1px solid #ebd9c0', borderRadius: '8px', padding: '16px' }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '10px' }}>
+                    <div>
+                      <strong style={{ fontSize: '0.88rem', color: '#0c2340' }}>
+                        Product Photography ({editExistingImages.length + editPendingFiles.length} photos)
+                      </strong>
+                      <p style={{ fontSize: '0.75rem', color: '#64748b', margin: '2px 0 0' }}>
+                        The first image is the primary cover image. Click &quot;Make Cover&quot; to set an image as primary.
+                      </p>
+                    </div>
+
+                    <input
+                      ref={editFileInputRef}
+                      type="file"
+                      multiple
+                      accept="image/*"
+                      onChange={handleEditFileSelect}
+                      style={{ display: 'none' }}
+                      id="edit-product-multi-image-input"
+                    />
+                    <label
+                      htmlFor="edit-product-multi-image-input"
+                      style={{
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        gap: '6px',
+                        backgroundColor: '#b47e00',
+                        color: '#ffffff',
+                        padding: '8px 14px',
+                        borderRadius: '4px',
+                        fontSize: '0.8rem',
+                        fontWeight: 700,
+                        cursor: 'pointer',
+                      }}
+                    >
+                      <Upload size={14} />
+                      <span>Add Photos</span>
+                    </label>
+                  </div>
+
+                  {/* Progress Indicator */}
+                  {uploadProgressText && isSubmittingEdit && (
+                    <div style={{ fontSize: '0.8rem', color: '#b47e00', fontWeight: 600, marginBottom: '10px', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                      <Loader2 size={16} className="animate-spin" />
+                      <span>{uploadProgressText}</span>
+                    </div>
+                  )}
+
+                  {/* Existing & Pending Photos Gallery */}
+                  <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap', minHeight: '80px', alignItems: 'center' }}>
+                    {/* Existing Images */}
+                    {editExistingImages.map((url, idx) => (
+                      <div
+                        key={idx}
+                        style={{
+                          position: 'relative',
+                          width: '94px',
+                          height: '94px',
+                          borderRadius: '6px',
+                          overflow: 'hidden',
+                          border: idx === 0 ? '2px solid #b47e00' : '1px solid #cbd5e1',
+                          backgroundColor: '#ffffff',
+                          boxShadow: idx === 0 ? '0 2px 8px rgba(180, 126, 0, 0.25)' : 'none',
+                        }}
+                      >
+                        <Image src={url} alt={`Photo ${idx + 1}`} fill style={{ objectFit: 'cover' }} />
+                        <button
+                          type="button"
+                          onClick={() => removeEditExistingImage(url)}
+                          style={{
+                            position: 'absolute',
+                            top: '4px',
+                            right: '4px',
+                            backgroundColor: 'rgba(0,0,0,0.65)',
+                            color: '#ffffff',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '20px',
+                            height: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                          }}
+                          title="Remove image"
+                        >
+                          <X size={12} />
+                        </button>
+                        {idx === 0 ? (
+                          <div
+                            style={{
+                              position: 'absolute',
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              backgroundColor: '#b47e00',
+                              color: '#ffffff',
+                              fontSize: '0.62rem',
+                              fontWeight: 700,
+                              textAlign: 'center',
+                              padding: '2px 0',
+                            }}
+                          >
+                            COVER
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => setEditPrimaryImage(idx)}
+                            style={{
+                              position: 'absolute',
+                              bottom: 0,
+                              left: 0,
+                              right: 0,
+                              backgroundColor: 'rgba(12, 35, 64, 0.85)',
+                              color: '#ffffff',
+                              fontSize: '0.6rem',
+                              border: 'none',
+                              cursor: 'pointer',
+                              padding: '3px 0',
+                            }}
+                          >
+                            Set Cover
+                          </button>
+                        )}
+                      </div>
+                    ))}
+
+                    {/* Pending Uploads */}
+                    {editPendingFiles.map((item, idx) => (
+                      <div
+                        key={`pending-${idx}`}
+                        style={{
+                          position: 'relative',
+                          width: '94px',
+                          height: '94px',
+                          borderRadius: '6px',
+                          overflow: 'hidden',
+                          border: '2px dashed #0284c7',
+                          backgroundColor: '#ffffff',
+                        }}
+                      >
+                        <Image src={item.previewUrl} alt="Pending upload" fill style={{ objectFit: 'cover' }} />
+                        <button
+                          type="button"
+                          onClick={() => removeEditPendingImage(idx)}
+                          style={{
+                            position: 'absolute',
+                            top: '4px',
+                            right: '4px',
+                            backgroundColor: 'rgba(0,0,0,0.65)',
+                            color: '#ffffff',
+                            border: 'none',
+                            borderRadius: '50%',
+                            width: '20px',
+                            height: '20px',
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            cursor: 'pointer',
+                          }}
+                        >
+                          <X size={12} />
+                        </button>
+                        <div
+                          style={{
+                            position: 'absolute',
+                            bottom: 0,
+                            left: 0,
+                            right: 0,
+                            backgroundColor: '#0284c7',
+                            color: '#ffffff',
+                            fontSize: '0.6rem',
+                            fontWeight: 700,
+                            textAlign: 'center',
+                            padding: '2px 0',
+                          }}
+                        >
+                          NEW ({(item.compressedSize / 1024).toFixed(0)} KB)
+                        </div>
+                      </div>
+                    ))}
+
+                    {editExistingImages.length === 0 && editPendingFiles.length === 0 && (
+                      <div style={{ color: '#94a3b8', fontSize: '0.8rem', fontStyle: 'italic' }}>
+                        No images attached. Click &quot;Add Photos&quot; to upload craft imagery.
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Row 5: Material, Dimensions, Badges */}
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '14px' }}>
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Material
+                    </label>
+                    <input
+                      type="text"
+                      value={editProdMaterial}
+                      onChange={(e) => setEditProdMaterial(e.target.value)}
+                      placeholder="e.g. Canadian Hardwood & Walnut"
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.85rem',
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Dimensions
+                    </label>
+                    <input
+                      type="text"
+                      value={editProdDimensions}
+                      onChange={(e) => setEditProdDimensions(e.target.value)}
+                      placeholder="e.g. 30cm x 30cm x 3cm"
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.85rem',
+                      }}
+                    />
+                  </div>
+
+                  <div>
+                    <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                      Merchandising Badge
+                    </label>
+                    <select
+                      value={editProdBadge}
+                      onChange={(e) => setEditProdBadge(e.target.value)}
+                      style={{
+                        width: '100%',
+                        padding: '10px 12px',
+                        borderRadius: '6px',
+                        border: '1px solid #cbd5e1',
+                        fontSize: '0.85rem',
+                        backgroundColor: '#ffffff',
+                      }}
+                    >
+                      <option value="New Release">New Release</option>
+                      <option value="Bestseller">Bestseller</option>
+                      <option value="Collector Edition">Collector Edition</option>
+                      <option value="Limited Run">Limited Run</option>
+                      <option value="Artisan Choice">Artisan Choice</option>
+                    </select>
+                  </div>
+                </div>
+
+                {/* Row 6: Short Description */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                    Short Summary (One-liner)
+                  </label>
+                  <input
+                    type="text"
+                    value={editProdShortDesc}
+                    onChange={(e) => setEditProdShortDesc(e.target.value)}
+                    placeholder="Brief highlights for cards and previews..."
+                    style={{
+                      width: '100%',
+                      padding: '10px 12px',
+                      borderRadius: '6px',
+                      border: '1px solid #cbd5e1',
+                      fontSize: '0.85rem',
+                      outline: 'none',
+                    }}
+                  />
+                </div>
+
+                {/* Row 7: Full Description */}
+                <div>
+                  <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 700, color: '#0c2340', marginBottom: '6px' }}>
+                    Artisan Description &amp; Specifications
+                  </label>
+                  <textarea
+                    rows={4}
+                    value={editProdDesc}
+                    onChange={(e) => setEditProdDesc(e.target.value)}
+                    placeholder="Describe the craftsmanship, materials, Canadian origin, and mounting instructions..."
+                    style={{
+                      width: '100%',
+                      padding: '10px 12px',
+                      borderRadius: '6px',
+                      border: '1px solid #cbd5e1',
+                      fontSize: '0.85rem',
+                      outline: 'none',
+                    }}
+                  />
+                </div>
+
+                {/* Row 8: Feature & Limited Edition Toggles */}
+                <div style={{ display: 'flex', gap: '24px', alignItems: 'center' }}>
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: '#0c2340' }}>
+                    <input
+                      type="checkbox"
+                      checked={editIsFeatured}
+                      onChange={(e) => setEditIsFeatured(e.target.checked)}
+                      style={{ width: '16px', height: '16px', accentColor: '#b47e00' }}
+                    />
+                    <span>Feature on Homepage Spotlight</span>
+                  </label>
+
+                  <label style={{ display: 'flex', alignItems: 'center', gap: '8px', cursor: 'pointer', fontSize: '0.85rem', fontWeight: 600, color: '#0c2340' }}>
+                    <input
+                      type="checkbox"
+                      checked={editIsLimited}
+                      onChange={(e) => setEditIsLimited(e.target.checked)}
+                      style={{ width: '16px', height: '16px', accentColor: '#b47e00' }}
+                    />
+                    <span>Mark as Limited Edition Collectible</span>
+                  </label>
+                </div>
+              </div>
+
+              {/* Modal Footer */}
+              <div
+                style={{
+                  display: 'flex',
+                  justifyContent: 'flex-end',
+                  gap: '12px',
+                  paddingTop: '20px',
+                  marginTop: '20px',
+                  borderTop: '1px solid #e2e8f0',
+                }}
+              >
+                <button
+                  type="button"
+                  onClick={() => setIsEditProductModalOpen(false)}
+                  style={{
+                    padding: '10px 18px',
+                    borderRadius: '6px',
+                    border: '1px solid #cbd5e1',
+                    backgroundColor: '#ffffff',
+                    color: '#475569',
+                    fontSize: '0.85rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                  }}
+                >
+                  Cancel
+                </button>
+
+                <button
+                  type="submit"
+                  disabled={isSubmittingEdit}
+                  style={{
+                    padding: '10px 24px',
+                    borderRadius: '6px',
+                    border: 'none',
+                    backgroundColor: '#0c2340',
+                    color: '#ffffff',
+                    fontSize: '0.85rem',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '8px',
+                    boxShadow: '0 4px 12px rgba(12, 35, 64, 0.25)',
+                  }}
+                >
+                  {isSubmittingEdit ? (
+                    <>
+                      <Loader2 size={16} className="animate-spin" style={{ color: '#dda82e' }} />
+                      <span>Saving Changes...</span>
+                    </>
+                  ) : (
+                    <span>Save Product Changes &rarr;</span>
                   )}
                 </button>
               </div>

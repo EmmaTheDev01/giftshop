@@ -46,10 +46,10 @@ export default function CollaborationsGrid() {
             <h2
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(2rem, 3.8vw, 2.75rem)',
+                fontSize: 'clamp(1.45rem, 2.2vw, 1.95rem)',
                 fontWeight: 500,
                 color: '#0c2340',
-                lineHeight: 1.2,
+                lineHeight: 1.25,
               }}
             >
               Artisan Guild Partners

@@ -80,11 +80,11 @@ export default function YourOwnMark() {
             <h2
               style={{
                 fontFamily: 'var(--font-serif)',
-                fontSize: 'clamp(2.2rem, 4.2vw, 3.2rem)',
+                fontSize: 'clamp(1.5rem, 2.3vw, 2.05rem)',
                 fontWeight: 500,
                 color: '#ffffff',
-                lineHeight: 1.18,
-                marginBottom: '18px',
+                lineHeight: 1.25,
+                marginBottom: '14px',
                 letterSpacing: '-0.01em',
               }}
             >
@@ -93,10 +93,10 @@ export default function YourOwnMark() {
 
             <p
               style={{
-                fontSize: '1.1rem',
-                lineHeight: 1.7,
+                fontSize: 'clamp(0.92rem, 1.05vw, 1rem)',
+                lineHeight: 1.65,
                 color: '#cbd5e1',
-                marginBottom: '32px',
+                marginBottom: '28px',
                 maxWidth: '540px',
                 fontWeight: 300,
               }}

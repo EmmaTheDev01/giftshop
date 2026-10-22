@@ -203,12 +203,12 @@ export default function ProductCard({ product }: { product: ExtendedProduct }) {
       <div style={{ paddingTop: '14px', textAlign: 'left' }}>
         <p
           style={{
-            fontSize: '0.72rem',
+            fontSize: '0.68rem',
             fontWeight: 600,
             textTransform: 'uppercase',
-            letterSpacing: '0.12em',
+            letterSpacing: '0.1em',
             color: '#b47e00',
-            marginBottom: '4px',
+            marginBottom: '3px',
           }}
         >
           {product.category_name || 'Official Souvenir'}
@@ -218,12 +218,12 @@ export default function ProductCard({ product }: { product: ExtendedProduct }) {
           <h4
             style={{
               fontFamily: 'var(--font-serif)',
-              fontSize: '1.05rem',
+              fontSize: 'clamp(0.88rem, 1vw, 0.96rem)',
               fontWeight: 600,
-              lineHeight: 1.3,
+              lineHeight: 1.35,
               color: '#0c2340',
-              marginBottom: '6px',
-              minHeight: '2.6em',
+              marginBottom: '5px',
+              minHeight: '2.7em',
               display: '-webkit-box',
               WebkitLineClamp: 2,
               WebkitBoxOrient: 'vertical',
@@ -240,7 +240,7 @@ export default function ProductCard({ product }: { product: ExtendedProduct }) {
           <span
             style={{
               fontFamily: 'var(--font-sans)',
-              fontSize: '1.02rem',
+              fontSize: 'clamp(0.92rem, 1vw, 0.98rem)',
               fontWeight: 700,
               color: '#0c2340',
             }}
@@ -250,7 +250,7 @@ export default function ProductCard({ product }: { product: ExtendedProduct }) {
           {product.original_price && (
             <span
               style={{
-                fontSize: '0.82rem',
+                fontSize: '0.78rem',
                 color: '#94a3b8',
                 textDecoration: 'line-through',
               }}
