@@ -136,6 +136,7 @@ function ForgotPasswordForm() {
                 type="submit"
                 disabled={submitting}
                 style={{
+                  width: '100%',
                   backgroundColor: '#0c2340',
                   color: '#ffffff',
                   border: 'none',

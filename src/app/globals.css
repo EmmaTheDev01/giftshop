@@ -327,6 +327,38 @@ img {
   background-color: #faf8f5 !important;
 }
 
+/* ============================================================================== */
+/* PRODUCT CAROUSEL (RESPONSIVE 2x2 MOBILE GRID)                                  */
+/* ============================================================================== */
+.product-carousel-track {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding-bottom: 20px;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+.product-carousel-track::-webkit-scrollbar {
+  display: none;
+}
+
+.product-carousel-card-wrap {
+  flex: 0 0 280px;
+  scroll-snap-align: start;
+}
+
+/* Two-button stack equal width utility */
+.two-btn-stack {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+}
+
 @media (max-width: 900px) {
   .hidden-tablet {
     display: none !important;
@@ -350,6 +382,67 @@ img {
     min-height: 480px !important;
     padding: 44px 0 !important;
   }
+
+  /* 1. Mobile Product Carousel: 2x2 Grid per visible row view */
+  .product-carousel-track {
+    display: grid !important;
+    grid-template-rows: repeat(2, auto) !important;
+    grid-auto-flow: column !important;
+    grid-auto-columns: calc(50% - 6px) !important;
+    gap: 16px 12px !important;
+    padding-bottom: 14px !important;
+  }
+
+  .product-carousel-card-wrap {
+    flex: none !important;
+    width: 100% !important;
+    min-width: 0 !important;
+    scroll-snap-align: start !important;
+  }
+
+  /* 2. Smaller Buttons on Mobile Across All Sections */
+  .btn-primary,
+  .btn-secondary,
+  .btn-gold,
+  .hero-btn,
+  .hero-btn-secondary {
+    padding: 10px 18px !important;
+    font-size: 0.8rem !important;
+    letter-spacing: 0.05em !important;
+  }
+
+  /* 3. Forms: Centered with full/equal width submit & action buttons */
+  form {
+    width: 100% !important;
+  }
+
+  form button[type="submit"] {
+    width: 100% !important;
+    padding: 11px 18px !important;
+    font-size: 0.85rem !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  /* 4. When 2 buttons are stacked, make them equal size in width */
+  .two-btn-stack {
+    flex-direction: column !important;
+    width: 100% !important;
+    gap: 10px !important;
+  }
+
+  .two-btn-stack > a,
+  .two-btn-stack > button,
+  .two-btn-stack .stacked-btn,
+  .form-actions-pair > button,
+  .form-actions-pair > a {
+    width: 100% !important;
+    flex: 1 1 100% !important;
+    text-align: center !important;
+    justify-content: center !important;
+    display: flex !important;
+  }
 }
 
 @media (max-width: 640px) {
@@ -360,5 +453,56 @@ img {
     min-height: 440px !important;
     padding: 36px 0 !important;
   }
+  .newsletter-form {
+    flex-direction: column !important;
+  }
+  .newsletter-form input,
+  .newsletter-form button {
+    width: 100% !important;
+    min-width: 100% !important;
+  }
 }
+
+/* ============================================================================== */
+/* SKELETON SHIMMER LOADING SYSTEM                                                */
+/* ============================================================================== */
+@keyframes skeleton-shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+.skeleton-shimmer {
+  background: linear-gradient(
+    90deg,
+    #f2ece4 0%,
+    #faf7f3 25%,
+    #e9e0d4 50%,
+    #faf7f3 75%,
+    #f2ece4 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+}
+
+.skeleton-shimmer-dark {
+  background: linear-gradient(
+    90deg,
+    #0f243b 0%,
+    #183a5c 25%,
+    #0b1c2e 50%,
+    #183a5c 75%,
+    #0f243b 100%
+  );
+  background-size: 200% 100%;
+  animation: skeleton-shimmer 1.8s ease-in-out infinite;
+}
+
+.skeleton-box {
+  display: block;
+}
+
 

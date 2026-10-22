@@ -173,15 +173,16 @@ export default function HeroBanner() {
               backgroundColor: '#B47E00',
               color: '#FFFFFF',
               fontFamily: 'var(--font-serif)',
-              fontSize: '13px',
+              fontSize: 'clamp(11px, 1.8vw, 13px)',
               fontWeight: 600,
               textTransform: 'uppercase',
               letterSpacing: '0.08em',
-              padding: '13px 28px',
+              padding: 'clamp(10px, 2vw, 13px) clamp(18px, 3.5vw, 28px)',
               borderRadius: '2px',
               textDecoration: 'none',
               display: 'inline-flex',
               alignItems: 'center',
+              justifyContent: 'center',
               gap: '10px',
               boxShadow: '0 4px 14px rgba(0,0,0,0.25)',
               transition: 'background-color 0.25s, transform 0.2s',
@@ -189,7 +190,7 @@ export default function HeroBanner() {
             className="hero-btn"
           >
             <span>EXPLORE PERSONAL GIFTS</span>
-            <ArrowRight size={15} />
+            <ArrowRight size={14} />
           </Link>
         </div>
       </div>

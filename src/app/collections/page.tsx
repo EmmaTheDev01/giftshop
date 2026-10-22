@@ -6,7 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DiamondSeparator from '@/components/DiamondSeparator';
-import { Sparkles, ArrowRight, ChevronRight } from 'lucide-react';
+import { ArrowRight, ChevronRight } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Exclusive Collections | Official Memoriq Boutique Canada 🇨🇦',
@@ -133,7 +133,6 @@ export default function CollectionsPage() {
                 marginBottom: '14px',
               }}
             >
-              <Sparkles size={13} />
               <span>Curated Design Universes</span>
             </div>
 

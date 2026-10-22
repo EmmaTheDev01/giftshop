@@ -123,22 +123,23 @@ export default function SpotlightRivet() {
                 backgroundColor: '#B47E00',
                 color: '#FFFFFF',
                 fontFamily: 'var(--font-serif)',
-                fontSize: '14px',
+                fontSize: 'clamp(12px, 1.8vw, 13px)',
                 fontWeight: 600,
                 textTransform: 'uppercase',
-                letterSpacing: '1px',
-                padding: '14px 32px',
+                letterSpacing: '0.08em',
+                padding: 'clamp(10px, 2vw, 12px) clamp(20px, 3.5vw, 28px)',
                 borderRadius: '2px',
                 textDecoration: 'none',
                 display: 'inline-flex',
                 alignItems: 'center',
-                gap: '12px',
+                justifyContent: 'center',
+                gap: '10px',
                 transition: 'background-color 0.25s',
               }}
               className="hero-btn"
             >
               <span>Get yours</span>
-              <ArrowRight size={16} />
+              <ArrowRight size={15} />
             </Link>
           </div>
         </div>

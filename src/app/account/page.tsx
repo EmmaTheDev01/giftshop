@@ -33,6 +33,7 @@ import {
   Send,
   Trash2,
 } from 'lucide-react';
+import { Skeleton, AccountSkeleton } from '@/components/Skeleton';
 
 export default function AccountPage() {
   const router = useRouter();
@@ -140,11 +141,9 @@ export default function AccountPage() {
     return (
       <div style={{ backgroundColor: '#faf8f5', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
         <Header />
-        <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-          <div style={{ textAlign: 'center', color: '#0c2340', fontWeight: 600 }}>
-            Verifying Canadian Boutique session...
-          </div>
-        </div>
+        <main style={{ flex: 1 }}>
+          <AccountSkeleton />
+        </main>
         <Footer />
       </div>
     );
@@ -410,8 +409,33 @@ export default function AccountPage() {
                   </div>
 
                   {loadingData ? (
-                    <div style={{ padding: '40px', textAlign: 'center', color: '#64748b' }}>
-                      Fetching your order history from Supabase...
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                      {Array.from({ length: 3 }).map((_, i) => (
+                        <div
+                          key={`order-load-skel-${i}`}
+                          style={{
+                            border: '1px solid #e2e8f0',
+                            borderRadius: '8px',
+                            padding: '20px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: '12px',
+                          }}
+                        >
+                          <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                            <Skeleton width="180px" height="18px" />
+                            <Skeleton width="90px" height="24px" borderRadius={12} />
+                          </div>
+                          <div style={{ display: 'flex', gap: '14px', alignItems: 'center' }}>
+                            <Skeleton width="54px" height="54px" borderRadius={4} />
+                            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '6px' }}>
+                              <Skeleton width="50%" height="15px" />
+                              <Skeleton width="25%" height="13px" />
+                            </div>
+                            <Skeleton width="70px" height="20px" />
+                          </div>
+                        </div>
+                      ))}
                     </div>
                   ) : orders.length === 0 ? (
                     <div style={{ padding: '48px 24px', textAlign: 'center', border: '1px dashed #cbd5e1', borderRadius: '8px' }}>
@@ -810,7 +834,7 @@ export default function AccountPage() {
                     </div>
                   )}
 
-                  <form onSubmit={handleProfileSave} style={{ maxWidth: '440px' }}>
+                  <form onSubmit={handleProfileSave} style={{ maxWidth: '440px', margin: '0 auto', width: '100%' }}>
                     <div style={{ marginBottom: '16px' }}>
                       <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '6px' }}>
                         Email Address (Read-only)
@@ -851,7 +875,7 @@ export default function AccountPage() {
                       />
                     </div>
 
-                    <div style={{ marginBottom: '22px' }}>
+                    <div style={{ marginBottom: '20px' }}>
                       <label style={{ display: 'block', fontSize: '0.8rem', fontWeight: 600, color: '#334155', marginBottom: '6px' }}>
                         Phone Number (For Canada Post tracking alerts)
                       </label>
@@ -875,6 +899,7 @@ export default function AccountPage() {
                       type="submit"
                       disabled={profileSaving}
                       style={{
+                        width: '100%',
                         backgroundColor: '#0c2340',
                         color: '#ffffff',
                         padding: '11px 20px',
@@ -883,6 +908,9 @@ export default function AccountPage() {
                         fontSize: '0.85rem',
                         border: 'none',
                         cursor: profileSaving ? 'not-allowed' : 'pointer',
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
                       }}
                     >
                       {profileSaving ? 'Saving Changes...' : 'Save Profile Changes'}
@@ -986,11 +1014,12 @@ export default function AccountPage() {
                 />
               </div>
 
-              <div style={{ display: 'flex', gap: '10px', justifyContent: 'flex-end' }}>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, 1fr)', gap: '10px' }} className="form-actions-pair">
                 <button
                   type="button"
                   onClick={() => setSelectedOrderForRefund(null)}
                   style={{
+                    width: '100%',
                     padding: '10px 16px',
                     backgroundColor: '#f1f5f9',
                     border: 'none',
@@ -999,6 +1028,10 @@ export default function AccountPage() {
                     fontWeight: 600,
                     cursor: 'pointer',
                     color: '#475569',
+                    textAlign: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
                   Cancel
@@ -1007,6 +1040,7 @@ export default function AccountPage() {
                   type="submit"
                   disabled={refundSubmitting}
                   style={{
+                    width: '100%',
                     padding: '10px 18px',
                     backgroundColor: '#0c2340',
                     border: 'none',
@@ -1015,6 +1049,10 @@ export default function AccountPage() {
                     fontWeight: 600,
                     cursor: refundSubmitting ? 'not-allowed' : 'pointer',
                     color: '#ffffff',
+                    textAlign: 'center',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
                   }}
                 >
                   {refundSubmitting ? 'Submitting...' : 'Submit Request'}

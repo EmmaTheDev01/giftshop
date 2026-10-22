@@ -16,7 +16,7 @@ import {
   Truck,
   ShieldCheck,
   RotateCcw,
-  Sparkles,
+  Gift,
   ChevronRight,
   ChevronDown,
   ChevronUp,
@@ -463,20 +463,20 @@ export default function ProductDetailClient({
                   className="btn-primary"
                   style={{
                     flex: 1,
-                    height: '48px',
-                    padding: '0 24px',
-                    fontSize: '0.88rem',
+                    height: '42px',
+                    padding: '0 16px',
+                    fontSize: '0.82rem',
                     backgroundColor: added ? '#15803d' : '#0c2340',
                   }}
                 >
                   {added ? (
                     <>
-                      <Check size={18} />
-                      <span>Added to Shopping Bag!</span>
+                      <Check size={16} />
+                      <span>Added to Bag!</span>
                     </>
                   ) : (
                     <>
-                      <ShoppingBag size={18} style={{ color: '#dda82e' }} />
+                      <ShoppingBag size={16} style={{ color: '#dda82e' }} />
                       <span>Add to Bag • ${(product.price * qty).toFixed(2)} CAD</span>
                     </>
                   )}
@@ -489,15 +489,15 @@ export default function ProductDetailClient({
                 className="btn-gold"
                 style={{
                   width: '100%',
-                  height: '46px',
-                  fontSize: '0.85rem',
+                  height: '42px',
+                  fontSize: '0.82rem',
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
                 }}
               >
-                <CreditCard size={17} />
+                <CreditCard size={16} />
                 <span>Instant Checkout • Fast Dispatch</span>
               </button>
             </div>
@@ -525,7 +525,7 @@ export default function ProductDetailClient({
                 <span>30-Day Canadian Returns</span>
               </div>
               <div style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.8rem', color: '#475569' }}>
-                <Sparkles size={16} style={{ color: '#b47e00' }} />
+                <Gift size={16} style={{ color: '#b47e00' }} />
                 <span>Artisan Gift Wrapping Available</span>
               </div>
             </div>

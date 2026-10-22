@@ -3,7 +3,7 @@
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { Sparkles, ArrowRight, PenTool } from 'lucide-react';
+import { ArrowRight, PenTool } from 'lucide-react';
 import DiamondSeparator from './DiamondSeparator';
 
 export default function YourOwnMark() {
@@ -110,8 +110,9 @@ export default function YourOwnMark() {
                 display: 'flex',
                 alignItems: 'center',
                 flexWrap: 'wrap',
-                gap: '14px',
+                gap: '12px',
               }}
+              className="two-btn-stack"
             >
               {/* 1. Find My Gift */}
               <Link
@@ -120,23 +121,24 @@ export default function YourOwnMark() {
                   backgroundColor: '#B47E00',
                   color: '#FFFFFF',
                   fontFamily: 'var(--font-serif)',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   fontWeight: 600,
                   textTransform: 'uppercase',
-                  letterSpacing: '1px',
-                  padding: '14px 28px',
+                  letterSpacing: '0.06em',
+                  padding: '11px 22px',
                   borderRadius: '2px',
                   textDecoration: 'none',
                   display: 'inline-flex',
                   alignItems: 'center',
-                  gap: '10px',
+                  justifyContent: 'center',
+                  gap: '8px',
                   transition: 'background-color 0.25s',
                   boxShadow: '0 4px 14px rgba(180, 126, 0, 0.35)',
                 }}
-                className="hero-btn"
+                className="hero-btn stacked-btn"
               >
                 <span>Find My Gift</span>
-                <ArrowRight size={15} />
+                <ArrowRight size={14} />
               </Link>
 
               {/* 2. Create Yours */}
@@ -146,22 +148,23 @@ export default function YourOwnMark() {
                   backgroundColor: 'transparent',
                   color: '#ffffff',
                   fontFamily: 'var(--font-serif)',
-                  fontSize: '14px',
+                  fontSize: '13px',
                   fontWeight: 600,
                   textTransform: 'uppercase',
-                  letterSpacing: '1px',
-                  padding: '13px 26px',
+                  letterSpacing: '0.06em',
+                  padding: '10px 20px',
                   borderRadius: '2px',
                   textDecoration: 'none',
                   display: 'inline-flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   gap: '8px',
                   border: '1.5px solid rgba(221, 168, 46, 0.8)',
                   transition: 'all 0.25s',
                 }}
-                className="hero-btn-secondary"
+                className="hero-btn-secondary stacked-btn"
               >
-                <PenTool size={14} style={{ color: '#dda82e' }} />
+                <PenTool size={13} style={{ color: '#dda82e' }} />
                 <span>Create Yours</span>
               </Link>
 
@@ -170,18 +173,19 @@ export default function YourOwnMark() {
                 href="/collections"
                 style={{
                   color: '#dda82e',
-                  fontSize: '0.88rem',
+                  fontSize: '0.84rem',
                   fontWeight: 600,
                   textDecoration: 'none',
                   display: 'inline-flex',
                   alignItems: 'center',
+                  justifyContent: 'center',
                   gap: '6px',
-                  padding: '10px 14px',
+                  padding: '8px 12px',
                   transition: 'color 0.2s',
                 }}
               >
                 <span>Explore More</span>
-                <ArrowRight size={14} />
+                <ArrowRight size={13} />
               </Link>
             </div>
           </div>

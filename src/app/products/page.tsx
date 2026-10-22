@@ -14,11 +14,11 @@ import {
   ChevronDown,
   Search,
   RotateCcw,
-  Sparkles,
   ShieldCheck,
   Truck,
   Loader2,
 } from 'lucide-react';
+import { ProductGridSkeleton } from '@/components/Skeleton';
 
 const CATEGORY_TABS = [
   { id: 'all', label: 'All Keepsakes' },
@@ -161,7 +161,6 @@ export default function ProductsPage() {
                 marginBottom: '14px',
               }}
             >
-              <Sparkles size={13} />
               <span>Precision Laser-Engraved Canadian Keepsakes</span>
             </div>
 
@@ -361,10 +360,7 @@ export default function ProductsPage() {
         <section style={{ padding: '48px 20px 80px' }}>
           <div className="container-custom">
             {loading ? (
-              <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', minHeight: '300px', gap: '14px' }}>
-                <Loader2 size={36} className="animate-spin" style={{ color: '#b47e00' }} />
-                <p style={{ color: '#64748b', fontSize: '0.9rem' }}>Loading artisan collection...</p>
-              </div>
+              <ProductGridSkeleton count={8} />
             ) : filteredProducts.length === 0 ? (
               <div
                 style={{
@@ -440,7 +436,7 @@ export default function ProductsPage() {
               <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Official certificates with all numbered limited editions</span>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '8px' }}>
-              <Sparkles size={24} style={{ color: '#dda82e' }} />
+              <RotateCcw size={24} style={{ color: '#dda82e' }} />
               <strong style={{ fontSize: '0.92rem', letterSpacing: '0.04em' }}>30-Day Canadian Returns</strong>
               <span style={{ fontSize: '0.8rem', color: '#94a3b8' }}>Hassle-free domestic return drop-offs across Canada</span>
             </div>

@@ -74,7 +74,7 @@ export default function ContactPage() {
         </div>
 
         {/* Contact Form Section */}
-        <section>
+        <section style={{ maxWidth: '680px', margin: '0 auto', width: '100%', textAlign: 'center' }}>
           <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.45rem', color: '#0c2340', marginBottom: '8px', fontWeight: 600 }}>
             Send Us an Electronic Message
           </h3>
@@ -232,10 +232,12 @@ export default function ContactPage() {
                   disabled={submitting}
                   className="btn-primary"
                   style={{
-                    padding: '14px 28px',
+                    width: '100%',
+                    padding: '12px 24px',
                     fontSize: '0.85rem',
-                    display: 'inline-flex',
+                    display: 'flex',
                     alignItems: 'center',
+                    justifyContent: 'center',
                     gap: '10px',
                     opacity: submitting ? 0.7 : 1,
                   }}

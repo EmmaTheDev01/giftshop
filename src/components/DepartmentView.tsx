@@ -5,7 +5,7 @@ import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import DiamondSeparator from '@/components/DiamondSeparator';
 import { ExtendedProduct } from '@/types/supabase';
-import { Sparkles, SlidersHorizontal, Search, RotateCcw, ChevronRight } from 'lucide-react';
+import { SlidersHorizontal, Search, RotateCcw, ChevronRight } from 'lucide-react';
 
 interface SubcategoryItem {
   name: string;
@@ -143,7 +143,6 @@ export default function DepartmentView({
               marginBottom: '14px',
             }}
           >
-            <Sparkles size={13} />
             <span>{eyebrow}</span>
           </div>
 

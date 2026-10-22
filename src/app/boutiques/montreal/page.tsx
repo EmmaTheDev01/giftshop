@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DiamondSeparator from '@/components/DiamondSeparator';
 import { SITE_CONFIG } from '@/config/site';
-import { MapPin, Clock, Phone, Mail, Award, Sparkles, Calendar, ChevronRight } from 'lucide-react';
+import { MapPin, Clock, Phone, Mail, Award, Gift, Calendar, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
@@ -133,7 +133,7 @@ export default function MontrealBoutiquePage() {
 
             <div style={{ display: 'flex', flexDirection: 'column', gap: '14px' }}>
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
-                <Sparkles size={18} style={{ color: '#b47e00', marginTop: '3px' }} />
+                <Gift size={18} style={{ color: '#b47e00', marginTop: '3px' }} />
                 <div>
                   <strong style={{ color: '#0c2340', fontSize: '0.92rem' }}>Emballage ruban couture :</strong>
                   <span style={{ color: '#64748b', fontSize: '0.88rem' }}> Chaque cadeau est enveloppé dans du papier de soie avec cachet de cire doré sur demande.</span>

@@ -4,6 +4,7 @@ import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import Logo, { LogoIcon } from '@/components/Logo';
 import { useAuth } from '@/context/AuthContext';
 import {
   adminGetDashboardMetrics,
@@ -48,7 +49,7 @@ import {
   CheckCircle2,
   Clock,
   Layers,
-  Sparkles,
+  Zap,
   Upload,
   X,
   ExternalLink,
@@ -63,6 +64,7 @@ import {
   Award,
   Loader2,
 } from 'lucide-react';
+import { AdminSkeleton } from '@/components/Skeleton';
 
 export default function AdminDashboardPage() {
   const router = useRouter();
@@ -580,6 +582,10 @@ export default function AdminDashboardPage() {
     });
   }, [orders, selectedOrderStatus, searchQuery]);
 
+  if ((loading && !metrics) || authLoading) {
+    return <AdminSkeleton />;
+  }
+
   return (
     <div
       style={{
@@ -610,43 +616,30 @@ export default function AdminDashboardPage() {
         {/* Brand Header */}
         <div
           style={{
-            padding: '20px 18px',
+            padding: isSidebarCollapsed ? '16px 8px' : '18px 16px',
             display: 'flex',
             alignItems: 'center',
             justifyContent: isSidebarCollapsed ? 'center' : 'space-between',
             borderBottom: '1px solid rgba(255, 255, 255, 0.08)',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <div
-              style={{
-                width: '38px',
-                height: '38px',
-                borderRadius: '8px',
-                backgroundColor: '#b47e00',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#ffffff',
-                fontWeight: 900,
-                fontSize: '1.2rem',
-                letterSpacing: '0.04em',
-                boxShadow: '0 4px 12px rgba(180, 126, 0, 0.35)',
-              }}
-            >
-              M
-            </div>
-            {!isSidebarCollapsed && (
-              <div>
-                <div style={{ fontWeight: 800, fontSize: '1rem', letterSpacing: '0.08em', color: '#ffffff' }}>
-                  MEMORIQ
-                </div>
-                <div style={{ fontSize: '0.68rem', color: '#dda82e', fontWeight: 600, letterSpacing: '0.04em' }}>
-                  Canadian Atelier
-                </div>
-              </div>
+          <Link
+            href="/"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              textDecoration: 'none',
+              overflow: 'hidden',
+              cursor: 'pointer',
+            }}
+            title="Memoriq Canadian Atelier • View Store"
+          >
+            {isSidebarCollapsed ? (
+              <LogoIcon size={34} inverted />
+            ) : (
+              <Logo inverted subtitle="Canadian Atelier" size={34} />
             )}
-          </div>
+          </Link>
         </div>
 
         {/* Workspace Dropdown */}
@@ -1213,7 +1206,7 @@ export default function AdminDashboardPage() {
                     overflow: 'hidden',
                   }}
                 >
-                  <div style={{ flex: '1 1 360px' }}>
+                  <div style={{ flex: '1 1 100%' }}>
                     <div style={{ fontSize: '0.75rem', fontWeight: 700, color: '#b47e00', textTransform: 'uppercase', letterSpacing: '0.12em', marginBottom: '6px' }}>
                       Welcome back!
                     </div>
@@ -1249,7 +1242,7 @@ export default function AdminDashboardPage() {
                       </div>
                     </div>
 
-                    <p style={{ color: '#64748b', fontSize: '0.88rem', lineHeight: 1.5, margin: '12px 0 18px', maxWidth: '480px' }}>
+                    <p style={{ color: '#64748b', fontSize: '0.88rem', lineHeight: 1.5, margin: '12px 0 18px', maxWidth: '720px' }}>
                       Powering your authentic Canadian craft and keepsakes boutique with live Supabase telemetry, instant image storage, and Canada Post tracking.
                     </p>
 
@@ -1291,63 +1284,19 @@ export default function AdminDashboardPage() {
                       </button>
                     </div>
                   </div>
-
-                  {/* Right Side: Mini Bar Graph Representation */}
-                  <div
-                    style={{
-                      flex: '0 1 340px',
-                      backgroundColor: '#faf8f5',
-                      border: '1px solid #ebd9c0',
-                      borderRadius: '8px',
-                      padding: '20px',
-                    }}
-                  >
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '14px' }}>
-                      <div>
-                        <div style={{ fontSize: '0.72rem', color: '#64748b', fontWeight: 600 }}>ANNUAL REVENUE TARGET</div>
-                        <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#0c2340' }}>$28.4 K CAD</div>
-                      </div>
-                      <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#16a34a', backgroundColor: '#dcfce7', padding: '3px 8px', borderRadius: '4px' }}>
-                        +14.2% YoY
-                      </span>
-                    </div>
-
-                    {/* CSS Bar Chart Simulation */}
-                    <div style={{ display: 'flex', alignItems: 'flex-end', gap: '8px', height: '110px', paddingTop: '10px' }}>
-                      {[40, 65, 50, 85, 45, 90, 75, 100, 60, 80, 55, 95].map((val, idx) => (
-                        <div key={idx} style={{ flex: 1, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '4px' }}>
-                          <div
-                            style={{
-                              width: '100%',
-                              height: `${val}%`,
-                              backgroundColor: idx === 7 ? '#b47e00' : '#0c2340',
-                              borderRadius: '3px 3px 0 0',
-                            }}
-                          />
-                        </div>
-                      ))}
-                    </div>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.65rem', color: '#94a3b8', marginTop: '6px' }}>
-                      <span>Jan</span>
-                      <span>Apr</span>
-                      <span>Jul</span>
-                      <span>Oct</span>
-                      <span>Dec</span>
-                    </div>
-                  </div>
                 </div>
 
-                {/* 2. Four High-Density Metric Cards (Matching Screenshot) */}
+                {/* 2. Four High-Density Metric Cards (Live Supabase Telemetry) */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '18px' }}>
                   {/* Card 1: Total Revenue */}
                   <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid #e2e8f0', padding: '20px' }}>
                     <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>Total Income (CAD)</div>
                     <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0c2340', margin: '8px 0 4px' }}>
-                      ${metrics?.total_revenue ? metrics.total_revenue.toLocaleString('en-CA', { minimumFractionDigits: 2 }) : '14,890.50'}
+                      ${(metrics?.total_revenue_cad ?? metrics?.total_revenue ?? orders.reduce((sum, ord) => sum + Number(ord.total || 0), 0)).toLocaleString('en-CA', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: '#16a34a', fontWeight: 700 }}>
                       <TrendingUp size={13} />
-                      <span>22% Growth this year</span>
+                      <span>Live verified orders</span>
                     </div>
                   </div>
 
@@ -1355,7 +1304,7 @@ export default function AdminDashboardPage() {
                   <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid #e2e8f0', padding: '20px' }}>
                     <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>Total Orders</div>
                     <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0c2340', margin: '8px 0 4px' }}>
-                      {orders.length || '142'}
+                      {orders.length}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: '#16a34a', fontWeight: 700 }}>
                       <Truck size={13} />
@@ -1379,7 +1328,7 @@ export default function AdminDashboardPage() {
                   <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid #e2e8f0', padding: '20px' }}>
                     <div style={{ fontSize: '0.8rem', color: '#64748b', fontWeight: 600 }}>Active Users</div>
                     <div style={{ fontSize: '1.75rem', fontWeight: 800, color: '#0c2340', margin: '8px 0 4px' }}>
-                      {usersList.length || '89'}
+                      {usersList.length}
                     </div>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '6px', fontSize: '0.75rem', color: '#2563eb', fontWeight: 700 }}>
                       <Users size={13} />
@@ -1388,87 +1337,136 @@ export default function AdminDashboardPage() {
                   </div>
                 </div>
 
-                {/* 3. Middle Section: Analytics & Canadian Geographic Breakdown */}
+                {/* 3. Middle Section: Live Orders & Canadian Geographic Breakdown */}
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(360px, 1fr))', gap: '20px' }}>
-                  {/* Sales Analytics Chart Card */}
-                  <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid #e2e8f0', padding: '24px' }}>
-                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
-                      <div>
-                        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0c2340', margin: 0 }}>
-                          Sales Analytics (2026)
-                        </h3>
-                        <p style={{ fontSize: '0.78rem', color: '#64748b', margin: '2px 0 0' }}>
-                          Real-time volume and fulfillment velocity
-                        </p>
-                      </div>
-                      <span style={{ fontSize: '0.75rem', backgroundColor: '#faf8f5', border: '1px solid #ebd9c0', color: '#b47e00', padding: '3px 8px', borderRadius: '4px', fontWeight: 700 }}>
-                        Live Stream
-                      </span>
-                    </div>
-
-                    {/* SVG Graphic Wave Area */}
-                    <svg viewBox="0 0 500 150" style={{ width: '100%', height: '150px', overflow: 'visible' }}>
-                      <defs>
-                        <linearGradient id="goldGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                          <stop offset="0%" stopColor="#dda82e" stopOpacity="0.4" />
-                          <stop offset="100%" stopColor="#dda82e" stopOpacity="0.0" />
-                        </linearGradient>
-                      </defs>
-                      <path
-                        d="M0,130 Q70,40 140,80 T280,30 T420,70 T500,20 L500,150 L0,150 Z"
-                        fill="url(#goldGradient)"
-                      />
-                      <path
-                        d="M0,130 Q70,40 140,80 T280,30 T420,70 T500,20"
-                        fill="none"
-                        stroke="#b47e00"
-                        strokeWidth="3"
-                      />
-                    </svg>
-
-                    <div style={{ display: 'flex', justifyContent: 'space-between', borderTop: '1px solid #f1f5f9', paddingTop: '14px', marginTop: '12px' }}>
-                      <div>
-                        <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Average Order Value</span>
-                        <div style={{ fontSize: '1rem', fontWeight: 700, color: '#0c2340' }}>$112.50 CAD</div>
-                      </div>
-                      <div>
-                        <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Fulfillment Time</span>
-                        <div style={{ fontSize: '1rem', fontWeight: 700, color: '#0c2340' }}>1.2 Days</div>
-                      </div>
-                      <div>
-                        <span style={{ fontSize: '0.72rem', color: '#64748b' }}>Repeat Rate</span>
-                        <div style={{ fontSize: '1rem', fontWeight: 700, color: '#16a34a' }}>34.8%</div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Geographic Province Breakdown (Matching right card in screenshot) */}
+                  {/* Recent Customer Orders Card */}
                   <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid #e2e8f0', padding: '24px' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
-                      <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0c2340', margin: 0 }}>
-                        Canadian Provincial Shipments
-                      </h3>
+                      <div>
+                        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0c2340', margin: 0 }}>
+                          Recent Customer Orders
+                        </h3>
+                        <p style={{ fontSize: '0.78rem', color: '#64748b', margin: '2px 0 0' }}>
+                          Live fulfillment and dispatch queue
+                        </p>
+                      </div>
+                      <button
+                        onClick={() => setActiveTab('orders')}
+                        style={{
+                          fontSize: '0.75rem',
+                          fontWeight: 700,
+                          color: '#b47e00',
+                          backgroundColor: '#faf8f5',
+                          border: '1px solid #ebd9c0',
+                          padding: '4px 10px',
+                          borderRadius: '4px',
+                          cursor: 'pointer',
+                        }}
+                      >
+                        View All ({orders.length}) &rarr;
+                      </button>
+                    </div>
+
+                    {orders.length === 0 ? (
+                      <div style={{ color: '#64748b', fontSize: '0.84rem', padding: '36px 16px', textAlign: 'center', backgroundColor: '#faf8f5', borderRadius: '6px', border: '1px dashed #e2e8f0' }}>
+                        No orders recorded yet. Live customer orders will appear here automatically.
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+                        {orders.slice(0, 4).map((o) => (
+                          <div
+                            key={o.id}
+                            style={{
+                              display: 'flex',
+                              justifyContent: 'space-between',
+                              alignItems: 'center',
+                              padding: '10px 12px',
+                              backgroundColor: '#faf8f5',
+                              borderRadius: '6px',
+                              border: '1px solid #ebd9c0',
+                              fontSize: '0.82rem',
+                            }}
+                          >
+                            <div>
+                              <strong style={{ color: '#0c2340' }}>{o.order_number}</strong>
+                              <div style={{ fontSize: '0.72rem', color: '#64748b' }}>{o.customer_name}</div>
+                            </div>
+                            <div style={{ textAlign: 'right' }}>
+                              <div style={{ fontWeight: 700, color: '#0c2340' }}>${Number(o.total || 0).toFixed(2)} CAD</div>
+                              <span
+                                style={{
+                                  display: 'inline-block',
+                                  fontSize: '0.68rem',
+                                  fontWeight: 700,
+                                  textTransform: 'capitalize',
+                                  color: o.status === 'delivered' ? '#16a34a' : o.status === 'shipped' ? '#0284c7' : '#b47e00',
+                                }}
+                              >
+                                {o.status}
+                              </span>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Geographic Province Breakdown (Dynamic from orders) */}
+                  <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid #e2e8f0', padding: '24px' }}>
+                    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '18px' }}>
+                      <div>
+                        <h3 style={{ fontSize: '1.05rem', fontWeight: 700, color: '#0c2340', margin: 0 }}>
+                          Canadian Provincial Shipments
+                        </h3>
+                        <p style={{ fontSize: '0.78rem', color: '#64748b', margin: '2px 0 0' }}>
+                          Canada Post fulfillment regions
+                        </p>
+                      </div>
                       <span style={{ fontSize: '0.75rem', color: '#64748b' }}>Canada Post</span>
                     </div>
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
-                      {[
-                        { province: 'Ontario (ON)', amount: '$8,420 CAD', pct: 44, color: '#0c2340' },
-                        { province: 'Quebec (QC)', amount: '$5,580 CAD', pct: 28, color: '#b47e00' },
-                        { province: 'British Columbia (BC)', amount: '$3,410 CAD', pct: 18, color: '#0284c7' },
-                        { province: 'Alberta & Prairies (AB/SK)', amount: '$2,190 CAD', pct: 10, color: '#16a34a' },
-                      ].map((item, idx) => (
-                        <div key={idx}>
-                          <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '6px' }}>
-                            <strong style={{ color: '#0c2340' }}>{item.province}</strong>
-                            <span style={{ color: '#475569', fontWeight: 600 }}>{item.amount}</span>
-                          </div>
-                          <div style={{ width: '100%', height: '8px', backgroundColor: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
-                            <div style={{ width: `${item.pct}%`, height: '100%', backgroundColor: item.color, borderRadius: '4px' }} />
-                          </div>
-                        </div>
-                      ))}
-                    </div>
+                    {orders.length === 0 ? (
+                      <div style={{ color: '#64748b', fontSize: '0.84rem', padding: '36px 16px', textAlign: 'center', backgroundColor: '#faf8f5', borderRadius: '6px', border: '1px dashed #e2e8f0' }}>
+                        No shipment destinations recorded yet. Provincial shipping distribution will populate as orders are placed.
+                      </div>
+                    ) : (
+                      <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+                        {(() => {
+                          const provMap: Record<string, { total: number; count: number; name: string }> = {};
+                          let grandTotal = 0;
+                          orders.forEach((o) => {
+                            const prov = (o.shipping_address?.province || o.shipping_address?.province_code || o.shipping_address?.state || 'Other').toUpperCase();
+                            const val = Number(o.total || 0);
+                            grandTotal += val;
+                            if (!provMap[prov]) provMap[prov] = { total: 0, count: 0, name: prov };
+                            provMap[prov].total += val;
+                            provMap[prov].count += 1;
+                          });
+                          const colors: Record<string, string> = {
+                            ON: '#0c2340',
+                            QC: '#b47e00',
+                            BC: '#0284c7',
+                            AB: '#16a34a',
+                            NS: '#8b5cf6',
+                            MB: '#ec4899',
+                          };
+                          return Object.values(provMap).map((item, idx) => {
+                            const pct = grandTotal > 0 ? Math.round((item.total / grandTotal) * 100) : 0;
+                            return (
+                              <div key={idx}>
+                                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '0.82rem', marginBottom: '6px' }}>
+                                  <strong style={{ color: '#0c2340' }}>{item.name} ({item.count} orders)</strong>
+                                  <span style={{ color: '#475569', fontWeight: 600 }}>${item.total.toFixed(2)} CAD</span>
+                                </div>
+                                <div style={{ width: '100%', height: '8px', backgroundColor: '#f1f5f9', borderRadius: '4px', overflow: 'hidden' }}>
+                                  <div style={{ width: `${pct}%`, height: '100%', backgroundColor: colors[item.name] || '#b47e00', borderRadius: '4px' }} />
+                                </div>
+                              </div>
+                            );
+                          });
+                        })()}
+                      </div>
+                    )}
                   </div>
                 </div>
 
@@ -2033,7 +2031,7 @@ export default function AdminDashboardPage() {
 
                   <div style={{ backgroundColor: '#ffffff', borderRadius: '8px', border: '1px solid #e2e8f0', padding: '20px' }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '8px' }}>
-                      <Sparkles size={20} style={{ color: '#b47e00' }} />
+                      <Zap size={20} style={{ color: '#b47e00' }} />
                       <strong style={{ fontSize: '1rem', color: '#0c2340' }}>Client-Side Optimizer</strong>
                     </div>
                     <p style={{ fontSize: '0.82rem', color: '#64748b', margin: '0 0 12px' }}>

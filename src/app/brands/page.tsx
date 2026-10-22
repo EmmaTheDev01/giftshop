@@ -6,7 +6,7 @@ import Header from '@/components/Header';
 import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DiamondSeparator from '@/components/DiamondSeparator';
-import { Sparkles, ArrowRight, ChevronRight, Award } from 'lucide-react';
+import { ArrowRight, ChevronRight, Award } from 'lucide-react';
 
 export const metadata: Metadata = {
   title: 'Artisan Houses & Manufactures | The Gift Shop Canada 🇨🇦',

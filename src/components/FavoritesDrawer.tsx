@@ -7,6 +7,7 @@ import { useCart } from '@/context/CartContext';
 import { getProducts } from '@/lib/api';
 import type { ExtendedProduct } from '@/types/supabase';
 import { X, Heart, ShoppingBag, Trash2, ArrowRight } from 'lucide-react';
+import { Skeleton } from '@/components/Skeleton';
 
 export default function FavoritesDrawer() {
   const {
@@ -156,8 +157,29 @@ export default function FavoritesDrawer() {
           }}
         >
           {loading ? (
-            <div style={{ textAlign: 'center', padding: '60px 0', color: '#64748b' }}>
-              <p>Loading your saved keepsakes...</p>
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+              {Array.from({ length: 3 }).map((_, i) => (
+                <div
+                  key={`fav-skel-${i}`}
+                  style={{
+                    display: 'flex',
+                    gap: '14px',
+                    padding: '14px',
+                    borderRadius: '4px',
+                    border: '1px solid #e2e8f0',
+                    backgroundColor: '#ffffff',
+                    alignItems: 'center',
+                  }}
+                >
+                  <Skeleton width="70px" height="70px" borderRadius={4} />
+                  <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                    <Skeleton width="85%" height="15px" />
+                    <Skeleton width="40%" height="13px" />
+                    <Skeleton width="55px" height="15px" />
+                  </div>
+                  <Skeleton width="34px" height="34px" borderRadius={4} />
+                </div>
+              ))}
             </div>
           ) : favoriteProducts.length === 0 ? (
             <div

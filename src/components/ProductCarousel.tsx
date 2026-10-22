@@ -5,7 +5,8 @@ import ProductCard from './ProductCard';
 import DiamondSeparator from './DiamondSeparator';
 import { getProducts } from '@/lib/api';
 import { ExtendedProduct } from '@/types/supabase';
-import { ChevronLeft, ChevronRight, Loader2 } from 'lucide-react';
+import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ProductCarouselSkeleton } from '@/components/Skeleton';
 
 export default function ProductCarousel() {
   const [products, setProducts] = useState<ExtendedProduct[]>([]);
@@ -88,9 +89,7 @@ export default function ProductCarousel() {
 
         {/* Carousel Container */}
         {loading ? (
-          <div style={{ display: 'flex', justifyContent: 'center', padding: '60px 0' }}>
-            <Loader2 size={32} className="animate-spin" style={{ color: '#b47e00' }} />
-          </div>
+          <ProductCarouselSkeleton count={4} />
         ) : (
           <div
             style={{ position: 'relative' }}
@@ -131,27 +130,15 @@ export default function ProductCarousel() {
               <ChevronLeft size={22} />
             </button>
 
-            {/* Scrollable Products Row */}
+            {/* Scrollable Products Row (Responsive 2x2 on Mobile, 1 Row on Desktop) */}
             <div
               ref={scrollContainerRef}
-              style={{
-                display: 'flex',
-                gap: '24px',
-                overflowX: 'auto',
-                scrollSnapType: 'x mandatory',
-                paddingBottom: '20px',
-                scrollbarWidth: 'none',
-                msOverflowStyle: 'none',
-                scrollBehavior: 'smooth',
-              }}
+              className="product-carousel-track"
             >
               {filteredProducts.map((product) => (
                 <div
                   key={product.id}
-                  style={{
-                    flex: '0 0 280px',
-                    scrollSnapAlign: 'start',
-                  }}
+                  className="product-carousel-card-wrap"
                 >
                   <ProductCard product={product} />
                 </div>

@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import { Award, Compass, ShieldCheck, Sparkles } from 'lucide-react';
+import { Award, Compass, ShieldCheck } from 'lucide-react';
 
 export default function CommitmentsBar() {
   const pillars = [
@@ -17,7 +17,7 @@ export default function CommitmentsBar() {
     {
       title: 'Curated Artisan Houses',
       desc: 'In partnership with historic workshops across Canada & the United States',
-      icon: Sparkles,
+      icon: Compass,
     },
   ];
 

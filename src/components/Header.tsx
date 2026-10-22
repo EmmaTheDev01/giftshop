@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Logo from './Logo';
 import { useCart } from '@/context/CartContext';
@@ -16,16 +16,24 @@ import {
   Menu as MenuIcon,
   X as CloseIcon,
   ChevronDown,
+  ChevronRight,
+  ShieldCheck,
+  LogOut,
+  Package,
 } from 'lucide-react';
 
 export default function Header() {
   const { cartCount, cartTotal, setIsCartOpen, setIsFavoritesOpen, setIsSearchOpen, wishlist } = useCart();
-  const { user, profile, isAdmin } = useAuth();
+  const { user, profile, isAdmin, signOut } = useAuth();
   const [activeMegaMenu, setActiveMegaMenu] = useState<string | null>(null);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [expandedMobileCategory, setExpandedMobileCategory] = useState<string | null>(null);
   const [selectedLang, setSelectedLang] = useState('EN');
   const [isLangDropdownOpen, setIsLangDropdownOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+
+  const headerRef = useRef<HTMLElement>(null);
+  const [headerHeight, setHeaderHeight] = useState(74);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,6 +43,43 @@ export default function Header() {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
+  // Update dynamic header height for pixel-perfect mobile drawer positioning
+  useEffect(() => {
+    const updateHeaderHeight = () => {
+      if (headerRef.current) {
+        setHeaderHeight(headerRef.current.getBoundingClientRect().height);
+      }
+    };
+    updateHeaderHeight();
+    window.addEventListener('resize', updateHeaderHeight);
+    return () => window.removeEventListener('resize', updateHeaderHeight);
+  }, [isScrolled]);
+
+  // Lock body scroll when mobile menu is open
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = '';
+    }
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [isMobileMenuOpen]);
+
+  // Close mobile drawer on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsMobileMenuOpen(false);
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  const toggleMobileCategory = (slug: string) => {
+    setExpandedMobileCategory((prev) => (prev === slug ? null : slug));
+  };
+
   const languages = [
     { code: 'EN', label: 'English (CA)', flag: '🇨🇦' },
     { code: 'US', label: 'English (US)', flag: '🇺🇸' },
@@ -42,7 +87,11 @@ export default function Header() {
   ];
 
   return (
-    <header style={{ position: 'sticky', top: 0, zIndex: 50, backgroundColor: '#ffffff', transition: 'box-shadow 0.25s' }} className={isScrolled ? 'shadow-md' : ''}>
+    <header
+      ref={headerRef}
+      style={{ position: 'sticky', top: 0, zIndex: 50, backgroundColor: '#ffffff', transition: 'box-shadow 0.25s' }}
+      className={isScrolled ? 'shadow-md' : ''}
+    >
       {/* 1. Top Announcement Bar */}
       <div
         style={{
@@ -76,13 +125,13 @@ export default function Header() {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'space-between',
-          paddingTop: '18px',
-          paddingBottom: '18px',
+          paddingTop: 'clamp(10px, 2.2vw, 18px)',
+          paddingBottom: 'clamp(10px, 2.2vw, 18px)',
           position: 'relative',
         }}
       >
         {/* Left Utilities (Language & Monument Link) */}
-        <div style={{ display: 'flex', alignItems: 'center', gap: '24px', flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(10px, 2vw, 24px)', flex: 1 }}>
           {/* Mobile Menu Trigger */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -91,12 +140,18 @@ export default function Header() {
               alignItems: 'center',
               justifyContent: 'center',
               color: '#0c2340',
-              padding: '6px',
+              padding: '8px',
+              borderRadius: '4px',
+              border: '1px solid #e2e8f0',
+              backgroundColor: isMobileMenuOpen ? '#f1f5f9' : '#ffffff',
+              cursor: 'pointer',
+              transition: 'all 0.2s',
             }}
             className="mobile-burger"
-            aria-label="Toggle menu"
+            aria-label={isMobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
+            aria-expanded={isMobileMenuOpen}
           >
-            {isMobileMenuOpen ? <CloseIcon size={24} /> : <MenuIcon size={24} />}
+            {isMobileMenuOpen ? <CloseIcon size={22} /> : <MenuIcon size={22} />}
           </button>
 
           {/* Language Selector */}
@@ -192,7 +247,7 @@ export default function Header() {
         </div>
 
         {/* Right: Actions (Search, Wishlist, Account, Cart) */}
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: '18px', flex: 1 }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 'clamp(6px, 1.8vw, 18px)', flex: 1 }}>
           {/* Search Trigger */}
           <button
             onClick={() => setIsSearchOpen(true)}
@@ -284,10 +339,10 @@ export default function Header() {
             style={{
               display: 'flex',
               alignItems: 'center',
-              gap: '10px',
+              gap: '8px',
               backgroundColor: '#0c2340',
               color: '#ffffff',
-              padding: '9px 16px',
+              padding: '8px 14px',
               borderRadius: '2px',
               fontWeight: 600,
               fontSize: '0.82rem',
@@ -320,7 +375,9 @@ export default function Header() {
                 </span>
               )}
             </div>
-            <span style={{ letterSpacing: '0.04em' }}>${cartTotal.toFixed(2)} CAD</span>
+            <span className="hidden-mobile" style={{ letterSpacing: '0.04em' }}>
+              ${cartTotal.toFixed(2)} CAD
+            </span>
           </button>
         </div>
       </div>
@@ -597,17 +654,208 @@ export default function Header() {
           style={{
             position: 'fixed',
             inset: 0,
-            top: '90px',
+            top: `${headerHeight}px`,
             backgroundColor: '#ffffff',
             zIndex: 90,
             overflowY: 'auto',
-            padding: '24px 20px',
-            animation: 'fadeIn 0.2s',
+            WebkitOverflowScrolling: 'touch',
+            display: 'flex',
+            flexDirection: 'column',
+            animation: 'fadeIn 0.2s ease-out',
+            borderTop: '1px solid #e2e8f0',
           }}
         >
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
-            {/* All Products on mobile */}
-            <div style={{ borderBottom: '1px solid #ebd9c0', paddingBottom: '14px' }}>
+          {/* Mobile Drawer Brand Header */}
+          <div
+            style={{
+              padding: '14px 20px',
+              borderBottom: '1px solid #f1f5f9',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'space-between',
+              backgroundColor: '#faf8f5',
+            }}
+          >
+            <Link href="/" onClick={() => setIsMobileMenuOpen(false)}>
+              <Logo size={32} />
+            </Link>
+            <span
+              style={{
+                fontSize: '0.68rem',
+                color: '#b47e00',
+                backgroundColor: '#ffffff',
+                border: '1px solid #ebd9c0',
+                padding: '3px 8px',
+                borderRadius: '4px',
+                fontWeight: 700,
+              }}
+            >
+              🇨🇦 Canada
+            </span>
+          </div>
+
+          {/* Quick Search Shortcut */}
+          <div style={{ padding: '16px 20px 12px 20px', borderBottom: '1px solid #f1f5f9' }}>
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsSearchOpen(true);
+              }}
+              style={{
+                width: '100%',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '10px',
+                padding: '11px 14px',
+                backgroundColor: '#f8fafc',
+                border: '1px solid #e2e8f0',
+                borderRadius: '6px',
+                color: '#64748b',
+                fontSize: '0.86rem',
+                cursor: 'pointer',
+                textAlign: 'left',
+              }}
+              aria-label="Search catalog"
+            >
+              <Search size={18} style={{ color: '#94a3b8' }} />
+              <span>Search art, collectibles, gifts...</span>
+            </button>
+          </div>
+
+          {/* Quick Account / Wishlist / Admin Grid */}
+          <div
+            style={{
+              padding: '12px 20px',
+              display: 'grid',
+              gridTemplateColumns: isAdmin ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)',
+              gap: '10px',
+              backgroundColor: '#faf8f5',
+              borderBottom: '1px solid #ebd9c0',
+            }}
+          >
+            {/* Account Link */}
+            <Link
+              href={user ? '/my-account' : '/login'}
+              onClick={() => setIsMobileMenuOpen(false)}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                padding: '10px 8px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #ebd9c0',
+                borderRadius: '6px',
+                color: '#0c2340',
+                textDecoration: 'none',
+                textAlign: 'center',
+              }}
+            >
+              <div style={{ position: 'relative' }}>
+                <User size={18} style={{ color: '#0c2340' }} />
+                {user && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: '-2px',
+                      right: '-3px',
+                      width: '7px',
+                      height: '7px',
+                      borderRadius: '50%',
+                      backgroundColor: '#16a34a',
+                      border: '1.5px solid #ffffff',
+                    }}
+                  />
+                )}
+              </div>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.02em' }}>
+                {user ? (profile?.full_name ? profile.full_name.split(' ')[0] : 'My Account') : 'Sign In'}
+              </span>
+            </Link>
+
+            {/* Wishlist Link */}
+            <button
+              onClick={() => {
+                setIsMobileMenuOpen(false);
+                setIsFavoritesOpen(true);
+              }}
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
+                gap: '6px',
+                padding: '10px 8px',
+                backgroundColor: '#ffffff',
+                border: '1px solid #ebd9c0',
+                borderRadius: '6px',
+                color: '#0c2340',
+                cursor: 'pointer',
+                textAlign: 'center',
+              }}
+            >
+              <div style={{ position: 'relative' }}>
+                <Heart size={18} style={{ color: '#b47e00', fill: wishlist.length > 0 ? '#b47e00' : 'none' }} />
+                {wishlist.length > 0 && (
+                  <span
+                    style={{
+                      position: 'absolute',
+                      top: '-6px',
+                      right: '-8px',
+                      backgroundColor: '#b47e00',
+                      color: '#ffffff',
+                      fontSize: '0.6rem',
+                      fontWeight: 800,
+                      width: '15px',
+                      height: '15px',
+                      borderRadius: '50%',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                    }}
+                  >
+                    {wishlist.length}
+                  </span>
+                )}
+              </div>
+              <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.02em' }}>
+                Saved ({wishlist.length})
+              </span>
+            </button>
+
+            {/* Admin Portal Shortcut if Admin */}
+            {isAdmin && (
+              <Link
+                href="/admin"
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  gap: '6px',
+                  padding: '10px 8px',
+                  backgroundColor: '#0c2340',
+                  border: '1px solid #0c2340',
+                  borderRadius: '6px',
+                  color: '#dda82e',
+                  textDecoration: 'none',
+                  textAlign: 'center',
+                }}
+              >
+                <ShieldCheck size={18} style={{ color: '#dda82e' }} />
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, letterSpacing: '0.02em' }}>
+                  Admin
+                </span>
+              </Link>
+            )}
+          </div>
+
+          {/* Navigation Accordion Sections */}
+          <div style={{ flex: 1, padding: '16px 20px 24px 20px', display: 'flex', flexDirection: 'column', gap: '4px' }}>
+            {/* Master All Products Link */}
+            <div style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '10px', marginBottom: '4px' }}>
               <Link
                 href="/products"
                 onClick={() => setIsMobileMenuOpen(false)}
@@ -615,98 +863,247 @@ export default function Header() {
                   display: 'flex',
                   alignItems: 'center',
                   justifyContent: 'space-between',
-                  fontSize: '1rem',
-                  fontWeight: 800,
+                  padding: '10px 14px',
+                  backgroundColor: '#0c2340',
+                  color: '#ffffff',
+                  borderRadius: '4px',
+                  fontSize: '0.86rem',
+                  fontWeight: 700,
                   textTransform: 'uppercase',
-                  letterSpacing: '0.08em',
-                  color: '#0c2340',
+                  letterSpacing: '0.06em',
+                  textDecoration: 'none',
                 }}
               >
-                <span>All Products (Catalogue)</span>
-                <span style={{ fontSize: '0.72rem', backgroundColor: '#dda82e', color: '#0c2340', padding: '2px 8px', borderRadius: '2px' }}>
-                  CAD
+                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                  <Package size={16} style={{ color: '#dda82e' }} />
+                  <span>Browse All Products</span>
+                </div>
+                <span
+                  style={{
+                    fontSize: '0.68rem',
+                    backgroundColor: '#dda82e',
+                    color: '#0c2340',
+                    padding: '2px 8px',
+                    borderRadius: '2px',
+                    fontWeight: 800,
+                  }}
+                >
+                  Catalogue
                 </span>
               </Link>
             </div>
 
+            {/* Departments with Accordion Collapse */}
             {NAV_MENU.map((item) => {
               const itemHref =
-                item.slug === 'collections'
-                  ? '/collections'
-                  : item.slug === 'brands'
-                    ? '/brands'
-                    : item.slug === 'gifts'
-                      ? '/gifts'
-                      : item.slug === 'crafts'
-                        ? '/crafts'
-                        : item.slug === 'decorations'
-                          ? '/decorations'
-                          : item.slug === 'souvenirs'
-                            ? '/souvenirs'
-                            : item.slug === 'lifestyle'
-                              ? '/lifestyle'
-                              : `/category/${item.slug}`;
+                item.slug === 'catalogue'
+                  ? '/products'
+                  : item.slug === 'collections'
+                    ? '/collections'
+                    : item.slug === 'brands'
+                      ? '/brands'
+                      : item.slug === 'gifts'
+                        ? '/gifts'
+                        : item.slug === 'lifestyles'
+                          ? '/collections'
+                          : item.slug === 'fashion'
+                            ? '/collections'
+                            : item.slug === 'events'
+                              ? '/boutiques'
+                              : item.slug === 'customize'
+                                ? '/customize'
+                                : `/category/${item.slug}`;
+
+              const isExpanded = expandedMobileCategory === item.slug;
 
               return (
-                <div key={item.slug} style={{ borderBottom: '1px solid #f1f5f9', paddingBottom: '12px' }}>
-                  <Link
-                    href={itemHref}
-                    onClick={() => setIsMobileMenuOpen(false)}
+                <div
+                  key={item.slug}
+                  style={{
+                    borderBottom: '1px solid #f1f5f9',
+                    paddingBottom: isExpanded ? '10px' : '4px',
+                    transition: 'all 0.2s',
+                  }}
+                >
+                  <div
                     style={{
-                      fontSize: '0.95rem',
-                      fontWeight: 700,
-                      textTransform: 'uppercase',
-                      letterSpacing: '0.08em',
-                      color: '#0c2340',
-                      display: 'block',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'space-between',
+                      padding: '8px 4px',
                     }}
                   >
-                    {item.name}
-                  </Link>
-                  <div style={{ marginTop: '8px', paddingLeft: '8px', display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                    {item.items.map((sub) => {
-                      const subHref =
-                        item.slug === 'collections'
-                          ? `/collections/${sub.slug}`
-                          : item.slug === 'brands'
-                            ? `/brands/${sub.slug}`
-                            : `/category/${sub.slug}`;
+                    <Link
+                      href={itemHref}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                      style={{
+                        fontSize: '0.92rem',
+                        fontWeight: 700,
+                        textTransform: 'uppercase',
+                        letterSpacing: '0.07em',
+                        color: isExpanded ? '#b47e00' : '#0c2340',
+                        textDecoration: 'none',
+                        flex: 1,
+                      }}
+                    >
+                      {item.name}
+                    </Link>
 
-                      return (
-                        <Link
-                          key={sub.slug}
-                          href={subHref}
-                          onClick={() => setIsMobileMenuOpen(false)}
-                          style={{ fontSize: '0.85rem', color: '#475569' }}
-                        >
-                          {sub.name}
-                        </Link>
-                      );
-                    })}
+                    {item.items && item.items.length > 0 && (
+                      <button
+                        onClick={() => toggleMobileCategory(item.slug)}
+                        aria-label={`Toggle ${item.name} categories`}
+                        aria-expanded={isExpanded}
+                        style={{
+                          background: 'none',
+                          border: 'none',
+                          cursor: 'pointer',
+                          padding: '6px 8px',
+                          display: 'flex',
+                          alignItems: 'center',
+                          justifyContent: 'center',
+                          color: isExpanded ? '#b47e00' : '#64748b',
+                          transition: 'transform 0.2s ease',
+                          transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)',
+                        }}
+                      >
+                        <ChevronDown size={18} />
+                      </button>
+                    )}
                   </div>
+
+                  {/* Subcategories (Collapsible) */}
+                  {isExpanded && item.items && item.items.length > 0 && (
+                    <div
+                      style={{
+                        paddingLeft: '12px',
+                        paddingTop: '6px',
+                        paddingBottom: '8px',
+                        display: 'flex',
+                        flexDirection: 'column',
+                        gap: '8px',
+                        borderLeft: '2px solid #dda82e',
+                        marginLeft: '4px',
+                        marginTop: '4px',
+                      }}
+                    >
+                      {item.items.map((sub) => {
+                        const subHref =
+                          item.slug === 'collections'
+                            ? `/collections/${sub.slug}`
+                            : item.slug === 'brands'
+                              ? `/brands/${sub.slug}`
+                              : `/category/${sub.slug}`;
+
+                        return (
+                          <Link
+                            key={sub.slug}
+                            href={subHref}
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            style={{
+                              fontSize: '0.84rem',
+                              color: '#475569',
+                              textDecoration: 'none',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'space-between',
+                              padding: '4px 0',
+                            }}
+                          >
+                            <span>{sub.name}</span>
+                            {sub.count && (
+                              <span style={{ fontSize: '0.72rem', color: '#94a3b8' }}>{sub.count}</span>
+                            )}
+                          </Link>
+                        );
+                      })}
+                    </div>
+                  )}
                 </div>
               );
             })}
 
-            <div style={{ marginTop: '20px', display: 'flex', gap: '12px' }}>
-              {languages.map((l) => (
+            {/* Canadian Boutiques & Galleries */}
+            <div style={{ borderBottom: '1px solid #f1f5f9', padding: '12px 4px' }}>
+              <Link
+                href="/boutiques"
+                onClick={() => setIsMobileMenuOpen(false)}
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  fontSize: '0.88rem',
+                  fontWeight: 600,
+                  color: '#0c2340',
+                  textDecoration: 'none',
+                }}
+              >
+                <span>Galleries: Canada • USA</span>
+                <ArrowUpRight size={15} style={{ color: '#b47e00' }} />
+              </Link>
+            </div>
+
+            {/* Regional & Language Switcher */}
+            <div style={{ marginTop: '16px' }}>
+              <span style={{ display: 'block', fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#94a3b8', marginBottom: '8px' }}>
+                Region &amp; Currency
+              </span>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '8px' }}>
+                {languages.map((l) => (
+                  <button
+                    key={l.code}
+                    onClick={() => setSelectedLang(l.code)}
+                    style={{
+                      padding: '8px 10px',
+                      borderRadius: '4px',
+                      border: selectedLang === l.code ? '1.5px solid #0c2340' : '1px solid #e2e8f0',
+                      fontSize: '0.76rem',
+                      fontWeight: selectedLang === l.code ? 700 : 500,
+                      backgroundColor: selectedLang === l.code ? '#0c2340' : '#ffffff',
+                      color: selectedLang === l.code ? '#ffffff' : '#0c2340',
+                      cursor: 'pointer',
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: '4px',
+                    }}
+                  >
+                    <span>{l.flag}</span>
+                    <span>{l.code}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Sign Out Action if Logged In */}
+            {user && (
+              <div style={{ marginTop: '20px', paddingTop: '16px', borderTop: '1px solid #f1f5f9' }}>
                 <button
-                  key={l.code}
-                  onClick={() => setSelectedLang(l.code)}
+                  onClick={async () => {
+                    await signOut();
+                    setIsMobileMenuOpen(false);
+                  }}
                   style={{
-                    padding: '8px 16px',
+                    width: '100%',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: '8px',
+                    padding: '10px',
                     borderRadius: '4px',
-                    border: '1px solid #e2e8f0',
-                    fontSize: '0.85rem',
-                    fontWeight: selectedLang === l.code ? 700 : 500,
-                    backgroundColor: selectedLang === l.code ? '#0c2340' : '#fff',
-                    color: selectedLang === l.code ? '#fff' : '#0c2340',
+                    border: '1px solid #fee2e2',
+                    backgroundColor: '#fef2f2',
+                    color: '#dc2626',
+                    fontSize: '0.84rem',
+                    fontWeight: 600,
+                    cursor: 'pointer',
                   }}
                 >
-                  {l.flag} {l.label}
+                  <LogOut size={16} />
+                  <span>Sign Out</span>
                 </button>
-              ))}
-            </div>
+              </div>
+            )}
           </div>
         </div>
       )}

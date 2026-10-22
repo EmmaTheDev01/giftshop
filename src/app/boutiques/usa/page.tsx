@@ -4,7 +4,7 @@ import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DiamondSeparator from '@/components/DiamondSeparator';
 import { SITE_CONFIG } from '@/config/site';
-import { MapPin, Clock, Phone, Sparkles, ChevronRight, ArrowRight, ShieldCheck } from 'lucide-react';
+import { MapPin, Clock, Phone, ChevronRight, ArrowRight, ShieldCheck } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {

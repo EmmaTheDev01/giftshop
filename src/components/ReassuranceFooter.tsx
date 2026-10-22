@@ -175,12 +175,13 @@ export default function ReassuranceFooter() {
           ) : (
             <form
               onSubmit={handleSubmit}
+              className="newsletter-form"
               style={{
                 display: 'flex',
                 gap: '10px',
                 maxWidth: '520px',
                 margin: '0 auto',
-                flexWrap: 'wrap',
+                width: '100%',
               }}
             >
               <input
@@ -191,20 +192,20 @@ export default function ReassuranceFooter() {
                 required
                 style={{
                   flex: 1,
-                  minWidth: '240px',
-                  padding: '14px 18px',
+                  minWidth: '220px',
+                  padding: '12px 16px',
                   borderRadius: '2px',
                   border: '1px solid #cbd5e1',
-                  fontSize: '0.9rem',
+                  fontSize: '0.88rem',
                   outline: 'none',
                   backgroundColor: '#ffffff',
                 }}
               />
               <button
                 type="submit"
-                className="btn-primary"
+                className="btn-primary newsletter-submit-btn"
                 style={{
-                  padding: '14px 28px',
+                  padding: '12px 24px',
                   fontSize: '0.82rem',
                 }}
               >
