@@ -112,7 +112,7 @@ export default function HeroBanner() {
               textShadow: '0 1px 4px rgba(0, 0, 0, 0.4)',
             }}
           >
-            PERSONAL GIFTS • MOMENTS TO REMEMBER • CANADA/USA 🇨🇦 🇺🇸
+            PERSONAL GIFTS • MOMENTS TO REMEMBER • <span style={{ color: '#FFFFFF' }}>CANADA/USA 🇨🇦 🇺🇸</span>
           </h2>
 
           {/* Main Title - Proportional Luxury Size */}
@@ -158,7 +158,7 @@ export default function HeroBanner() {
               lineHeight: 1.45,
             }}
           >
-            SHOP BY OCCASION • ADD A LITTLE PERSONAL TOUCH • KEEPSAKES FOR THE PEOPLE WHO MATTER MOST
+             ADD A LITTLE PERSONAL TOUCH • KEEPSAKES FOR THE PEOPLE WHO MATTER MOST
           </p>
 
           {/* Exact separator from site */}
