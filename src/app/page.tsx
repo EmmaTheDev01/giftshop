@@ -5,9 +5,8 @@ import ProductCarousel from '@/components/ProductCarousel';
 import SpotlightRivet from '@/components/SpotlightRivet';
 import CuratedLookbook from '@/components/CuratedLookbook';
 import BrandManifesto from '@/components/BrandManifesto';
-import CollaborationsGrid from '@/components/CollaborationsGrid';
 import YourOwnMark from '@/components/YourOwnMark';
-import CollectionsSlider from '@/components/CollectionsSlider';
+import FeaturedCollectionVideo from '@/components/FeaturedCollectionVideo';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import Footer from '@/components/Footer';
 
@@ -33,16 +32,13 @@ export default function Home() {
         {/* 6. Brand Heritage Manifesto */}
         <BrandManifesto />
 
-        {/* 7. Official Collaborations (Maison Partenaires) */}
-        <CollaborationsGrid />
-
-        {/* 8. Your Own Mark Personalization Studio */}
+        {/* 7. Your Own Mark Personalization Studio */}
         <YourOwnMark />
 
-        {/* 9. Parisian Collections Slider */}
-        <CollectionsSlider />
+        {/* 8. Featured Video Showcase: Heritage Collections */}
+        <FeaturedCollectionVideo />
 
-        {/* 10. Buyer Protection & Newsletter Registration */}
+        {/* 9. Buyer Protection & Newsletter Registration */}
         <ReassuranceFooter />
       </main>
 

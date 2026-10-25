@@ -10,16 +10,16 @@ export default function YourOwnMark() {
   return (
     <section
       style={{
-        backgroundColor: '#0c2340',
-        color: '#ffffff',
+        backgroundColor: '#ffffff',
+        color: '#0c2340',
         padding: '88px 0',
         position: 'relative',
         overflow: 'hidden',
-        borderTop: '2px solid #b47e00',
-        borderBottom: '1px solid rgba(180, 126, 0, 0.3)',
+        borderTop: '1px solid #ebd9c0',
+        borderBottom: '1px solid #ebd9c0',
       }}
     >
-      {/* Decorative ambient radial lighting */}
+      {/* Decorative subtle warm ambient lighting */}
       <div
         style={{
           position: 'absolute',
@@ -28,7 +28,7 @@ export default function YourOwnMark() {
           width: '600px',
           height: '600px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(221, 168, 46, 0.15) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(221, 168, 46, 0.06) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -40,7 +40,7 @@ export default function YourOwnMark() {
           width: '500px',
           height: '500px',
           borderRadius: '50%',
-          background: 'radial-gradient(circle, rgba(180, 126, 0, 0.12) 0%, transparent 70%)',
+          background: 'radial-gradient(circle, rgba(180, 126, 0, 0.05) 0%, transparent 70%)',
           pointerEvents: 'none',
         }}
       />
@@ -61,19 +61,18 @@ export default function YourOwnMark() {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
-                color: '#dda82e',
+                color: '#b47e00',
                 fontSize: '0.82rem',
                 fontWeight: 700,
                 textTransform: 'uppercase',
                 letterSpacing: '0.22em',
                 marginBottom: '12px',
-                backgroundColor: 'rgba(221, 168, 46, 0.1)',
+                backgroundColor: '#fbf5eb',
                 padding: '6px 14px',
                 borderRadius: '9999px',
-                border: '1px solid rgba(221, 168, 46, 0.3)',
+                border: '1px solid rgba(180, 126, 0, 0.25)',
               }}
             >
-
               <span>Your Own Mark</span>
             </div>
 
@@ -82,7 +81,7 @@ export default function YourOwnMark() {
                 fontFamily: 'var(--font-serif)',
                 fontSize: 'clamp(1.5rem, 2.3vw, 2.05rem)',
                 fontWeight: 500,
-                color: '#ffffff',
+                color: '#0c2340',
                 lineHeight: 1.25,
                 marginBottom: '14px',
                 letterSpacing: '-0.01em',
@@ -95,16 +94,16 @@ export default function YourOwnMark() {
               style={{
                 fontSize: 'clamp(0.92rem, 1.05vw, 1rem)',
                 lineHeight: 1.65,
-                color: '#cbd5e1',
+                color: '#475569',
                 marginBottom: '28px',
                 maxWidth: '540px',
-                fontWeight: 300,
+                fontWeight: 400,
               }}
             >
               Choose a gift, add your details, and create something they won&apos;t forget. Make their day memorable.
             </p>
 
-            {/* CTAs matching Google Doc requirements */}
+            {/* CTAs */}
             <div
               style={{
                 display: 'flex',
@@ -133,7 +132,7 @@ export default function YourOwnMark() {
                   justifyContent: 'center',
                   gap: '8px',
                   transition: 'background-color 0.25s',
-                  boxShadow: '0 4px 14px rgba(180, 126, 0, 0.35)',
+                  boxShadow: '0 4px 14px rgba(180, 126, 0, 0.25)',
                 }}
                 className="hero-btn stacked-btn"
               >
@@ -145,8 +144,8 @@ export default function YourOwnMark() {
               <Link
                 href="/customize"
                 style={{
-                  backgroundColor: 'transparent',
-                  color: '#ffffff',
+                  backgroundColor: '#ffffff',
+                  color: '#0c2340',
                   fontFamily: 'var(--font-serif)',
                   fontSize: '13px',
                   fontWeight: 600,
@@ -159,12 +158,12 @@ export default function YourOwnMark() {
                   alignItems: 'center',
                   justifyContent: 'center',
                   gap: '8px',
-                  border: '1.5px solid rgba(221, 168, 46, 0.8)',
+                  border: '1.5px solid #0c2340',
                   transition: 'all 0.25s',
                 }}
                 className="hero-btn-secondary stacked-btn"
               >
-                <PenTool size={13} style={{ color: '#dda82e' }} />
+                <PenTool size={13} style={{ color: '#b47e00' }} />
                 <span>Create Yours</span>
               </Link>
 
@@ -172,7 +171,7 @@ export default function YourOwnMark() {
               <Link
                 href="/collections"
                 style={{
-                  color: '#dda82e',
+                  color: '#b47e00',
                   fontSize: '0.84rem',
                   fontWeight: 600,
                   textDecoration: 'none',
@@ -199,9 +198,9 @@ export default function YourOwnMark() {
                 maxWidth: '460px',
                 borderRadius: '8px',
                 overflow: 'hidden',
-                backgroundColor: '#132d4d',
-                border: '1px solid rgba(221, 168, 46, 0.4)',
-                boxShadow: '0 16px 40px rgba(0, 0, 0, 0.4)',
+                backgroundColor: '#faf8f5',
+                border: '1px solid #ebd9c0',
+                boxShadow: '0 12px 32px rgba(12, 35, 64, 0.08)',
               }}
             >
               <div
@@ -222,19 +221,19 @@ export default function YourOwnMark() {
                   style={{
                     position: 'absolute',
                     inset: 0,
-                    background: 'linear-gradient(to top, rgba(12, 35, 64, 0.92) 0%, rgba(12, 35, 64, 0.3) 60%, transparent 100%)',
+                    background: 'linear-gradient(to top, rgba(12, 35, 64, 0.6) 0%, rgba(12, 35, 64, 0.1) 60%, transparent 100%)',
                   }}
                 />
               </div>
 
               {/* Interactive Inscription Card Overlay */}
-              <div style={{ padding: '24px 28px' }}>
+              <div style={{ padding: '24px 28px', backgroundColor: '#ffffff' }}>
                 <p
                   style={{
                     fontSize: '0.72rem',
                     textTransform: 'uppercase',
                     letterSpacing: '0.18em',
-                    color: '#dda82e',
+                    color: '#b47e00',
                     fontWeight: 700,
                     marginBottom: '8px',
                   }}
@@ -245,14 +244,14 @@ export default function YourOwnMark() {
                   style={{
                     fontFamily: 'var(--font-serif)',
                     fontSize: '1.25rem',
-                    color: '#ffffff',
+                    color: '#0c2340',
                     fontStyle: 'italic',
                     margin: '0 0 6px',
                   }}
                 >
                   &ldquo;To Many More Shared Sunsets&rdquo;
                 </p>
-                <p style={{ fontSize: '0.82rem', color: '#94a3b8', margin: 0 }}>
+                <p style={{ fontSize: '0.82rem', color: '#64748b', margin: 0 }}>
                   Engraved in Master Hardwood • Hand-Inspected in Canada 🇨🇦
                 </p>
               </div>

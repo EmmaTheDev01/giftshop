@@ -151,7 +151,7 @@ export default function ReassuranceFooter() {
             Keep in touch with The Memoriq
           </h3>
           <p style={{ fontSize: '0.88rem', color: '#64748b', marginBottom: '22px' }}>
-            Receive exclusive artisan releases, seasonal collections, and Canadian subscriber privileges.
+            Receive exclusive memoriq releases, seasonal drops and subscriber privileges.
           </p>
 
           {subscribed ? (

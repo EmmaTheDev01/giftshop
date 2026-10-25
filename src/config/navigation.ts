@@ -70,56 +70,6 @@ export const NAV_MENU: NavSection[] = [
     },
   },
   {
-    name: 'Fashion',
-    slug: 'fashion',
-    items: [
-      { name: 'Handcrafted Wooden Jewelry', slug: 'wood-jewelry', count: '8 items' },
-      { name: 'Botanical & Leaf Pendants', slug: 'botanical-pendants', count: '6 items' },
-      { name: 'Artisan Wooden Brooches', slug: 'artisan-brooches', count: '5 items' },
-      { name: 'Brass & Walnut Cufflinks', slug: 'cufflinks', count: '4 items' },
-      { name: 'Pocket Talismans & Keepsakes', slug: 'pocket-keepsakes', count: '12 items' },
-      { name: 'Artisan Keyrings & Charms', slug: 'keyrings', count: '7 items' },
-    ],
-    featured: {
-      title: 'Wearable Artisan Accents',
-      desc: 'Intricate hardwood jewellery, organic botanical motifs and heirloom accessories',
-      image: '/images/collections/metalcraft-atelier.jpg',
-    },
-  },
-  {
-    name: 'Brands',
-    slug: 'brands',
-    items: [
-      { name: 'Memoriq Master Guild', slug: 'memoriq-atelier' },
-      { name: 'Laurentian Woodcraft Studio', slug: 'laurentian-craft' },
-      { name: 'Rocky Mountain Metalworks', slug: 'rocky-metalworks' },
-      { name: 'Boreal Heritage Workshops', slug: 'boreal-heritage' },
-      { name: 'Saint James & Allied Guilds', slug: 'saint-james' },
-    ],
-    featured: {
-      title: 'Master Guild Ateliers',
-      desc: 'Collaborations with premier Canadian woodturners, laser artisans and metal fabricators',
-      image: '/images/collections/woodcraft-atelier.jpg',
-    },
-  },
-  {
-    name: 'Collections',
-    slug: 'collections',
-    items: [
-      { name: 'Canadian Signature Collection', slug: 'signature' },
-      { name: 'Laurentian Gardens Collection', slug: 'gardens' },
-      { name: 'Aurora Day & Night Collection', slug: 'day-night' },
-      { name: 'Historic Architecture Collection', slug: 'historic-architecture' },
-      { name: 'Monumental Heights Collection', slug: '330-meters' },
-      { name: 'Limited Collector Editions', slug: 'limited-editions' },
-    ],
-    featured: {
-      title: 'Curated Thematic Series',
-      desc: 'From historic architecture and mountain valleys to numbered series',
-      image: '/images/collections/rocky-mountain-summit.jpg',
-    },
-  },
-  {
     name: 'Events',
     slug: 'events',
     items: [

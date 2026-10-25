@@ -34,7 +34,6 @@ export default function Footer() {
         { label: 'Legal information', href: '/legal' },
         { label: 'Privacy policy', href: '/privacy' },
         { label: 'Cookies settings', href: '/cookies' },
-        { label: 'Store Admin Portal', href: '/admin' },
       ],
     },
   ];

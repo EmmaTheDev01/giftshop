@@ -20,7 +20,7 @@ export default function CuratedLookbook() {
   }, []);
 
   return (
-    <section style={{ padding: '80px 0', backgroundColor: '#faf8f5' }}>
+    <section style={{ padding: '80px 0', backgroundColor: '#ffffff' }}>
       <div className="container-custom">
         {/* Section Heading */}
         <div style={{ textAlign: 'center', marginBottom: '48px' }}>
