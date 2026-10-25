@@ -67,7 +67,7 @@ export default function ContactPage() {
 
           <div style={{ border: '1px solid #ebd9c0', borderRadius: '4px', padding: '18px', backgroundColor: '#faf8f5' }}>
             <MapPin size={22} style={{ color: '#b47e00', marginBottom: '8px' }} />
-            <strong style={{ color: '#0c2340', display: 'block', fontSize: '0.95rem' }}>Canadian Flagships</strong>
+            <strong style={{ color: '#0c2340', display: 'block', fontSize: '0.95rem' }}>Boutique Showrooms</strong>
             <span style={{ fontSize: '0.85rem', color: '#0c2340' }}>{SITE_CONFIG.locations}</span>
             <p style={{ margin: '4px 0 0', fontSize: '0.75rem', color: '#64748b' }}>By appointment & retail walk-in</p>
           </div>
@@ -196,7 +196,7 @@ export default function ContactPage() {
                     }}
                   >
                     <option value="General Inquiry">General Boutique Inquiry</option>
-                    <option value="Order Tracking">Order & Canadian Delivery Status</option>
+                    <option value="Order Tracking">Order & Delivery Status</option>
                     <option value="Returns & Exchanges">Return, Refund, or Exchange</option>
                     <option value="Limited Edition Concierge">Limited Edition Collector Piece Inquiries</option>
                     <option value="Corporate Gifting">Corporate Gifting & Bespoke Sets</option>

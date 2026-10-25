@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import LegalLayout from '@/components/LegalLayout';
 import { SITE_CONFIG } from '@/config/site';
-import { ChevronDown, HelpCircle, Search, Mail } from 'lucide-react';
+import { ChevronDown, Search } from 'lucide-react';
 import Link from 'next/link';
 
 interface FAQItem {
@@ -15,33 +15,33 @@ interface FAQItem {
 const FAQ_DATA: FAQItem[] = [
   {
     category: 'Orders & Payments',
-    q: 'Are all prices charged in Canadian Dollars (CAD)?',
-    a: 'Yes, all prices displayed across our boutique are in Canadian Dollars ($ CAD). At checkout, applicable federal and provincial sales taxes (GST, PST, HST) are itemized according to your delivery destination.',
+    q: 'How is pricing and currency handled at checkout?',
+    a: 'All prices displayed across our boutique are clearly stated at checkout. Applicable sales taxes and delivery fees are itemized transparently according to your delivery destination before order confirmation.',
   },
   {
     category: 'Orders & Payments',
     q: 'Which payment methods do you accept?',
-    a: 'We accept Visa and Mastercard processed in Canadian Dollars ($ CAD) with 3D Secure 2.0 cardholder protection. All payment transactions are encrypted using bank-grade PCI-DSS Level 1 compliance.',
+    a: 'We accept Visa and Mastercard processed with 3D Secure 2.0 cardholder protection. All payment transactions are encrypted using bank-grade PCI-DSS Level 1 compliance.',
   },
   {
     category: 'Orders & Payments',
     q: 'Can I add a personalized gift message or gift box?',
-    a: 'Absolutely. Every order is packaged in our signature luxury presentation box. During checkout, you can include a complimentary personalized gift message printed on a heavy cardstock embossed with our golden maple leaf crest.',
+    a: 'Absolutely. Every order is packaged in our signature luxury presentation box. During checkout, you can include a complimentary personalized gift message printed on heavy cardstock embossed with our golden workshop crest.',
   },
   {
     category: 'Shipping & Delivery',
-    q: 'How does free shipping work in Canada?',
-    a: 'We offer free standard expedited shipping on all orders totaling $95.00 CAD or more. This applies across all Canadian provinces and territories with no coupon required.',
+    q: 'How does complimentary shipping work?',
+    a: 'We offer complimentary standard expedited shipping on all qualifying orders totaling $95.00 or more. Transit insurance and tracking are included with no promo code required.',
   },
   {
     category: 'Shipping & Delivery',
     q: 'How long will it take to receive my order?',
-    a: 'Orders are prepared and dispatched within 24 to 48 hours from our Canadian hubs in Montreal and Toronto. Deliveries to Ontario and Quebec typically take 1 to 3 business days, while Western and Atlantic Canada take 3 to 5 business days.',
+    a: 'Orders are prepared and dispatched within 24 to 48 hours from our fulfillment ateliers. Standard domestic deliveries typically take 2 to 4 business days, while express international shipping takes 3 to 6 business days.',
   },
   {
     category: 'Shipping & Delivery',
     q: 'How can I track my parcel?',
-    a: 'As soon as your parcel is scanned by our carrier (Canada Post, FedEx, or UPS), you will receive an email containing your tracking number and live link to monitor its progress.',
+    a: 'As soon as your parcel is scanned by our carrier partners (including FedEx, UPS, and premier postal networks), you will receive an email containing your tracking number and live link to monitor its progress.',
   },
   {
     category: 'Returns & Refunds',
@@ -51,17 +51,17 @@ const FAQ_DATA: FAQItem[] = [
   {
     category: 'Returns & Refunds',
     q: 'How do I obtain a prepaid return shipping label?',
-    a: 'Simply email our concierge at ' + SITE_CONFIG.contact.email + ' with your order number. We will provide a prepaid Canada Post digital label that can be dropped off at any post office.',
+    a: 'Simply email our concierge at ' + SITE_CONFIG.contact.email + ' with your order number. We will provide a prepaid digital return label with complete return instructions.',
   },
   {
     category: 'Craftsmanship & Authenticity',
     q: 'Are limited edition pieces authenticated and numbered?',
-    a: 'Yes. All limited edition items (such as the Official 2025 Rivet and Diamond Light Lamp) are individually numbered and accompanied by an official Certificate of Authenticity signed by the master craft workshop.',
+    a: 'Yes. All limited edition items are individually numbered and accompanied by an official Certificate of Authenticity signed by the master craft workshop.',
   },
   {
     category: 'Craftsmanship & Authenticity',
-    q: 'Where are your physical boutiques located?',
-    a: 'Our flagship boutiques and showroom locations are situated in Montreal, Toronto, and Vancouver. Visitors can discover our full collection and curated gift sets in person.',
+    q: 'Where are your physical boutiques and showrooms located?',
+    a: 'Our flagship showrooms and workshop partners showcase our full collections, curated keepsakes, and personalized engraving options in person.',
   },
 ];
 
@@ -84,7 +84,7 @@ export default function FAQPage() {
   return (
     <LegalLayout
       title="Frequently Asked Questions (F.A.Q)"
-      subtitle="Find quick answers to common questions regarding orders, Canadian shipping, payments, returns, and our artisan keepsakes."
+      subtitle="Find quick answers to common questions regarding orders, shipping, payments, returns, and our artisan keepsakes."
       badge="Customer Help Center"
       lastUpdated="October 2026"
     >
@@ -101,7 +101,7 @@ export default function FAQPage() {
             type="text"
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search questions (e.g. shipping, returns, CAD currency, tracking)..."
+            placeholder="Search questions (e.g. shipping, returns, currency, tracking)..."
             style={{
               width: '100%',
               padding: '14px 16px 14px 44px',
@@ -235,7 +235,7 @@ export default function FAQPage() {
               Still have a question?
             </h4>
             <p style={{ margin: 0, fontSize: '0.85rem', color: '#64748b' }}>
-              Our dedicated Canadian concierge team is here to assist you anytime.
+              Our dedicated concierge team is here to assist you anytime.
             </p>
           </div>
 

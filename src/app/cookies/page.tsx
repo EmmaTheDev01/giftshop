@@ -3,7 +3,7 @@
 import React, { useState } from 'react';
 import LegalLayout from '@/components/LegalLayout';
 import { SITE_CONFIG } from '@/config/site';
-import { Cookie, Check, RotateCcw, ShieldCheck, Settings, Sliders } from 'lucide-react';
+import { Cookie, Check, RotateCcw } from 'lucide-react';
 
 export default function CookiePolicyPage() {
   const [resetSuccess, setResetSuccess] = useState(false);
@@ -23,8 +23,8 @@ export default function CookiePolicyPage() {
   return (
     <LegalLayout
       title="Cookie Policy & Preferences"
-      subtitle="Comprehensive disclosure regarding our utilization of HTTP cookies, local storage tokens, and telemetry diagnostics to ensure secure, personalized Canadian shopping in CAD."
-      badge="ePrivacy, GDPR & Law 25 Compliant"
+      subtitle="Comprehensive disclosure regarding our utilization of HTTP cookies, local storage tokens, and telemetry diagnostics to ensure secure, personalized online shopping."
+      badge="ePrivacy & GDPR Compliant"
       lastUpdated="October 2026"
     >
       <div style={{ color: '#334155', lineHeight: 1.8, fontSize: '0.94rem' }}>
@@ -34,7 +34,7 @@ export default function CookiePolicyPage() {
             1. What Are Cookies &amp; Digital Web Storage Tokens?
           </h2>
           <p style={{ marginBottom: '14px' }}>
-            Cookies are compact alphanumeric text files placed on your personal computing terminal, smartphone, or tablet device when you access our digital boutique. These miniature data packages are transmitted between our web servers and your internet browser, enabling our platform to recognize your specific hardware session across consecutive page views. Through this persistent recognition, our platform accurately retains your shopping basket contents, keepsakes wishlist, CAD currency preferences, and security authentication tokens without demanding redundant customer inputs.
+            Cookies are compact alphanumeric text files placed on your personal computing terminal, smartphone, or tablet device when you access our digital boutique. These miniature data packages are transmitted between our web servers and your internet browser, enabling our platform to recognize your specific hardware session across consecutive page views. Through this persistent recognition, our platform accurately retains your shopping basket contents, keepsakes wishlist, currency preferences, and security authentication tokens without demanding redundant customer inputs.
           </p>
           <p>
             In addition to traditional HTTP cookies, our modern web architecture utilizes client-side web storage mechanisms (specifically HTML5 <code>localStorage</code> and <code>sessionStorage</code>). These client-side mechanisms operate with enhanced cryptographic speed and security, allowing us to store non-sensitive user interface configurations locally on your terminal without repeatedly transmitting unnecessary tracking payloads across public telecommunication networks.
@@ -44,10 +44,10 @@ export default function CookiePolicyPage() {
         {/* Section 2 */}
         <section style={{ marginBottom: '36px' }}>
           <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.45rem', color: '#0c2340', marginBottom: '14px', fontWeight: 600 }}>
-            2. Statutory Regulatory Framework (ePrivacy, GDPR &amp; PIPEDA)
+            2. Statutory Regulatory Framework (ePrivacy &amp; GDPR)
           </h2>
           <p style={{ marginBottom: '14px' }}>
-            Our deployment and management of cookies comply strictly with international and Canadian privacy mandates, including the European Union&apos;s ePrivacy Directive (Directive 2002/58/EC as amended), the General Data Protection Regulation (Regulation (EU) 2016/679 &ndash; GDPR), and Canadian federal privacy standards under the <em>Personal Information Protection and Electronic Documents Act</em> (PIPEDA). Furthermore, we adhere to Quebec&apos;s Law 25 requirements governing digital tracking consent for our Francophone patrons.
+            Our deployment and management of cookies comply strictly with international privacy mandates, including the European Union&apos;s ePrivacy Directive (Directive 2002/58/EC as amended) and the General Data Protection Regulation (Regulation (EU) 2016/679 &ndash; GDPR).
           </p>
           <p>
             Under these governing legal standards, cookies are classified by their necessity. Strictly essential technical cookies required for the fundamental operation of the online store are activated automatically upon site entry. All non-essential tracking cookies—including analytics and marketing identifiers—remain deactivated by default and are energized only after the customer provides clear, affirmative, and unambiguous opt-in consent through our interactive consent modal.
@@ -60,10 +60,10 @@ export default function CookiePolicyPage() {
             3. Strictly Necessary &amp; Security Cookies (Category A)
           </h2>
           <p style={{ marginBottom: '14px' }}>
-            Strictly Necessary cookies are indispensable for the core operational architecture of our boutique. Without these technical tokens, essential e-commerce functions such as retaining items in your shopping bag as you browse other categories, securing the checkout funnel against cross-site request forgery (CSRF), and processing payment card pre-authorizations in Canadian Dollars cannot function. These tokens do not track your browsing habits across third-party websites and do not store unencrypted personal information.
+            Strictly Necessary cookies are indispensable for the core operational architecture of our boutique. Without these technical tokens, essential e-commerce functions such as retaining items in your shopping bag as you browse other categories, securing the checkout funnel against cross-site request forgery (CSRF), and processing payment card authorizations cannot function. These tokens do not track your browsing habits across third-party websites and do not store unencrypted personal information.
           </p>
           <p>
-            Because these cookies are technically required to deliver the specific commercial service expressly requested by the customer, they do not legally require prior consent under Canadian and European privacy regulations. Examples include our session identity token (<code>gs_session_id</code>) and our security anti-tampering verification cookies, which expire either upon closing your browser window or within twenty-four (24) hours.
+            Because these cookies are technically required to deliver the specific commercial service expressly requested by the customer, they do not legally require prior consent under international privacy regulations. Examples include our session identity token (<code>gs_session_id</code>) and our security anti-tampering verification cookies, which expire either upon closing your browser window or within twenty-four (24) hours.
           </p>
         </section>
 
@@ -73,10 +73,10 @@ export default function CookiePolicyPage() {
             4. Functional &amp; Localization Preference Cookies (Category B)
           </h2>
           <p style={{ marginBottom: '14px' }}>
-            Functional cookies allow our platform to remember custom preferences and localization choices you make during your visit, providing a seamless, individualized browsing experience tailored to Canadian provinces. These tokens store parameters such as your active delivery region (enabling precise calculation of provincial sales taxes like HST or QST), your default currency display (fixed in CAD), your language preference (English or French), and items saved to your personal boutique wishlist.
+            Functional cookies allow our platform to remember custom preferences and localization choices you make during your visit, providing a seamless, individualized browsing experience. These tokens store parameters such as your active delivery region (enabling precise calculation of applicable local sales taxes), your default currency display, your language preference, and items saved to your personal boutique wishlist.
           </p>
           <p>
-            These cookies significantly elevate user convenience by eliminating the necessity of re-entering basic preferences upon every page transition. If you decide to disable functional cookies via your browser settings, the core store will remain accessible, but advanced conveniences—such as persistent wishlist memory and automatic postal code remembrance—will be unavailable.
+            These cookies significantly elevate user convenience by eliminating the necessity of re-entering basic preferences upon every page transition. If you decide to disable functional cookies via your browser settings, the core store will remain accessible, but advanced conveniences—such as persistent wishlist memory and automatic region remembrance—will be unavailable.
           </p>
         </section>
 
@@ -86,10 +86,10 @@ export default function CookiePolicyPage() {
             5. Anonymous Analytics &amp; Boutique Performance Telemetry (Category C)
           </h2>
           <p style={{ marginBottom: '14px' }}>
-            Performance and analytics cookies gather anonymous, aggregate metrics regarding how patrons navigate and interact with our digital boutique. They assist our technical team in measuring key performance indicators (KPIs) such as average page load durations across Canadian internet service providers, popular product categories, navigation drop-off rates during checkout, and search query trends. This telemetry is invaluable for identifying broken links, optimizing mobile responsiveness, and refining product displays.
+            Performance and analytics cookies gather anonymous, aggregate metrics regarding how patrons navigate and interact with our digital boutique. They assist our technical team in measuring key performance indicators (KPIs) such as average page load durations across global internet networks, popular product categories, navigation drop-off rates during checkout, and search query trends. This telemetry is invaluable for identifying broken links, optimizing mobile responsiveness, and refining product displays.
           </p>
           <p>
-            We implement privacy-preserving analytics configurations that systematically truncate and hash your IP address prior to storage, preventing any correlation between navigation telemetry and your personal identity. In accordance with GDPR and Quebec Law 25, analytics cookies are activated solely upon your affirmative consent and may be deactivated at any time without impacting your ability to complete an order.
+            We implement privacy-preserving analytics configurations that systematically truncate and hash your IP address prior to storage, preventing any correlation between navigation telemetry and your personal identity. In accordance with GDPR standards, analytics cookies are activated solely upon your affirmative consent and may be deactivated at any time without impacting your ability to complete an order.
           </p>
         </section>
 
@@ -99,7 +99,7 @@ export default function CookiePolicyPage() {
             6. Third-Party Payment Token Cookies (Category D)
           </h2>
           <p style={{ marginBottom: '14px' }}>
-            During the checkout process, our certified payment gateway partners (Visa and Mastercard) deploy specialized technical cookies designed to facilitate fraud detection, device fingerprinting for anti-money laundering compliance, and 3D-Secure 2.0 multi-factor cardholder authentication. These tokens evaluate technical parameters such as browser resolution, IP reputation, and payment velocity to protect genuine cardholders against unauthorized transaction attempts.
+            During the checkout process, our certified payment gateway partners (Visa and Mastercard) deploy specialized technical cookies designed to facilitate fraud detection, device fingerprinting for security compliance, and 3D-Secure 2.0 multi-factor cardholder authentication. These tokens evaluate technical parameters such as browser resolution, IP reputation, and payment velocity to protect genuine cardholders against unauthorized transaction attempts.
           </p>
           <p>
             These payment tokens operate under strict PCI-DSS Level 1 compliance mandates and are utilized exclusively for the execution of the payment authorization requested by you. They are never utilized for behavioral cross-context advertising or marketing profiling across other websites.
@@ -128,7 +128,7 @@ export default function CookiePolicyPage() {
             Cookies utilized on our boutique are divided into two distinct lifecycle classifications: Session Cookies and Persistent Cookies. Session cookies are temporary in nature and are automatically erased from your device memory the instant you terminate your browser software or close all boutique browser tabs. These tokens are used primarily to maintain shopping cart items during an active browsing journey.
           </p>
           <p>
-            Persistent cookies remain stored on your hard drive until their predetermined expiration timestamp is reached, or until you manually clear your browser cache. In strict accordance with European data protection guidance, our persistent consent cookie (<code>gs_cookie_consent</code>) has a maximum lifespan of six (6) months, following which it automatically expires, prompting our platform to request a fresh, renewed consent determination from the customer.
+            Persistent cookies remain stored on your hard drive until their predetermined expiration timestamp is reached, or until you manually clear your browser cache. In strict accordance with international data protection guidance, our persistent consent cookie (<code>gs_cookie_consent</code>) has a maximum lifespan of six (6) months, following which it automatically expires, prompting our platform to request a fresh, renewed consent determination from the customer.
           </p>
         </section>
 
@@ -189,7 +189,7 @@ export default function CookiePolicyPage() {
             </ul>
           </div>
           <p>
-            Please note that universally disabling all cookies at the browser level may disrupt necessary session persistence on our website, preventing you from saving items to your shopping cart or completing payment checkouts in Canadian Dollars.
+            Please note that universally disabling all cookies at the browser level may disrupt necessary session persistence on our website, preventing you from saving items to your shopping cart or completing payment checkouts.
           </p>
         </section>
 

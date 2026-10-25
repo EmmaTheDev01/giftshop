@@ -18,13 +18,13 @@ interface LegalLayoutProps {
 }
 
 const LEGAL_NAV_ITEMS = [
-  { label: 'Privacy Policy (GDPR / PIPEDA)', href: '/privacy', icon: Lock },
+  { label: 'Privacy & Data Protection Policy', href: '/privacy', icon: Lock },
   { label: 'Terms & Conditions of Sale', href: '/terms-of-sale', icon: FileText },
   { label: 'Terms of Use', href: '/terms', icon: ShieldCheck },
   { label: 'Cookie Policy & Consent', href: '/cookies', icon: Cookie },
   { label: 'Legal Notice & Publisher', href: '/legal', icon: Building },
   { label: 'Returns & Refunds Policy', href: '/returns', icon: RotateCcw },
-  { label: 'Delivery & Canadian Shipping', href: '/delivery', icon: Truck },
+  { label: 'Delivery & Shipping Policy', href: '/delivery', icon: Truck },
   { label: 'Frequently Asked Questions', href: '/faq', icon: HelpCircle },
 ];
 
@@ -120,7 +120,7 @@ export default function LegalLayout({
           </p>
 
           <p style={{ fontSize: '0.78rem', color: '#94a3b8' }}>
-            Effective & Last Updated: <strong>{lastUpdated}</strong> • Applicable in Canada & Worldwide
+            Effective & Last Updated: <strong>{lastUpdated}</strong> • Applicable Worldwide
           </p>
         </div>
       </section>
@@ -262,10 +262,10 @@ export default function LegalLayout({
                   <ShieldCheck size={24} style={{ color: '#b47e00', flexShrink: 0, marginTop: '2px' }} />
                   <div>
                     <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1rem', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
-                      Certified Consumer Protection & Canadian Privacy Standard
+                      Certified Consumer Protection & Global Privacy Standards
                     </h4>
                     <p style={{ fontSize: '0.8rem', color: '#64748b', lineHeight: 1.5 }}>
-                      This store complies strictly with Canadian consumer protection legislation (including Quebec Consumer Protection Act, Ontario CPA, British Columbia BPCPA), Canada&apos;s Personal Information Protection and Electronic Documents Act (PIPEDA), and the European Union General Data Protection Regulation (GDPR).
+                      This store complies strictly with international consumer protection standards, fair commercial trade practices, statutory electronic commerce laws, and the General Data Protection Regulation (GDPR).
                     </p>
                   </div>
                 </div>

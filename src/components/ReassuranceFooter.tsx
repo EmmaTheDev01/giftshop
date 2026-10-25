@@ -77,7 +77,7 @@ export default function ReassuranceFooter() {
               <Truck size={22} />
             </div>
             <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1rem, 1.2vw, 1.15rem)', fontWeight: 600, color: '#0c2340', marginBottom: '4px' }}>
-              Canadian &amp; Global Delivery
+              Express &amp; Global Delivery
             </h4>
             <p style={{ fontSize: '0.84rem', color: '#64748b' }}>
               Express dispatch within 1-2 days
@@ -105,7 +105,7 @@ export default function ReassuranceFooter() {
               Secure Checkout
             </h4>
             <p style={{ fontSize: '0.84rem', color: '#64748b' }}>
-              Interac, Visa, Mastercard, Apple Pay
+              Visa, Mastercard, Apple Pay
             </p>
           </div>
         </div>
