@@ -250,7 +250,7 @@ export default function FeaturedCollectionVideo() {
                   color: '#dda82e',
                 }}
               >
-                Behind the Scenes • The Atelier
+                Behind the Scenes • The Memoriq Studio
               </span>
             </div>
 
@@ -277,7 +277,7 @@ export default function FeaturedCollectionVideo() {
                 maxWidth: '640px',
               }}
             >
-              Discover how raw Canadian timber and architectural steel are transformed into heirloom keepsakes, sculpted with heritage artistry and timeless precision.
+              Discover how thoughtful design and precision engraving transform everyday materials into extraordinary personalized gifts and timeless keepsakes, crafted to celebrate the people, moments, and memories that matter most.
             </p>
           </div>
 
@@ -301,7 +301,7 @@ export default function FeaturedCollectionVideo() {
                 transition: 'all 0.25s ease',
               }}
             >
-              <span>Discover the Series</span>
+              <span>Learn More</span>
               <ArrowRight size={16} />
             </Link>
           </div>
@@ -409,17 +409,7 @@ export default function FeaturedCollectionVideo() {
                   boxShadow: isPlaying ? '0 0 12px #22c55e' : 'none',
                 }}
               />
-              <span
-                style={{
-                  fontSize: '0.72rem',
-                  fontWeight: 700,
-                  letterSpacing: '0.15em',
-                  textTransform: 'uppercase',
-                  color: '#e2e8f0',
-                }}
-              >
-                {activeItem.badge} • 4K ATELIER CINEMA
-              </span>
+
             </div>
           </div>
 

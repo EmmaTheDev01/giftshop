@@ -238,7 +238,7 @@ export default function YourOwnMark() {
                     marginBottom: '8px',
                   }}
                 >
-                  Personalization Atelier Preview
+                  A Glimpse Into the Art of Personalization
                 </p>
                 <p
                   style={{
@@ -252,7 +252,7 @@ export default function YourOwnMark() {
                   &ldquo;To Many More Shared Sunsets&rdquo;
                 </p>
                 <p style={{ fontSize: '0.82rem', color: '#64748b', margin: 0 }}>
-                  Engraved in Master Hardwood • Hand-Inspected in Canada 🇨🇦
+                  Precision Engraved • Thoughtfully Personalized • Made to Be Treasured 🇨🇦
                 </p>
               </div>
             </div>
