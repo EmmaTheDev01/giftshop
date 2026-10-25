@@ -29,17 +29,17 @@ interface CollectionVideoItem {
 
 const COLLECTION_VIDEOS: CollectionVideoItem[] = [
   {
-    id: 'gardens',
-    slug: 'gardens',
-    title: 'Laurentian Woodcraft & Forest Art',
-    tagline: 'Sustainably Sourced Canadian Hardwoods & Natural Living',
-    badge: 'Atelier Woodcraft',
+    id: 'laser-engraving',
+    slug: 'all-products',
+    title: 'Laser Engraving & Atelier Craftsmanship',
+    tagline: 'High-Precision Laser Engineering on Canadian Hardwoods',
+    badge: 'Atelier Laser Precision',
     description:
-      'Inspired by the majestic Laurentian woodlands. Each piece is carved from sustainable Canadian birch, cedar, and sugar maple, capturing authentic organic grains and woodland serenity.',
-    itemCount: '12 Curated Keepsakes',
-    poster: '/images/collections/woodcraft-atelier.jpg',
-    videoUrl: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4',
-    highlights: ['Canadian Sugar Maple', 'Hand-rubbed Beeswax Finish', 'Precision CNC Carving'],
+      'High-precision laser technology bringing architectural skylines and custom engravings to life on fine Canadian hardwoods.',
+    itemCount: 'Precision Works',
+    poster: '/images/laser-engraving-atelier.jpg',
+    videoUrl: '',
+    highlights: ['Micro-Precision Beam', 'Solid Canadian Walnut', 'Bespoke Inscriptions'],
   },
   {
     id: 'historic-architecture',
@@ -83,7 +83,7 @@ const COLLECTION_VIDEOS: CollectionVideoItem[] = [
 ];
 
 export default function FeaturedCollectionVideo() {
-  const [isPlaying, setIsPlaying] = useState(true);
+  const [isPlaying, setIsPlaying] = useState(false);
   const [isMuted, setIsMuted] = useState(true);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
@@ -97,17 +97,8 @@ export default function FeaturedCollectionVideo() {
 
   const activeItem = COLLECTION_VIDEOS[0];
 
-  // Initial video playback setup
   useEffect(() => {
     setVideoError(false);
-    if (videoRef.current) {
-      videoRef.current
-        .play()
-        .then(() => setIsPlaying(true))
-        .catch(() => {
-          setIsPlaying(false);
-        });
-    }
   }, []);
 
   // Fullscreen change listener
@@ -337,47 +328,45 @@ export default function FeaturedCollectionVideo() {
             marginBottom: 0,
           }}
         >
-          {/* Real Video Element */}
-          <video
-            ref={videoRef}
-            src={activeItem.videoUrl}
-            poster={activeItem.poster}
-            playsInline
-            autoPlay
-            loop
-            muted={isMuted}
-            onTimeUpdate={handleTimeUpdate}
-            onLoadedMetadata={handleLoadedMetadata}
-            onError={() => setVideoError(true)}
-            onClick={togglePlay}
-            style={{
-              width: '100%',
-              height: '100%',
-              objectFit: 'cover',
-              cursor: 'pointer',
-              display: videoError ? 'none' : 'block',
-            }}
-          />
+          {/* Laser Engraving Visual Showcase */}
+          <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+            <Image
+              src={activeItem.poster}
+              alt="Precision laser engraving on Canadian walnut hardwood plaque"
+              fill
+              style={{
+                objectFit: 'cover',
+                transform: isPlaying ? 'scale(1.04)' : 'scale(1)',
+                transition: 'transform 6s cubic-bezier(0.16, 1, 0.3, 1)',
+              }}
+              priority
+            />
 
-          {/* Fallback image when video cannot load */}
-          {videoError && (
-            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <Image
-                src={activeItem.poster}
-                alt={activeItem.title}
-                fill
-                style={{ objectFit: 'cover' }}
-                priority
-              />
-              <div
+            {/* If videoUrl is provided and playing, play real video */}
+            {activeItem.videoUrl && isPlaying && (
+              <video
+                ref={videoRef}
+                src={activeItem.videoUrl}
+                poster={activeItem.poster}
+                playsInline
+                autoPlay
+                loop
+                muted={isMuted}
+                onTimeUpdate={handleTimeUpdate}
+                onLoadedMetadata={handleLoadedMetadata}
+                onError={() => setVideoError(true)}
+                onClick={togglePlay}
                 style={{
                   position: 'absolute',
                   inset: 0,
-                  background: 'linear-gradient(180deg, rgba(7, 20, 38, 0.2) 0%, rgba(7, 20, 38, 0.8) 100%)',
+                  width: '100%',
+                  height: '100%',
+                  objectFit: 'cover',
+                  cursor: 'pointer',
                 }}
               />
-            </div>
-          )}
+            )}
+          </div>
 
           {/* Vignette Overlay for cinematic look */}
           <div
