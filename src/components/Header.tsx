@@ -220,7 +220,7 @@ export default function Header() {
             )}
           </div>
 
-          {/* Canada & USA Boutiques Link */}
+          {/* Online Boutique Link */}
           <Link
             href="/boutiques"
             className="hidden-tablet"
@@ -234,7 +234,7 @@ export default function Header() {
               transition: 'color 0.2s',
             }}
           >
-            <span>Galleries: Canada • USA</span>
+            <span>Online Boutique</span>
             <ArrowUpRight size={13} style={{ color: '#b47e00' }} />
           </Link>
         </div>
@@ -437,24 +437,14 @@ export default function Header() {
               const menuHref =
                 menu.slug === 'catalogue'
                   ? '/products'
-                  : menu.slug === 'collections'
-                    ? '/collections'
-                    : menu.slug === 'brands'
-                      ? '/brands'
-                      : menu.slug === 'gifts'
-                        ? '/gifts'
-                        : menu.slug === 'lifestyles'
-                          ? '/collections'
-                          : menu.slug === 'fashion'
-                            ? '/collections'
-                            : menu.slug === 'events'
-                              ? '/boutiques'
-                              : menu.slug === 'customize'
-                                ? '/customize'
-                                : `/category/${menu.slug}`;
+                  : menu.slug === 'gifts'
+                    ? '/gifts'
+                    : menu.slug === 'customize'
+                      ? '/customize'
+                      : `/category/${menu.slug}`;
 
-              const isLeftItem = menu.slug === 'catalogue' || menu.slug === 'gifts';
-              const isRightItem = menu.slug === 'customize' || menu.slug === 'events';
+              const isLeftItem = menu.slug === 'catalogue';
+              const isRightItem = menu.slug === 'customize';
 
               return (
                 <li
@@ -898,21 +888,11 @@ export default function Header() {
               const itemHref =
                 item.slug === 'catalogue'
                   ? '/products'
-                  : item.slug === 'collections'
-                    ? '/collections'
-                    : item.slug === 'brands'
-                      ? '/brands'
-                      : item.slug === 'gifts'
-                        ? '/gifts'
-                        : item.slug === 'lifestyles'
-                          ? '/collections'
-                          : item.slug === 'fashion'
-                            ? '/collections'
-                            : item.slug === 'events'
-                              ? '/boutiques'
-                              : item.slug === 'customize'
-                                ? '/customize'
-                                : `/category/${item.slug}`;
+                  : item.slug === 'gifts'
+                    ? '/gifts'
+                    : item.slug === 'customize'
+                      ? '/customize'
+                      : `/category/${item.slug}`;
 
               const isExpanded = expandedMobileCategory === item.slug;
 
@@ -1023,7 +1003,7 @@ export default function Header() {
               );
             })}
 
-            {/* Canadian Boutiques & Galleries */}
+            {/* Online Boutique Link */}
             <div style={{ borderBottom: '1px solid #f1f5f9', padding: '12px 4px' }}>
               <Link
                 href="/boutiques"
@@ -1038,7 +1018,7 @@ export default function Header() {
                   textDecoration: 'none',
                 }}
               >
-                <span>Galleries: Canada • USA</span>
+                <span>Online Boutique</span>
                 <ArrowUpRight size={15} style={{ color: '#b47e00' }} />
               </Link>
             </div>

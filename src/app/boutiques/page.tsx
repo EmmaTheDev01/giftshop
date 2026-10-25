@@ -4,73 +4,62 @@ import Footer from '@/components/Footer';
 import ReassuranceFooter from '@/components/ReassuranceFooter';
 import DiamondSeparator from '@/components/DiamondSeparator';
 import { SITE_CONFIG } from '@/config/site';
-import { MapPin, Clock, Phone, ArrowRight, ChevronRight, Building2 } from 'lucide-react';
+import { Globe, Award, Package, ShieldCheck, ArrowRight, ChevronRight, Clock, Mail, Phone, Truck, CheckCircle2 } from 'lucide-react';
 import Link from 'next/link';
 
 export const metadata = {
-  title: `Our Boutiques & Salons Across Canada & USA | ${SITE_CONFIG.name}`,
+  title: `The Official Online Boutique | ${SITE_CONFIG.name}`,
   description:
-    'Explore our boutique locations and partner salons across Canada and the United States. Book private consultations, discover architectural keepsakes, and experience artisan craftsmanship in person.',
+    'Experience our official online boutique. Handcrafted artisan keepsakes, custom laser engraving, and heirloom gifts delivered directly from our studio to your doorstep.',
 };
 
-export default function BoutiquesDirectoryPage() {
-  const canadianBoutiques = [
+export default function OnlineBoutiquePage() {
+  const onlinePillars = [
     {
-      city: 'Toronto Flagship',
-      district: 'Yorkville Heritage District',
-      address: '138 Cumberland Street, Suite 200, Toronto, ON M5R 1A6',
-      hours: 'Mon – Sat: 10:00 AM – 7:00 PM EST • Sun: 11:00 AM – 5:00 PM EST',
-      phone: SITE_CONFIG.contact.phone,
-      slug: 'toronto',
-      description: 'Our premier Canadian flagship with private collector lounges, bespoke gift curation, and certified monument rivets.',
+      icon: Award,
+      title: 'Direct Atelier Craftsmanship',
+      subtitle: 'Zero Retail Markups',
+      description:
+        'By operating exclusively online, we bypass traditional retail middlemen and invest directly into master-grade sustainably sourced hardwoods, high-precision laser optics, and artisan hand-finishes.',
     },
     {
-      city: 'Montreal Boutique',
-      district: 'Vieux-Montréal / Old Montreal',
-      address: '242 Rue Saint-Paul Ouest, Vieux-Montréal, QC H2Y 1Z9',
-      hours: 'Lundi – Samedi : 10h00 – 19h00 HNE • Dimanche : 11h00 – 17h00 HNE',
-      phone: SITE_CONFIG.contact.phone,
-      slug: 'montreal',
-      description: 'Set within an 1845 heritage salon with bilingual concierge service, Canadian maple reserve tastings, and custom gift wrapping.',
+      icon: Package,
+      title: 'Signature Gift Presentation',
+      subtitle: 'Complimentary On Every Order',
+      description:
+        'Every keepsake arrives encased in our signature gold-embossed presentation box, cushioned with archival protective inserts and accompanied by an official certificate of authenticity.',
     },
     {
-      city: 'Vancouver Showroom',
-      district: 'Alberni Luxury Corridor',
-      address: '1040 Alberni Street, Suite 320, Vancouver, BC V6E 1A3',
-      hours: 'Tue – Sat: 10:00 AM – 6:00 PM PST • Sun – Mon: Private Appointment',
-      phone: SITE_CONFIG.contact.phone,
-      slug: 'vancouver',
-      description: 'Our Pacific showroom offering executive gift suites, numbered edition previews, and same-day Metro Vancouver courier dispatch.',
+      icon: Truck,
+      title: 'Tracked Direct Delivery',
+      subtitle: 'Expedited & Fully Insured',
+      description:
+        'Orders are prepared, inspected, and dispatched with precision. Receive live courier tracking and delivery alerts directly to your phone or email every step of the journey.',
+    },
+    {
+      icon: ShieldCheck,
+      title: '30-Day In-Home Guarantee',
+      subtitle: 'Effortless Confidence',
+      description:
+        'Experience the rich wood grain, tactile weight, and flawless laser craft in the comfort of your home. If a piece does not completely enchant you, enjoy our 30-day return guarantee.',
     },
   ];
 
-  const usaBoutiques = [
+  const orderingSteps = [
     {
-      city: 'New York Flagship & Gallery',
-      district: 'Fifth Avenue / SoHo Arts District',
-      address: '580 Fifth Avenue, Suite 1400, New York, NY 10036',
-      hours: 'Mon – Sat: 10:00 AM – 7:00 PM EST • Sun: 12:00 PM – 6:00 PM EST',
-      phone: '+1 (800) 555-4438',
-      slug: 'usa',
-      description: 'Showcasing monumental architectural editions including the Statue of Liberty collector series, heirloom hardwood decor, and private collector salons.',
+      num: '01',
+      title: 'Select or Customize',
+      desc: 'Explore our master catalogue or use our studio customizer to input personal names, dates, coordinates, and dedications.',
     },
     {
-      city: 'Chicago Heritage Suite',
-      district: 'Michigan Avenue / Magnificent Mile',
-      address: '676 N Michigan Avenue, Suite 2100, Chicago, IL 60611',
-      hours: 'Mon – Fri: 10:00 AM – 6:00 PM CST • Sat: 11:00 AM – 5:00 PM CST',
-      phone: '+1 (800) 555-4438',
-      slug: 'usa',
-      description: 'An intimate gallery space dedicated to custom architectural wall sculptures, laser-cut cityscapes, and corporate executive gift curation.',
+      num: '02',
+      title: 'Atelier Laser Crafting',
+      desc: 'Our artisans calibrate precision laser systems to engrave your design into select natural hardwoods, finished with organic beeswax.',
     },
     {
-      city: 'Los Angeles Showroom',
-      district: 'Beverly Hills / West Hollywood Corridor',
-      address: '9454 Wilshire Boulevard, Suite 600, Beverly Hills, CA 90212',
-      hours: 'Tue – Sat: 10:00 AM – 6:00 PM PST • Sun – Mon: Private Appointment',
-      phone: '+1 (800) 555-4438',
-      slug: 'usa',
-      description: 'Serving our West Coast patrons with curated bespoke keepsakes, personalized wooden plaques, and private collector consultations.',
+      num: '03',
+      title: 'Delivered in Luxury',
+      desc: 'Carefully packaged in our heirloom gift box with wax-sealed certificates, dispatched promptly to your home or recipient address.',
     },
   ];
 
@@ -83,18 +72,21 @@ export default function BoutiquesDirectoryPage() {
         style={{
           backgroundColor: '#0c2340',
           color: '#ffffff',
-          padding: '72px 20px 60px',
+          padding: '80px 20px 68px',
           borderBottom: '2px solid #b47e00',
           position: 'relative',
+          overflow: 'hidden',
         }}
       >
-        <div className="container-custom" style={{ maxWidth: '1000px', margin: '0 auto' }}>
-          <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', color: '#94a3b8', marginBottom: '16px' }}>
-            <Link href="/" style={{ color: '#dda82e' }}>Home</Link>
+        <div className="container-custom" style={{ maxWidth: '1000px', margin: '0 auto', position: 'relative', zIndex: 10 }}>
+          {/* Breadcrumbs */}
+          <nav style={{ display: 'flex', alignItems: 'center', gap: '8px', fontSize: '0.78rem', color: '#94a3b8', marginBottom: '18px' }}>
+            <Link href="/" style={{ color: '#dda82e', textDecoration: 'none' }}>Home</Link>
             <ChevronRight size={13} />
-            <span style={{ color: '#ffffff' }}>Our Boutiques</span>
+            <span style={{ color: '#ffffff' }}>Online Boutique</span>
           </nav>
 
+          {/* Badge */}
           <span
             style={{
               fontSize: '0.72rem',
@@ -104,226 +96,249 @@ export default function BoutiquesDirectoryPage() {
               color: '#dda82e',
               backgroundColor: 'rgba(221, 168, 46, 0.12)',
               border: '1px solid rgba(221, 168, 46, 0.3)',
-              padding: '4px 10px',
+              padding: '5px 12px',
               borderRadius: '2px',
-              display: 'inline-block',
-              marginBottom: '14px',
+              display: 'inline-flex',
+              alignItems: 'center',
+              gap: '6px',
+              marginBottom: '16px',
             }}
           >
-            Canada &amp; USA Presence 🇨🇦 🇺🇸
+            <Globe size={13} />
+            <span>Exclusively Online • Direct From Atelier</span>
           </span>
-          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.2rem, 5vw, 3.2rem)', fontWeight: 600, marginBottom: '16px' }}>
-            Our Boutiques &amp; Salons
+
+          <h1 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(2.3rem, 5vw, 3.5rem)', fontWeight: 600, lineHeight: 1.15, marginBottom: '18px' }}>
+            The Official Online Boutique
           </h1>
-          <p style={{ color: '#cbd5e1', fontSize: '1.05rem', lineHeight: 1.7, maxWidth: '720px' }}>
-            Visit our physical locations across Canada and the United States for private concierge appointments, hands-on keepsake viewings, bespoke engraving, and complimentary gift wrapping.
+
+          <p style={{ color: '#cbd5e1', fontSize: '1.1rem', lineHeight: 1.7, maxWidth: '720px', marginBottom: '28px' }}>
+            We operate exclusively as a premier direct-to-patron digital atelier. Every heirloom keepsake, custom laser-cut creation, and commemorative art piece is crafted to order and dispatched directly to your doorstep.
           </p>
 
-          {/* Quick country jump buttons */}
-          <div style={{ display: 'flex', gap: '14px', marginTop: '24px', flexWrap: 'wrap' }}>
+          {/* Action Buttons */}
+          <div style={{ display: 'flex', gap: '14px', flexWrap: 'wrap' }}>
             <Link
-              href="/boutiques/canada"
+              href="/catalogue"
+              className="btn-primary"
               style={{
-                backgroundColor: '#b47e00',
-                color: '#ffffff',
-                padding: '10px 22px',
-                borderRadius: '2px',
-                fontWeight: 600,
-                fontSize: '0.88rem',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
+                padding: '12px 26px',
+                fontSize: '0.9rem',
               }}
             >
-              <span>Explore Canada Locations 🇨🇦</span>
+              <span>Explore Master Catalogue</span>
               <ArrowRight size={15} />
             </Link>
+
             <Link
-              href="/boutiques/usa"
+              href="/customize"
               style={{
                 backgroundColor: 'rgba(255, 255, 255, 0.1)',
                 color: '#ffffff',
                 border: '1px solid rgba(255, 255, 255, 0.3)',
-                padding: '10px 22px',
+                padding: '12px 24px',
                 borderRadius: '2px',
                 fontWeight: 600,
-                fontSize: '0.88rem',
+                fontSize: '0.9rem',
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '8px',
+                textDecoration: 'none',
+                transition: 'all 0.2s',
               }}
             >
-              <span>Explore USA Locations 🇺🇸</span>
-              <ArrowRight size={15} />
+              <span>Personalize a Keepsake</span>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Boutiques Main Content */}
-      <main className="container-custom" style={{ maxWidth: '1000px', margin: '0 auto', padding: '60px 20px 80px', flex: 1 }}>
+      {/* Main Content */}
+      <main className="container-custom" style={{ maxWidth: '1000px', margin: '0 auto', padding: '64px 20px 80px', flex: 1 }}>
         
-        {/* Section 1: Canada */}
-        <div style={{ marginBottom: '64px' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '24px' }}>
-            <div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#b47e00', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
-                Domestic Presence 🇨🇦
-              </span>
-              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: '#0c2340', fontWeight: 600, margin: '4px 0 0' }}>
-                Canada Boutiques &amp; Salons
-              </h2>
-            </div>
-            <Link href="/boutiques/canada" className="btn-secondary" style={{ padding: '8px 18px', fontSize: '0.85rem' }}>
-              View Canada Directory
-            </Link>
-          </div>
+        {/* Section 1: The Direct Atelier Model */}
+        <div style={{ textAlign: 'center', maxWidth: '720px', margin: '0 auto 52px' }}>
+          <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#b47e00', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
+            Pure Craft • Zero Middlemen
+          </span>
+          <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: 'clamp(1.8rem, 3.5vw, 2.5rem)', color: '#0c2340', fontWeight: 600, margin: '8px 0 14px' }}>
+            Why We Are Exclusively Online
+          </h2>
+          <p style={{ color: '#64748b', fontSize: '0.98rem', lineHeight: 1.7 }}>
+            By maintaining a focused digital atelier rather than traditional storefronts, we pour every resource into finest natural materials, bespoke laser craftsmanship, personalized customer service, and white-glove presentation.
+          </p>
+        </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-            {canadianBoutiques.map((b) => (
+        {/* 4 Pillars Grid */}
+        <div
+          style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '24px',
+            marginBottom: '64px',
+          }}
+        >
+          {onlinePillars.map((p, idx) => {
+            const Icon = p.icon;
+            return (
               <div
-                key={b.city}
+                key={idx}
                 style={{
                   backgroundColor: '#faf8f5',
                   border: '1px solid #ebd9c0',
                   borderRadius: '6px',
-                  padding: '32px 28px',
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                  gap: '24px',
-                  boxShadow: '0 4px 16px rgba(12, 35, 64, 0.04)',
+                  padding: '32px 26px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  transition: 'transform 0.2s, box-shadow 0.2s',
+                  boxShadow: '0 4px 16px rgba(12, 35, 64, 0.03)',
                 }}
               >
-                <div>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#b47e00', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                    {b.district}
-                  </span>
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', color: '#0c2340', margin: '6px 0 10px', fontWeight: 600 }}>
-                    {b.city}
-                  </h3>
-                  <p style={{ color: '#475569', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '18px' }}>
-                    {b.description}
-                  </p>
-                  <Link
-                    href={`/boutiques/${b.slug}`}
-                    className="btn-primary"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '9px 20px', fontSize: '0.85rem' }}
-                  >
-                    <span>View Location &amp; Book</span>
-                    <ArrowRight size={14} />
-                  </Link>
+                <div
+                  style={{
+                    width: '48px',
+                    height: '48px',
+                    borderRadius: '50%',
+                    backgroundColor: 'rgba(180, 126, 0, 0.12)',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    color: '#b47e00',
+                    marginBottom: '18px',
+                  }}
+                >
+                  <Icon size={24} />
                 </div>
+                <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#b47e00' }}>
+                  {p.subtitle}
+                </span>
+                <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.35rem', color: '#0c2340', margin: '4px 0 10px', fontWeight: 600 }}>
+                  {p.title}
+                </h3>
+                <p style={{ color: '#475569', fontSize: '0.88rem', lineHeight: 1.65, margin: 0 }}>
+                  {p.description}
+                </p>
+              </div>
+            );
+          })}
+        </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.86rem', borderLeft: '1px solid #ebd9c0', paddingLeft: '20px' }}>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <MapPin size={17} style={{ color: '#b47e00', flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <strong style={{ color: '#0c2340', display: 'block' }}>Address:</strong>
-                      <span style={{ color: '#64748b' }}>{b.address}</span>
-                    </div>
-                  </div>
+        <DiamondSeparator />
 
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <Clock size={17} style={{ color: '#b47e00', flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <strong style={{ color: '#0c2340', display: 'block' }}>Hours:</strong>
-                      <span style={{ color: '#64748b' }}>{b.hours}</span>
-                    </div>
-                  </div>
+        {/* Section 2: How It Works */}
+        <div style={{ margin: '64px 0' }}>
+          <div style={{ textAlign: 'center', maxWidth: '640px', margin: '0 auto 44px' }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#b47e00', textTransform: 'uppercase', letterSpacing: '0.15em' }}>
+              Seamless Experience
+            </span>
+            <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2.1rem', color: '#0c2340', fontWeight: 600, margin: '6px 0 10px' }}>
+              From Atelier to Your Door in 3 Steps
+            </h2>
+            <p style={{ color: '#64748b', fontSize: '0.94rem' }}>
+              Ordering your customized heirloom gift is simple, transparent, and backed by live concierge support.
+            </p>
+          </div>
 
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <Phone size={17} style={{ color: '#b47e00', flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <strong style={{ color: '#0c2340', display: 'block' }}>Concierge:</strong>
-                      <span style={{ color: '#64748b' }}>{b.phone}</span>
-                    </div>
-                  </div>
-                </div>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+              gap: '24px',
+            }}
+          >
+            {orderingSteps.map((step) => (
+              <div
+                key={step.num}
+                style={{
+                  backgroundColor: '#ffffff',
+                  border: '1px solid #e2e8f0',
+                  borderRadius: '6px',
+                  padding: '28px 24px',
+                  position: 'relative',
+                }}
+              >
+                <span
+                  style={{
+                    fontFamily: 'var(--font-serif)',
+                    fontSize: '2.4rem',
+                    fontWeight: 700,
+                    color: '#e2e8f0',
+                    lineHeight: 1,
+                    display: 'block',
+                    marginBottom: '12px',
+                  }}
+                >
+                  {step.num}
+                </span>
+                <h4 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.2rem', color: '#0c2340', margin: '0 0 8px', fontWeight: 600 }}>
+                  {step.title}
+                </h4>
+                <p style={{ color: '#64748b', fontSize: '0.86rem', lineHeight: 1.6, margin: 0 }}>
+                  {step.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
-        <DiamondSeparator />
-
-        {/* Section 2: USA */}
-        <div style={{ margin: '56px 0' }}>
-          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '12px', marginBottom: '24px' }}>
-            <div>
-              <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#b47e00', textTransform: 'uppercase', letterSpacing: '0.12em' }}>
-                United States Salons 🇺🇸
-              </span>
-              <h2 style={{ fontFamily: 'var(--font-serif)', fontSize: '2rem', color: '#0c2340', fontWeight: 600, margin: '4px 0 0' }}>
-                USA Boutiques &amp; Galleries
-              </h2>
-            </div>
-            <Link href="/boutiques/usa" className="btn-secondary" style={{ padding: '8px 18px', fontSize: '0.85rem' }}>
-              View USA Directory
-            </Link>
+        {/* Section 3: Concierge Help Card */}
+        <div
+          style={{
+            backgroundColor: '#faf8f5',
+            border: '1px solid #ebd9c0',
+            borderRadius: '6px',
+            padding: '36px 32px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            flexWrap: 'wrap',
+            gap: '24px',
+          }}
+        >
+          <div style={{ maxWidth: '580px' }}>
+            <span style={{ fontSize: '0.72rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#b47e00' }}>
+              Dedicated Client Concierge
+            </span>
+            <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', color: '#0c2340', margin: '6px 0 10px', fontWeight: 600 }}>
+              Need Help Selecting or Customizing a Gift?
+            </h3>
+            <p style={{ color: '#475569', fontSize: '0.9rem', lineHeight: 1.6, margin: 0 }}>
+              Our concierge team is at your disposal for custom font suggestions, coordinate lookups, corporate volume gifting, or order inquiries.
+            </p>
           </div>
 
-          <div style={{ display: 'flex', flexDirection: 'column', gap: '28px' }}>
-            {usaBoutiques.map((b) => (
-              <div
-                key={b.city}
-                style={{
-                  backgroundColor: '#faf8f5',
-                  border: '1px solid #ebd9c0',
-                  borderRadius: '6px',
-                  padding: '32px 28px',
-                  display: 'grid',
-                  gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
-                  gap: '24px',
-                  boxShadow: '0 4px 16px rgba(12, 35, 64, 0.04)',
-                }}
-              >
-                <div>
-                  <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#b47e00', textTransform: 'uppercase', letterSpacing: '0.1em' }}>
-                    {b.district}
-                  </span>
-                  <h3 style={{ fontFamily: 'var(--font-serif)', fontSize: '1.6rem', color: '#0c2340', margin: '6px 0 10px', fontWeight: 600 }}>
-                    {b.city}
-                  </h3>
-                  <p style={{ color: '#475569', fontSize: '0.9rem', lineHeight: 1.6, marginBottom: '18px' }}>
-                    {b.description}
-                  </p>
-                  <Link
-                    href="/boutiques/usa"
-                    className="btn-primary"
-                    style={{ display: 'inline-flex', alignItems: 'center', gap: '8px', padding: '9px 20px', fontSize: '0.85rem' }}
-                  >
-                    <span>Inquire / Book Appointment</span>
-                    <ArrowRight size={14} />
-                  </Link>
-                </div>
+          <div style={{ display: 'flex', gap: '12px', flexWrap: 'wrap' }}>
+            <Link
+              href="/contact"
+              className="btn-primary"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 24px',
+                fontSize: '0.88rem',
+              }}
+            >
+              <Mail size={16} />
+              <span>Contact Concierge</span>
+            </Link>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px', fontSize: '0.86rem', borderLeft: '1px solid #ebd9c0', paddingLeft: '20px' }}>
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <MapPin size={17} style={{ color: '#b47e00', flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <strong style={{ color: '#0c2340', display: 'block' }}>Address:</strong>
-                      <span style={{ color: '#64748b' }}>{b.address}</span>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <Clock size={17} style={{ color: '#b47e00', flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <strong style={{ color: '#0c2340', display: 'block' }}>Hours:</strong>
-                      <span style={{ color: '#64748b' }}>{b.hours}</span>
-                    </div>
-                  </div>
-
-                  <div style={{ display: 'flex', gap: '10px' }}>
-                    <Phone size={17} style={{ color: '#b47e00', flexShrink: 0, marginTop: '2px' }} />
-                    <div>
-                      <strong style={{ color: '#0c2340', display: 'block' }}>Concierge:</strong>
-                      <span style={{ color: '#64748b' }}>{b.phone}</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ))}
+            <Link
+              href="/faq"
+              className="btn-secondary"
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '8px',
+                padding: '12px 20px',
+                fontSize: '0.88rem',
+              }}
+            >
+              <span>View F.A.Q</span>
+            </Link>
           </div>
         </div>
       </main>

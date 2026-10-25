@@ -60,8 +60,8 @@ const FAQ_DATA: FAQItem[] = [
   },
   {
     category: 'Craftsmanship & Authenticity',
-    q: 'Where are your physical boutiques and showrooms located?',
-    a: 'Our flagship showrooms and workshop partners showcase our full collections, curated keepsakes, and personalized engraving options in person.',
+    q: 'Do you have physical stores or are you online only?',
+    a: 'We operate exclusively as a premier online boutique and direct digital atelier. By focusing entirely online, we avoid traditional retail markups and craft made-to-order keepsakes and custom laser engravings dispatched directly to your door, backed by our 30-day in-home guarantee.',
   },
 ];
 

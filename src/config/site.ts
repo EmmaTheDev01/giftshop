@@ -14,9 +14,9 @@ export const SITE_CONFIG = {
   freeShippingThreshold: 95, // in CAD
   shippingNotice: "Express shipping across Canada & the United States 🇨🇦 🇺🇸",
   announcement: "Bespoke Delivery Across Canada & USA • Free Shipping Over $95 CAD / $70 USD 🇨🇦 🇺🇸",
-  locations: "Toronto • New York • Montreal • Chicago • Vancouver",
+  locations: "Official Online Boutique",
   contact: {
-    email: "concierge@memoriq.lifelines.global",
+    email: "commandcenter@lifelines.global",
     phone: "+1 (800) 555-GIFT",
   },
 };

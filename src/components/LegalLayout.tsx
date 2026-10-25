@@ -52,16 +52,6 @@ export default function LegalLayout({
           overflow: 'hidden',
         }}
       >
-        {/* Subtle background radial aura */}
-        <div
-          style={{
-            position: 'absolute',
-            inset: 0,
-            background: 'radial-gradient(circle at 80% 20%, rgba(180, 126, 0, 0.15) 0%, transparent 60%)',
-            pointerEvents: 'none',
-          }}
-        />
-
         <div className="container-custom" style={{ position: 'relative', zIndex: 10 }}>
           {/* Breadcrumbs */}
           <nav

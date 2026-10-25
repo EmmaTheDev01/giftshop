@@ -52,39 +52,7 @@ export const NAV_MENU: NavSection[] = [
       image: '/images/collections/heirloom-packaging.jpg',
     },
   },
-  {
-    name: 'Lifestyles',
-    slug: 'lifestyles',
-    items: [
-      { name: 'Architectural Wall Accents', slug: 'wall-art', count: '18 items' },
-      { name: 'Geometric Honeycomb Shelves', slug: 'wall-shelves', count: '5 items' },
-      { name: 'Artisan Wall Clocks', slug: 'clocks', count: '6 items' },
-      { name: 'LED Ambient Night Lights', slug: 'led-lighting', count: '7 items' },
-      { name: 'Engraved Coaster Sets', slug: 'coasters-sets', count: '8 items' },
-      { name: 'Rustic Kitchen & Hearth Decor', slug: 'rustic-signs', count: '9 items' },
-    ],
-    featured: {
-      title: 'Architectural Wall Accents',
-      desc: 'Silent quartz movements and dimensional multi-layer wood sculptures for modern living',
-      image: '/images/collections/architectural-interior.jpg',
-    },
-  },
-  {
-    name: 'Events',
-    slug: 'events',
-    items: [
-      { name: 'Canadian Atelier Exhibits', slug: 'gallery-exhibits' },
-      { name: 'Artisan Pop-up Markets', slug: 'popups' },
-      { name: 'Masterclass Craft Demos', slug: 'masterclass' },
-      { name: 'Seasonal Gifting Previews', slug: 'gifting-previews' },
-      { name: 'VIP Collector Receptions', slug: 'vip-receptions' },
-    ],
-    featured: {
-      title: 'Atelier & Boutique Events',
-      desc: 'Meet our master artisans, preview limited releases, and experience live laser demonstrations',
-      image: '/images/statue-of-liberty.jpg',
-    },
-  },
+
   {
     name: 'Customize',
     slug: 'customize',
